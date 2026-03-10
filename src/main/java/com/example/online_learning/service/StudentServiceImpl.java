@@ -1,0 +1,67 @@
+package com.example.online_learning.service;
+
+import com.example.online_learning.dto.StudentRequestDto;
+import com.example.online_learning.dto.StudentResponseDto;
+import com.example.online_learning.entity.Course;
+import com.example.online_learning.entity.Student;
+import com.example.online_learning.exception.ResourceNotFoundException;
+import com.example.online_learning.mapper.StudentMapper;
+import com.example.online_learning.repository.StudentRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class StudentServiceImpl implements StudentService {
+
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
+
+    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
+        this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
+    }
+
+    @Override
+    @Transactional
+    public StudentResponseDto createStudent(StudentRequestDto requestDto) {
+        Student student = new Student(requestDto.fullName(), requestDto.email());
+        return studentMapper.toDto(studentRepository.save(student));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public java.util.List<StudentResponseDto> getStudents() {
+        return studentRepository.findAll().stream()
+                .map(studentMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public StudentResponseDto getStudentById(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student", id));
+        return studentMapper.toDto(student);
+    }
+
+    @Override
+    @Transactional
+    public StudentResponseDto updateStudent(Long id, StudentRequestDto requestDto) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student", id));
+        student.setFullName(requestDto.fullName());
+        student.setEmail(requestDto.email());
+        return studentMapper.toDto(student);
+    }
+
+    @Override
+    @Transactional
+    public void deleteStudent(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student", id));
+        for (Course course : java.util.List.copyOf(student.getCourses())) {
+            course.removeStudent(student);
+        }
+        studentRepository.delete(student);
+    }
+}

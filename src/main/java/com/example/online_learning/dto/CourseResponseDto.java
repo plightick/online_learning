@@ -1,4 +1,13 @@
 package com.example.online_learning.dto;
 
-public record CourseResponseDto(Long id, String title, String instructor, String level) {
+import java.util.List;
+
+public record CourseResponseDto(
+        Long id,
+        String title,
+        String level,
+        String instructorName,
+        List<LessonResponseDto> lessons,
+        List<String> studentNames,
+        List<String> categoryNames) {
 }

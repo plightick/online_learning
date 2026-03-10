@@ -1,0 +1,64 @@
+package com.example.online_learning.service;
+
+import com.example.online_learning.dto.RelatedSaveRequestDto;
+import com.example.online_learning.dto.RelatedSaveResponseDto;
+import com.example.online_learning.repository.CourseRepository;
+import com.example.online_learning.repository.InstructorRepository;
+import com.example.online_learning.repository.LessonRepository;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PersistenceDemoService {
+
+    private final RelatedPersistenceTransactionalWorker transactionalWorker;
+    private final InstructorRepository instructorRepository;
+    private final CourseRepository courseRepository;
+    private final LessonRepository lessonRepository;
+
+    public PersistenceDemoService(
+            RelatedPersistenceTransactionalWorker transactionalWorker,
+            InstructorRepository instructorRepository,
+            CourseRepository courseRepository,
+            LessonRepository lessonRepository) {
+        this.transactionalWorker = transactionalWorker;
+        this.instructorRepository = instructorRepository;
+        this.courseRepository = courseRepository;
+        this.lessonRepository = lessonRepository;
+    }
+
+    public RelatedSaveResponseDto saveWithoutTransaction(RelatedSaveRequestDto requestDto) {
+        try {
+            transactionalWorker.persistScenario(requestDto);
+            return buildResponse("WITHOUT_TRANSACTION", "Unexpected success", requestDto);
+        } catch (IllegalStateException exception) {
+            return buildResponse("WITHOUT_TRANSACTION", exception.getMessage(), requestDto);
+        }
+    }
+
+    public RelatedSaveResponseDto saveWithTransaction(RelatedSaveRequestDto requestDto) {
+        try {
+            transactionalWorker.saveWithRollback(requestDto);
+            return buildResponse("WITH_TRANSACTION", "Unexpected success", requestDto);
+        } catch (IllegalStateException exception) {
+            return buildResponse("WITH_TRANSACTION", exception.getMessage(), requestDto);
+        }
+    }
+
+    private RelatedSaveResponseDto buildResponse(
+            String mode,
+            String message,
+            RelatedSaveRequestDto requestDto) {
+        Long instructorId = instructorRepository.findByNameIgnoreCase(requestDto.instructorName())
+                .map(instructor -> instructor.getId())
+                .orElse(null);
+        Long courseId = courseRepository.findByTitleIgnoreCase(requestDto.courseTitle())
+                .map(course -> course.getId())
+                .orElse(null);
+        return new RelatedSaveResponseDto(
+                mode,
+                message,
+                instructorId,
+                courseId,
+                lessonRepository.countByCourseTitleIgnoreCase(requestDto.courseTitle()));
+    }
+}

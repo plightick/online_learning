@@ -1,257 +1,190 @@
-# 🎓 Online Learning — Spring Boot REST API
+# Online Learning API
 
-## 📌 Описание проекта
+Spring Boot REST API для учебной предметной области онлайн-обучения с PostgreSQL и JPA.
 
-`online_learning` — это Spring Boot приложение, реализующее REST API для управления ключевой сущностью предметной области онлайн‑обучения.
+## Что реализовано
 
-В рамках задания реализовано:
+1. Подключена реляционная БД PostgreSQL.
+2. В модели есть 5 сущностей:
+   - `Instructor`
+   - `Course`
+   - `Lesson`
+   - `Student`
+   - `Category`
+3. Реализованы CRUD-операции:
+   - для `Course`
+   - для `Student`
+4. Реализованы связи:
+   - `Instructor` -> `Course` как `OneToMany`
+   - `Course` -> `Lesson` как `OneToMany`
+   - `Course` <-> `Student` как `ManyToMany`
+   - `Course` <-> `Category` как `ManyToMany`
+5. Продемонстрирована проблема `N+1` и решение через `@EntityGraph`.
+6. Добавлены сценарии частичного сохранения без транзакции и полного rollback с `@Transactional`.
+7. Добавлена ER-диаграмма.
 
-1. Создание Spring Boot приложения
-2. REST API для ключевой доменной сущности
-3. GET endpoint с использованием `@RequestParam`
-4. GET endpoint с использованием `@PathVariable`
-5. Архитектура слоёв: **Controller → Service → Repository**
-6. Использование **DTO** и **Mapper**
-7. Настроенный **Checkstyle** и приведение кода к единому стилю
+## ER-диаграмма
 
----
+```text
+instructors
+-----------
+PK id
+name UNIQUE
+specialization
 
-## 🧩 Предметная область
+courses
+-------
+PK id
+title
+level
+FK instructor_id -> instructors.id
 
-### 🎯 Ключевая сущность: `Course`
+lessons
+-------
+PK id
+title
+duration_minutes
+lesson_order
+FK course_id -> courses.id
 
-Сущность описывает онлайн‑курс.
+students
+--------
+PK id
+full_name
+email UNIQUE
 
-**Основные поля:**
+categories
+----------
+PK id
+name UNIQUE
 
-* `id` — уникальный идентификатор
-* `title` — название курса
-* `description` — описание
-* `author` — автор курса
-* `duration` — продолжительность (в часах)
+course_students
+---------------
+PK/FK course_id -> courses.id
+PK/FK student_id -> students.id
 
----
-
-## 🏗 Архитектура проекта
-
-Проект реализован по классической многослойной архитектуре:
-
-```
-Controller → Service → Repository → Database
-```
-
-### 📁 Структура пакетов
-
-```
-src/main/java/.../
- ├── controller
- │    └── CourseController
- ├── service
- │    ├── CourseService
- │    └── impl/CourseServiceImpl
- ├── repository
- │    └── CourseRepository
- ├── dto
- │    └── CourseDto
- ├── mapper
- │    └── CourseMapper
- └── entity
-      └── Course
-```
-
----
-
-## 🔁 DTO и Mapper
-
-Для разделения внутренней модели данных и API-ответов используется `CourseDto`.
-
-**Зачем это нужно:**
-
-* Изоляция Entity от внешнего API
-* Гибкость изменения внутренней структуры
-* Безопасность (не отдаём лишние поля)
-
-### 🔄 Mapper
-
-`CourseMapper` реализует преобразование:
-
-* `Course → CourseDto`
-* `CourseDto → Course`
-
-Mapper может быть реализован вручную или с использованием MapStruct.
-
----
-
-## 🌐 REST API
-
-Базовый путь:
-
-```
-/api/courses
+course_categories
+-----------------
+PK/FK course_id -> courses.id
+PK/FK category_id -> categories.id
 ```
 
-### 📥 GET с `@PathVariable`
+## Почему такие `CascadeType` и `FetchType`
 
-Получение курса по ID:
+### `Course -> Lesson`
 
-```
-GET /api/courses/{id}
-```
+- `cascade = CascadeType.ALL`
+- `orphanRemoval = true`
+- причина: уроки не живут отдельно от курса, поэтому при сохранении/обновлении/удалении курса их жизненный цикл должен идти вместе с ним
 
-Пример:
+### `Course -> Instructor`
 
-```
-GET /api/courses/1
-```
+- `fetch = FetchType.LAZY`
+- без cascade
+- причина: преподаватель является самостоятельной сущностью, один преподаватель ведёт много курсов, поэтому удаление курса не должно удалять преподавателя
 
-Используется:
+### `Course -> Student`, `Course -> Category`
 
-```java
-@GetMapping("/{id}")
-public CourseDto getById(@PathVariable Long id)
-```
+- `fetch = LAZY` по умолчанию
+- без `REMOVE`
+- причина: студенты и категории разделяются между курсами; каскадное удаление здесь опасно и может повредить общие данные
 
----
+## PostgreSQL
 
-### 🔎 GET с `@RequestParam`
+По умолчанию приложение ожидает:
 
-Поиск курсов по автору:
-
-```
-GET /api/courses?author=Ivan
-```
-
-Используется:
-
-```java
-@GetMapping
-public List<CourseDto> getByAuthor(@RequestParam String author)
+```properties
+DB_URL=jdbc:postgresql://localhost:5432/online_learning
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
 ```
 
-Можно расширить дополнительными параметрами фильтрации.
+Можно передать свои значения через переменные окружения.
 
----
+## Запуск
 
-## 🗄 Repository Layer
+1. Поднять PostgreSQL и создать БД `online_learning`.
+2. Запустить приложение:
 
-Используется Spring Data JPA:
-
-```java
-public interface CourseRepository extends JpaRepository<Course, Long> {
-    List<Course> findByAuthor(String author);
-}
+```bash
+./mvnw spring-boot:run
 ```
 
-Repository отвечает только за работу с БД.
+При старте приложение добавляет тестовые данные.
 
----
+## Основные endpoints
 
-## ⚙️ Service Layer
+### Courses CRUD
 
-Слой бизнес‑логики:
-
-* Валидация данных
-* Преобразование Entity ↔ DTO
-* Вызов методов Repository
-
-```java
-public interface CourseService {
-    CourseDto getById(Long id);
-    List<CourseDto> getByAuthor(String author);
-}
+```text
+POST   /api/courses
+GET    /api/courses
+GET    /api/courses/{id}
+PUT    /api/courses/{id}
+DELETE /api/courses/{id}
 ```
 
----
+### Students CRUD
 
-## 🧪 Технологии
-
-* Java 17+
-* Spring Boot
-* Spring Web
-* Spring Data JPA
-* H2 / PostgreSQL
-* Maven / Gradle
-* Checkstyle
-
----
-
-## 🎨 Checkstyle
-
-В проекте подключён Checkstyle для:
-
-* Контроля форматирования
-* Единого стиля кода
-* Проверки соглашений по именованию
-
-Проверка выполняется при сборке проекта:
-
-```
-mvn verify
+```text
+POST   /api/students
+GET    /api/students
+GET    /api/students/{id}
+PUT    /api/students/{id}
+DELETE /api/students/{id}
 ```
 
-или
+### Демонстрация N+1
 
-```
-gradle check
-```
-
-Код приведён к единому стилю согласно конфигурации `checkstyle.xml`.
-
----
-
-## 🚀 Запуск проекта
-
-### 1️⃣ Клонировать репозиторий
-
-```
-git clone https://github.com/plightick/online_learning.git
-cd online_learning
+```text
+GET /api/courses/n-plus-one
+GET /api/courses/optimized
 ```
 
-### 2️⃣ Запуск
+- `/api/courses/n-plus-one` использует обычную загрузку `findAll()` и при маппинге дёргает ленивые связи, что порождает дополнительные SQL-запросы
+- `/api/courses/optimized` использует `@EntityGraph(attributePaths = {"instructor", "lessons", "students", "categories"})`
 
-Через Maven:
+Чтобы увидеть разницу, включены SQL-логи:
 
-```
-mvn spring-boot:run
-```
-
-Или запуск из IDE.
-
-Приложение будет доступно по адресу:
-
-```
-http://localhost:8080
+```properties
+spring.jpa.show-sql=true
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.orm.jdbc.bind=TRACE
 ```
 
----
+## Демонстрация транзакций
 
-## 📬 Пример ответа API
+```text
+POST /api/demo/persistence/without-transaction
+POST /api/demo/persistence/with-transaction
+```
+
+Оба endpoint намеренно выбрасывают ошибку после сохранения части связанного графа.
+
+- `without-transaction`: часть данных успевает сохраниться
+- `with-transaction`: всё откатывается целиком благодаря `@Transactional`
+
+## Пример запроса на создание курса
 
 ```json
 {
-  "id": 1,
-  "title": "Spring Boot Basics",
-  "description": "Introduction to Spring Boot",
-  "author": "Ivan Ivanov",
-  "duration": 12
+  "title": "Hibernate Deep Dive",
+  "level": "ADVANCED",
+  "instructorName": "Pavel Ivanov",
+  "instructorSpecialization": "Persistence",
+  "lessons": [
+    { "title": "Entity Lifecycle", "durationMinutes": 45, "lessonOrder": 1 },
+    { "title": "EntityGraph", "durationMinutes": 50, "lessonOrder": 2 }
+  ],
+  "studentIds": [1, 2],
+  "categoryNames": ["Backend", "Database"]
 }
 ```
 
----
+## Тесты
 
-## ✅ Требования задания — выполнено
+Для тестов используется профиль `test` с H2 в режиме совместимости с PostgreSQL:
 
-✔ Создано Spring Boot приложение
-✔ Реализован REST API для ключевой сущности
-✔ Реализован GET с `@PathVariable`
-✔ Реализован GET с `@RequestParam`
-✔ Реализована архитектура Controller → Service → Repository
-✔ Использованы DTO и Mapper
-✔ Настроен Checkstyle
-
----
-
-## 📄 Лицензия
-
-Проект создан в учебных целях.
+```bash
+./mvnw test
+```
