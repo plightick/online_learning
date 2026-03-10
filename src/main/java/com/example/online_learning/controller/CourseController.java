@@ -38,17 +38,17 @@ public class CourseController {
         return courseService.getCourses(level);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     public CourseResponseDto getCourseById(@PathVariable Long id) {
         return courseService.getCourseById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id:\\d+}")
     public CourseResponseDto updateCourse(@PathVariable Long id, @Valid @RequestBody CourseRequestDto requestDto) {
         return courseService.updateCourse(id, requestDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id:\\d+}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);

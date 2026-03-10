@@ -124,12 +124,10 @@ public class Course {
 
     public void addStudent(Student student) {
         students.add(student);
-        student.getCourses().add(this);
     }
 
     public void removeStudent(Student student) {
         students.remove(student);
-        student.getCourses().remove(this);
     }
 
     public void clearStudents() {
@@ -141,12 +139,10 @@ public class Course {
 
     public void addCategory(Category category) {
         categories.add(category);
-        category.getCourses().add(this);
     }
 
     public void removeCategory(Category category) {
         categories.remove(category);
-        category.getCourses().remove(this);
     }
 
     public void clearCategories() {
