@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    private static final String STUDENT_ENTITY = "Student";
+
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
 
@@ -40,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional(readOnly = true)
     public StudentResponseDto getStudentById(Long id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student", id));
+                .orElseThrow(() -> new ResourceNotFoundException(STUDENT_ENTITY, id));
         return studentMapper.toDto(student);
     }
 
@@ -48,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public StudentResponseDto updateStudent(Long id, StudentRequestDto requestDto) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student", id));
+                .orElseThrow(() -> new ResourceNotFoundException(STUDENT_ENTITY, id));
         student.setFirstName(requestDto.firstName());
         student.setLastName(requestDto.lastName());
         student.setEmail(requestDto.email());
@@ -59,7 +61,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public void deleteStudent(Long id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student", id));
+                .orElseThrow(() -> new ResourceNotFoundException(STUDENT_ENTITY, id));
         for (Course course : java.util.List.copyOf(student.getCourses())) {
             course.removeStudent(student);
         }

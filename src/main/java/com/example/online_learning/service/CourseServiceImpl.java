@@ -23,6 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CourseServiceImpl implements CourseService {
 
+    private static final String COURSE_ENTITY = "Course";
+    private static final String STUDENT_ENTITY = "Student";
+
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
@@ -54,7 +57,7 @@ public class CourseServiceImpl implements CourseService {
     @Transactional(readOnly = true)
     public CourseResponseDto getCourseById(Long id) {
         Course course = courseRepository.findDetailedById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course", id));
+                .orElseThrow(() -> new ResourceNotFoundException(COURSE_ENTITY, id));
         return courseMapper.toDto(course);
     }
 
@@ -68,7 +71,7 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public CourseResponseDto updateCourse(Long id, CourseRequestDto requestDto) {
         Course course = courseRepository.findDetailedById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course", id));
+                .orElseThrow(() -> new ResourceNotFoundException(COURSE_ENTITY, id));
         course.setTitle(requestDto.title());
         course.setLevel(requestDto.level());
         applyRequest(course, requestDto);
@@ -79,7 +82,7 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public void deleteCourse(Long id) {
         Course course = courseRepository.findDetailedById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course", id));
+                .orElseThrow(() -> new ResourceNotFoundException(COURSE_ENTITY, id));
         course.clearStudents();
         course.clearCategories();
         course.getInstructor().getCourses().remove(course);
@@ -151,7 +154,7 @@ public class CourseServiceImpl implements CourseService {
         }
         for (Long studentId : studentIds) {
             Student student = studentRepository.findById(studentId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Student", studentId));
+                    .orElseThrow(() -> new ResourceNotFoundException(STUDENT_ENTITY, studentId));
             course.addStudent(student);
         }
     }
