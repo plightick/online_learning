@@ -6,7 +6,8 @@ import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 public record RelatedSaveRequestDto(
-        @NotBlank String instructorName,
+        @NotBlank String instructorFirstName,
+        @NotBlank String instructorLastName,
         @NotBlank String instructorSpecialization,
         @NotBlank String courseTitle,
         @NotBlank String courseLevel,

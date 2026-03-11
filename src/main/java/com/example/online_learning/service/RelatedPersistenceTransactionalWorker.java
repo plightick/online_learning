@@ -46,7 +46,8 @@ public class RelatedPersistenceTransactionalWorker {
 
     public void persistScenario(RelatedSaveRequestDto requestDto) {
         Instructor instructor = instructorRepository.save(new Instructor(
-                requestDto.instructorName(),
+                requestDto.instructorFirstName(),
+                requestDto.instructorLastName(),
                 requestDto.instructorSpecialization()));
 
         Course course = new Course(requestDto.courseTitle(), requestDto.courseLevel());

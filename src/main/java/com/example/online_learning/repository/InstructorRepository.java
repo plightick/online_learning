@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 
-    Optional<Instructor> findByNameIgnoreCase(String name);
+    Optional<Instructor> findByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
 }

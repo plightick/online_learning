@@ -29,17 +29,18 @@ public class DataInitializer {
                 return;
             }
 
-            Student alex = studentRepository.save(new Student("Alex Novak", "alex@learn.io"));
-            Student maria = studentRepository.save(new Student("Maria Green", "maria@learn.io"));
-            Student nina = studentRepository.save(new Student("Nina Fox", "nina@learn.io"));
+            Student alex = studentRepository.save(new Student("Alex", "Novak", "alex@learn.io"));
+            Student maria = studentRepository.save(new Student("Maria", "Green", "maria@learn.io"));
+            Student nina = studentRepository.save(new Student("Nina", "Fox", "nina@learn.io"));
 
             Category backend = categoryRepository.save(new Category("Backend"));
             Category database = categoryRepository.save(new Category("Database"));
             Category devops = categoryRepository.save(new Category("DevOps"));
 
-            Instructor instructor = instructorRepository.save(new Instructor("Ivan Petrov", "Java Architecture"));
+            Instructor instructor = instructorRepository.save(
+                    new Instructor("Ivan", "Petrov", "Java Architecture"));
             Instructor secondInstructor = instructorRepository.save(
-                    new Instructor("Anna Sidorova", "Data Engineering"));
+                    new Instructor("Anna", "Sidorova", "Data Engineering"));
 
             Course springCourse = new Course("Spring Boot Intensive", "INTERMEDIATE");
             springCourse.setInstructor(instructor);

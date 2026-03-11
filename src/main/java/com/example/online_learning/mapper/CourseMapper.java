@@ -14,13 +14,14 @@ public class CourseMapper {
                 course.getId(),
                 course.getTitle(),
                 course.getLevel(),
-                course.getInstructor().getName(),
+                course.getInstructor().getFirstName(),
+                course.getInstructor().getLastName(),
                 course.getLessons().stream()
                         .sorted((left, right) -> left.getLessonOrder().compareTo(right.getLessonOrder()))
                         .map(this::toLessonDto)
                         .toList(),
                 course.getStudents().stream()
-                        .map(student -> student.getFullName())
+                        .map(student -> student.getFirstName() + " " + student.getLastName())
                         .sorted()
                         .toList(),
                 course.getCategories().stream()

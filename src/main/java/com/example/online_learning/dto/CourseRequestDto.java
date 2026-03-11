@@ -8,7 +8,8 @@ import java.util.List;
 public record CourseRequestDto(
         @NotBlank String title,
         @NotBlank String level,
-        @NotBlank String instructorName,
+        @NotBlank String instructorFirstName,
+        @NotBlank String instructorLastName,
         @NotBlank String instructorSpecialization,
         @Valid @NotEmpty List<LessonRequestDto> lessons,
         List<Long> studentIds,

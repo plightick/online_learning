@@ -48,7 +48,9 @@ public class PersistenceDemoService {
             String mode,
             String message,
             RelatedSaveRequestDto requestDto) {
-        Long instructorId = instructorRepository.findByNameIgnoreCase(requestDto.instructorName())
+        Long instructorId = instructorRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(
+                        requestDto.instructorFirstName(),
+                        requestDto.instructorLastName())
                 .map(instructor -> instructor.getId())
                 .orElse(null);
         Long courseId = courseRepository.findByTitleIgnoreCase(requestDto.courseTitle())

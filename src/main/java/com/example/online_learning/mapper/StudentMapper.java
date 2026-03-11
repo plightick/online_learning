@@ -10,7 +10,8 @@ public class StudentMapper {
     public StudentResponseDto toDto(Student student) {
         return new StudentResponseDto(
                 student.getId(),
-                student.getFullName(),
+                student.getFirstName(),
+                student.getLastName(),
                 student.getEmail(),
                 student.getCourses().stream()
                         .map(course -> course.getTitle())

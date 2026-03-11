@@ -24,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public StudentResponseDto createStudent(StudentRequestDto requestDto) {
-        Student student = new Student(requestDto.fullName(), requestDto.email());
+        Student student = new Student(requestDto.firstName(), requestDto.lastName(), requestDto.email());
         return studentMapper.toDto(studentRepository.save(student));
     }
 
@@ -49,7 +49,8 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponseDto updateStudent(Long id, StudentRequestDto requestDto) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Student", id));
-        student.setFullName(requestDto.fullName());
+        student.setFirstName(requestDto.firstName());
+        student.setLastName(requestDto.lastName());
         student.setEmail(requestDto.email());
         return studentMapper.toDto(student);
     }

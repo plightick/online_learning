@@ -114,21 +114,23 @@ public class CourseServiceImpl implements CourseService {
 
     private void applyRequest(Course course, CourseRequestDto requestDto) {
         course.setInstructor(resolveInstructor(
-                requestDto.instructorName(),
+                requestDto.instructorFirstName(),
+                requestDto.instructorLastName(),
                 requestDto.instructorSpecialization()));
         course.replaceLessons(mapLessons(requestDto.lessons()));
         syncStudents(course, requestDto.studentIds());
         syncCategories(course, requestDto.categoryNames());
     }
 
-    private Instructor resolveInstructor(String name, String specialization) {
-        Optional<Instructor> existingInstructor = instructorRepository.findByNameIgnoreCase(name);
+    private Instructor resolveInstructor(String firstName, String lastName, String specialization) {
+        Optional<Instructor> existingInstructor = instructorRepository
+                .findByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName);
         if (existingInstructor.isPresent()) {
             Instructor instructor = existingInstructor.get();
             instructor.setSpecialization(specialization);
             return instructor;
         }
-        return instructorRepository.save(new Instructor(name, specialization));
+        return instructorRepository.save(new Instructor(firstName, lastName, specialization));
     }
 
     private List<Lesson> mapLessons(List<LessonRequestDto> lessonRequestDtos) {

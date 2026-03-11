@@ -6,7 +6,8 @@ public record CourseResponseDto(
         Long id,
         String title,
         String level,
-        String instructorName,
+        String instructorFirstName,
+        String instructorLastName,
         List<LessonResponseDto> lessons,
         List<String> studentNames,
         List<String> categoryNames) {
