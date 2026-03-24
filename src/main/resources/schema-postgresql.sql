@@ -217,4 +217,4 @@ BEGIN
             END
         WHERE last_name IS NULL;
     END IF;
-END $$;
+END $$@@

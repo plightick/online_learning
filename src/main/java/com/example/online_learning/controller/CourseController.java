@@ -2,9 +2,14 @@ package com.example.online_learning.controller;
 
 import com.example.online_learning.dto.CourseRequestDto;
 import com.example.online_learning.dto.CourseResponseDto;
+import com.example.online_learning.dto.CourseSearchQueryType;
 import com.example.online_learning.service.CourseService;
 import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +41,24 @@ public class CourseController {
     @GetMapping
     public List<CourseResponseDto> getCourses(@RequestParam(required = false) String level) {
         return courseService.getCourses(level);
+    }
+
+    @GetMapping("/search")
+    public Page<CourseResponseDto> searchCourses(
+            @RequestParam(required = false) String categoryName,
+            @RequestParam(required = false) String instructorSpecialization,
+            @RequestParam(defaultValue = "JPQL") CourseSearchQueryType queryType,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending) {
+        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return courseService.searchCourses(
+                categoryName,
+                instructorSpecialization,
+                queryType,
+                pageable);
     }
 
     @GetMapping("/{id:\\d+}")

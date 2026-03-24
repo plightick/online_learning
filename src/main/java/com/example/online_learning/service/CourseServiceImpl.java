@@ -2,6 +2,7 @@ package com.example.online_learning.service;
 
 import com.example.online_learning.dto.CourseRequestDto;
 import com.example.online_learning.dto.CourseResponseDto;
+import com.example.online_learning.dto.CourseSearchQueryType;
 import com.example.online_learning.dto.LessonRequestDto;
 import com.example.online_learning.entity.Category;
 import com.example.online_learning.entity.Course;
@@ -9,14 +10,21 @@ import com.example.online_learning.entity.Instructor;
 import com.example.online_learning.entity.Lesson;
 import com.example.online_learning.entity.Student;
 import com.example.online_learning.exception.ResourceNotFoundException;
+import com.example.online_learning.hash.CourseSearchCacheKey;
+import com.example.online_learning.hash.CourseSearchIndex;
 import com.example.online_learning.mapper.CourseMapper;
 import com.example.online_learning.repository.CategoryRepository;
 import com.example.online_learning.repository.CourseRepository;
 import com.example.online_learning.repository.InstructorRepository;
 import com.example.online_learning.repository.StudentRepository;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,18 +39,21 @@ public class CourseServiceImpl implements CourseService {
     private final StudentRepository studentRepository;
     private final CategoryRepository categoryRepository;
     private final CourseMapper courseMapper;
+    private final CourseSearchIndex courseSearchIndex;
 
     public CourseServiceImpl(
             CourseRepository courseRepository,
             InstructorRepository instructorRepository,
             StudentRepository studentRepository,
             CategoryRepository categoryRepository,
-            CourseMapper courseMapper) {
+            CourseMapper courseMapper,
+            CourseSearchIndex courseSearchIndex) {
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.studentRepository = studentRepository;
         this.categoryRepository = categoryRepository;
         this.courseMapper = courseMapper;
+        this.courseSearchIndex = courseSearchIndex;
     }
 
     @Override
@@ -50,7 +61,9 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponseDto createCourse(CourseRequestDto requestDto) {
         Course course = new Course(requestDto.title(), requestDto.level());
         applyRequest(course, requestDto);
-        return courseMapper.toDto(courseRepository.save(course));
+        CourseResponseDto responseDto = courseMapper.toDto(courseRepository.save(course));
+        invalidateSearchIndex();
+        return responseDto;
     }
 
     @Override
@@ -75,7 +88,9 @@ public class CourseServiceImpl implements CourseService {
         course.setTitle(requestDto.title());
         course.setLevel(requestDto.level());
         applyRequest(course, requestDto);
-        return courseMapper.toDto(course);
+        CourseResponseDto responseDto = courseMapper.toDto(course);
+        invalidateSearchIndex();
+        return responseDto;
     }
 
     @Override
@@ -87,6 +102,7 @@ public class CourseServiceImpl implements CourseService {
         course.clearCategories();
         course.getInstructor().getCourses().remove(course);
         courseRepository.delete(course);
+        invalidateSearchIndex();
     }
 
     @Override
@@ -99,6 +115,48 @@ public class CourseServiceImpl implements CourseService {
     @Transactional(readOnly = true)
     public List<CourseResponseDto> getCoursesWithEntityGraph(String level) {
         return getCoursesInternal(level, true);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CourseResponseDto> searchCourses(
+            String categoryName,
+            String instructorSpecialization,
+            CourseSearchQueryType queryType,
+            Pageable pageable) {
+        String normalizedCategoryName = normalizeFilter(categoryName);
+        String normalizedSpecialization = normalizeFilter(instructorSpecialization);
+        CourseSearchCacheKey cacheKey = new CourseSearchCacheKey(
+                normalizedCategoryName,
+                normalizedSpecialization,
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                pageable.getSort().toString(),
+                queryType);
+
+        Optional<Page<CourseResponseDto>> cachedPage = courseSearchIndex.get(cacheKey);
+        if (cachedPage.isPresent()) {
+            return cachedPage.get();
+        }
+
+        Page<CourseResponseDto> resultPage = switch (queryType) {
+            case JPQL -> {
+                Page<Long> courseIdsPage = courseRepository.findCourseIdsByCategoryAndInstructorJpql(
+                        normalizedCategoryName,
+                        normalizedSpecialization,
+                        pageable);
+                List<CourseResponseDto> content = mapPagedCourses(courseIdsPage.getContent());
+                yield new PageImpl<>(content, pageable, courseIdsPage.getTotalElements());
+            }
+            case NATIVE -> courseRepository.findCoursesByCategoryAndInstructorNative(
+                            normalizedCategoryName,
+                            normalizedSpecialization,
+                            pageable)
+                    .map(courseMapper::toDto);
+        };
+
+        courseSearchIndex.put(cacheKey, resultPage);
+        return resultPage;
     }
 
     private List<CourseResponseDto> getCoursesInternal(String level, boolean optimized) {
@@ -169,5 +227,32 @@ public class CourseServiceImpl implements CourseService {
                     .orElseGet(() -> categoryRepository.save(new Category(categoryName)));
             course.addCategory(category);
         }
+    }
+
+    private List<CourseResponseDto> mapPagedCourses(List<Long> courseIds) {
+        if (courseIds.isEmpty()) {
+            return List.of();
+        }
+        Map<Long, Course> coursesById = new LinkedHashMap<>();
+        for (Course course : courseRepository.findAllDetailedByIdIn(courseIds)) {
+            coursesById.put(course.getId(), course);
+        }
+        return courseIds.stream()
+                .map(coursesById::get)
+                .filter(course -> course != null)
+                .map(courseMapper::toDto)
+                .toList();
+    }
+
+    private String normalizeFilter(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmedValue = value.trim();
+        return trimmedValue.isEmpty() ? null : trimmedValue;
+    }
+
+    private void invalidateSearchIndex() {
+        courseSearchIndex.clear();
     }
 }
