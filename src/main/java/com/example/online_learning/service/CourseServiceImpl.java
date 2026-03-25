@@ -16,12 +16,15 @@ import com.example.online_learning.mapper.CourseMapper;
 import com.example.online_learning.repository.CategoryRepository;
 import com.example.online_learning.repository.CourseRepository;
 import com.example.online_learning.repository.InstructorRepository;
+import com.example.online_learning.repository.PagedCourseIds;
 import com.example.online_learning.repository.StudentRepository;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +36,7 @@ public class CourseServiceImpl implements CourseService {
 
     private static final String COURSE_ENTITY = "Course";
     private static final String STUDENT_ENTITY = "Student";
+    private static final Logger log = LoggerFactory.getLogger(CourseServiceImpl.class);
 
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
@@ -77,7 +81,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional(readOnly = true)
     public List<CourseResponseDto> getCourses(String level) {
-        return getCoursesInternal(level, false);
+        return getCoursesInternal(level, true);
     }
 
     @Override
@@ -136,26 +140,33 @@ public class CourseServiceImpl implements CourseService {
 
         Optional<Page<CourseResponseDto>> cachedPage = courseSearchIndex.get(cacheKey);
         if (cachedPage.isPresent()) {
+            log.info("Search cache hit for hash={} and key={}", cacheKey.hashCode(), cacheKey);
             return cachedPage.get();
         }
 
+        log.info("Search cache miss for hash={} and key={}", cacheKey.hashCode(), cacheKey);
+
         Page<CourseResponseDto> resultPage = switch (queryType) {
             case JPQL -> {
-                Page<Long> courseIdsPage = courseRepository.findCourseIdsByCategoryAndInstructorJpql(
+                PagedCourseIds pagedCourseIds = courseRepository.findPagedCourseIdsByCategoryAndInstructor(
                         normalizedCategoryName,
                         normalizedSpecialization,
                         pageable);
-                List<CourseResponseDto> content = mapPagedCourses(courseIdsPage.getContent());
-                yield new PageImpl<>(content, pageable, courseIdsPage.getTotalElements());
+                List<CourseResponseDto> content = mapPagedCourses(pagedCourseIds.courseIds());
+                yield new PageImpl<>(content, pageable, pagedCourseIds.totalElements());
             }
-            case NATIVE -> courseRepository.findCoursesByCategoryAndInstructorNative(
-                            normalizedCategoryName,
-                            normalizedSpecialization,
-                            pageable)
-                    .map(courseMapper::toDto);
+            case NATIVE -> {
+                PagedCourseIds pagedCourseIds = courseRepository.findPagedCourseIdsByCategoryAndInstructor(
+                        normalizedCategoryName,
+                        normalizedSpecialization,
+                        pageable);
+                List<CourseResponseDto> content = mapPagedCourses(pagedCourseIds.courseIds());
+                yield new PageImpl<>(content, pageable, pagedCourseIds.totalElements());
+            }
         };
 
         courseSearchIndex.put(cacheKey, resultPage);
+        log.info("Search cache stored for hash={} and key={}", cacheKey.hashCode(), cacheKey);
         return resultPage;
     }
 
@@ -254,5 +265,6 @@ public class CourseServiceImpl implements CourseService {
 
     private void invalidateSearchIndex() {
         courseSearchIndex.clear();
+        log.info("Search cache cleared");
     }
 }

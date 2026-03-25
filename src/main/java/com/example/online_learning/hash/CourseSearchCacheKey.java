@@ -53,4 +53,16 @@ public final class CourseSearchCacheKey {
                 sort,
                 queryType);
     }
+
+    @Override
+    public String toString() {
+        return "CourseSearchCacheKey{"
+                + "categoryName='" + categoryName + '\''
+                + ", instructorSpecialization='" + instructorSpecialization + '\''
+                + ", pageNumber=" + pageNumber
+                + ", pageSize=" + pageSize
+                + ", sort='" + sort + '\''
+                + ", queryType=" + queryType
+                + '}';
+    }
 }
