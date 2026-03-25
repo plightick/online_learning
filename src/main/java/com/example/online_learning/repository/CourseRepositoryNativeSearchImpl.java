@@ -195,10 +195,10 @@ class CourseRepositoryNativeSearchImpl implements CourseRepositoryNativeSearch {
     private String buildFilterSql(String categoryName, String instructorSpecialization) {
         List<String> conditions = new ArrayList<>();
         if (categoryName != null) {
-            conditions.add("lower(cat.name) = lower(" + toSqlLiteral(categoryName) + ")");
+            conditions.add("lower(cat.name) = " + toSqlLiteral(categoryName));
         }
         if (instructorSpecialization != null) {
-            conditions.add("lower(i.specialization) = lower(" + toSqlLiteral(instructorSpecialization) + ")");
+            conditions.add("lower(i.specialization) = " + toSqlLiteral(instructorSpecialization));
         }
         if (conditions.isEmpty()) {
             return "";

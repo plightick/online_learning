@@ -16,11 +16,11 @@ import com.example.online_learning.mapper.CourseMapper;
 import com.example.online_learning.repository.CategoryRepository;
 import com.example.online_learning.repository.CourseRepository;
 import com.example.online_learning.repository.InstructorRepository;
-import com.example.online_learning.repository.PagedCourseIds;
 import com.example.online_learning.repository.StudentRepository;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -66,6 +66,7 @@ public class CourseServiceImpl implements CourseService {
         Course course = new Course(requestDto.title(), requestDto.level());
         applyRequest(course, requestDto);
         CourseResponseDto responseDto = courseMapper.toDto(courseRepository.save(course));
+        log.info("Course created: id={}, title='{}'", responseDto.id(), responseDto.title());
         invalidateSearchIndex();
         return responseDto;
     }
@@ -93,6 +94,7 @@ public class CourseServiceImpl implements CourseService {
         course.setLevel(requestDto.level());
         applyRequest(course, requestDto);
         CourseResponseDto responseDto = courseMapper.toDto(course);
+        log.info("Course updated: id={}, title='{}'", responseDto.id(), responseDto.title());
         invalidateSearchIndex();
         return responseDto;
     }
@@ -106,6 +108,7 @@ public class CourseServiceImpl implements CourseService {
         course.clearCategories();
         course.getInstructor().getCourses().remove(course);
         courseRepository.delete(course);
+        log.info("Course deleted: id={}", id);
         invalidateSearchIndex();
     }
 
@@ -137,36 +140,35 @@ public class CourseServiceImpl implements CourseService {
                 pageable.getPageSize(),
                 pageable.getSort().toString(),
                 queryType);
+        int hash = cacheKey.hashCode();
 
         Optional<Page<CourseResponseDto>> cachedPage = courseSearchIndex.get(cacheKey);
         if (cachedPage.isPresent()) {
-            log.info("Search cache hit for hash={} and key={}", cacheKey.hashCode(), cacheKey);
+            log.info("Cache hit: hash={}, key={}", hash, cacheKey);
             return cachedPage.get();
         }
-
-        log.info("Search cache miss for hash={} and key={}", cacheKey.hashCode(), cacheKey);
+        log.info("Cache miss: hash={}, key={}", hash, cacheKey);
 
         Page<CourseResponseDto> resultPage = switch (queryType) {
             case JPQL -> {
-                PagedCourseIds pagedCourseIds = courseRepository.findPagedCourseIdsByCategoryAndInstructor(
+                Page<Long> pagedCourseIds = courseRepository.findPagedCourseIdsByCategoryAndInstructorJpql(
                         normalizedCategoryName,
                         normalizedSpecialization,
                         pageable);
-                List<CourseResponseDto> content = mapPagedCourses(pagedCourseIds.courseIds());
-                yield new PageImpl<>(content, pageable, pagedCourseIds.totalElements());
+                List<CourseResponseDto> content = mapPagedCourses(pagedCourseIds.getContent());
+                yield new PageImpl<>(content, pageable, pagedCourseIds.getTotalElements());
             }
             case NATIVE -> {
-                PagedCourseIds pagedCourseIds = courseRepository.findPagedCourseIdsByCategoryAndInstructor(
+                Page<Long> pagedCourseIds = courseRepository.findPagedCourseIdsByCategoryAndInstructorNative(
                         normalizedCategoryName,
                         normalizedSpecialization,
                         pageable);
-                List<CourseResponseDto> content = mapPagedCourses(pagedCourseIds.courseIds());
-                yield new PageImpl<>(content, pageable, pagedCourseIds.totalElements());
+                List<CourseResponseDto> content = mapPagedCourses(pagedCourseIds.getContent());
+                yield new PageImpl<>(content, pageable, pagedCourseIds.getTotalElements());
             }
         };
 
         courseSearchIndex.put(cacheKey, resultPage);
-        log.info("Search cache stored for hash={} and key={}", cacheKey.hashCode(), cacheKey);
         return resultPage;
     }
 
@@ -175,8 +177,9 @@ public class CourseServiceImpl implements CourseService {
         if (level == null || level.isBlank()) {
             courses = optimized ? courseRepository.findAllWithDetails() : courseRepository.findAll();
         } else {
+            String normalizedLevel = normalizeFilter(level);
             courses = optimized
-                    ? courseRepository.findAllWithDetailsByLevel(level)
+                    ? courseRepository.findAllWithDetailsByLevel(normalizedLevel)
                     : courseRepository.findByLevelIgnoreCase(level);
         }
         return courses.stream()
@@ -260,11 +263,12 @@ public class CourseServiceImpl implements CourseService {
             return null;
         }
         String trimmedValue = value.trim();
-        return trimmedValue.isEmpty() ? null : trimmedValue;
+        return trimmedValue.isEmpty() ? null : trimmedValue.toLowerCase(Locale.ROOT);
     }
 
     private void invalidateSearchIndex() {
+        int cachedEntries = courseSearchIndex.size();
         courseSearchIndex.clear();
-        log.info("Search cache cleared");
+        log.info("Search cache invalidated after course data change: clearedEntries={}", cachedEntries);
     }
 }

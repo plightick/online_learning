@@ -10,6 +10,8 @@ import com.example.online_learning.entity.Category;
 import com.example.online_learning.entity.Course;
 import com.example.online_learning.entity.Instructor;
 import com.example.online_learning.entity.Lesson;
+import com.example.online_learning.hash.CourseSearchCacheKey;
+import com.example.online_learning.hash.CourseSearchIndex;
 import com.example.online_learning.repository.CategoryRepository;
 import com.example.online_learning.repository.CourseRepository;
 import com.example.online_learning.repository.InstructorRepository;
@@ -40,8 +42,12 @@ class CourseSearchIntegrationTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private CourseSearchIndex courseSearchIndex;
+
     @BeforeEach
     void setUp() {
+        courseSearchIndex.clear();
         courseRepository.deleteAll();
         instructorRepository.deleteAll();
         categoryRepository.deleteAll();
@@ -93,6 +99,30 @@ class CourseSearchIntegrationTest {
     }
 
     @Test
+    void searchCoursesIsCaseInsensitiveForJpqlAndNativeQueries() {
+        PageRequest pageable = PageRequest.of(0, 10, Sort.by("id"));
+
+        Page<CourseResponseDto> jpqlPage = courseService.searchCourses(
+                "bAcKeNd",
+                "jAvA aRcHiTeCtUrE",
+                CourseSearchQueryType.JPQL,
+                pageable);
+        Page<CourseResponseDto> nativePage = courseService.searchCourses(
+                "bAcKeNd",
+                "jAvA aRcHiTeCtUrE",
+                CourseSearchQueryType.NATIVE,
+                pageable);
+
+        assertThat(jpqlPage.getTotalElements()).isEqualTo(1);
+        assertThat(jpqlPage.getContent()).hasSize(1);
+        assertThat(jpqlPage.getContent().getFirst().title()).isEqualTo("Spring Boot Intensive");
+
+        assertThat(nativePage.getTotalElements()).isEqualTo(1);
+        assertThat(nativePage.getContent()).hasSize(1);
+        assertThat(nativePage.getContent().getFirst().title()).isEqualTo("Spring Boot Intensive");
+    }
+
+    @Test
     void searchCacheIsInvalidatedAfterCourseChanges() {
         PageRequest pageable = PageRequest.of(0, 10, Sort.by("id"));
 
@@ -122,6 +152,55 @@ class CourseSearchIntegrationTest {
 
         assertThat(initialPage.getTotalElements()).isEqualTo(1);
         assertThat(refreshedPage.getTotalElements()).isEqualTo(2);
+    }
+
+    @Test
+    void searchCacheKeepsOnlyLastThreeRequests() {
+        PageRequest pageable = PageRequest.of(0, 10, Sort.by("id"));
+
+        courseService.searchCourses("Backend", "Java Architecture", CourseSearchQueryType.JPQL, pageable);
+        courseService.searchCourses("Frontend", "UI Design", CourseSearchQueryType.JPQL, pageable);
+        courseService.searchCourses("Backend", null, CourseSearchQueryType.JPQL, pageable);
+
+        CourseSearchCacheKey firstKey = createCacheKey("Backend", "Java Architecture", pageable);
+        CourseSearchCacheKey secondKey = createCacheKey("Frontend", "UI Design", pageable);
+        CourseSearchCacheKey thirdKey = createCacheKey("Backend", null, pageable);
+
+        assertThat(courseSearchIndex.size()).isEqualTo(3);
+        assertThat(courseSearchIndex.contains(firstKey)).isTrue();
+        assertThat(courseSearchIndex.contains(secondKey)).isTrue();
+        assertThat(courseSearchIndex.contains(thirdKey)).isTrue();
+
+        courseService.searchCourses(null, "UI Design", CourseSearchQueryType.JPQL, pageable);
+
+        CourseSearchCacheKey fourthKey = createCacheKey(null, "UI Design", pageable);
+
+        assertThat(courseSearchIndex.size()).isEqualTo(3);
+        assertThat(courseSearchIndex.contains(firstKey)).isFalse();
+        assertThat(courseSearchIndex.contains(secondKey)).isTrue();
+        assertThat(courseSearchIndex.contains(thirdKey)).isTrue();
+        assertThat(courseSearchIndex.contains(fourthKey)).isTrue();
+    }
+
+    private CourseSearchCacheKey createCacheKey(
+            String categoryName,
+            String instructorSpecialization,
+            PageRequest pageable) {
+        return new CourseSearchCacheKey(
+                normalizeFilter(categoryName),
+                normalizeFilter(instructorSpecialization),
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                pageable.getSort().toString(),
+                CourseSearchQueryType.JPQL);
+    }
+
+    private String normalizeFilter(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmedValue = value.trim();
+        return trimmedValue.isEmpty() ? null : trimmedValue.toLowerCase(java.util.Locale.ROOT);
     }
 
     private Course createCourse(

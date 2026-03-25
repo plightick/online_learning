@@ -5,6 +5,7 @@
 DO $$
 DECLARE
     single_first_name_unique_constraint RECORD;
+    text_column RECORD;
     current_schema_name TEXT := current_schema();
     instructors_table_name CONSTANT TEXT := 'instructors';
     students_table_name CONSTANT TEXT := 'students';
@@ -15,6 +16,40 @@ DECLARE
     unknown_last_name CONSTANT TEXT := 'Unknown';
     space_delimiter CONSTANT TEXT := ' ';
 BEGIN
+    -- Repair legacy schemas where text columns were accidentally created as bytea.
+    -- Case-insensitive repository methods compile to lower(...), which fails on bytea.
+    FOR text_column IN
+        SELECT *
+        FROM (VALUES
+            ('categories', 'name'),
+            ('courses', 'title'),
+            ('courses', 'level'),
+            ('instructors', 'first_name'),
+            ('instructors', 'last_name'),
+            ('instructors', 'specialization'),
+            ('lessons', 'title'),
+            ('students', 'first_name'),
+            ('students', 'last_name'),
+            ('students', 'email')
+        ) AS expected_text_column(table_name, column_name)
+        LOOP
+            IF EXISTS (
+                SELECT 1
+                FROM information_schema.columns
+                WHERE table_schema = current_schema_name
+                  AND table_name = text_column.table_name
+                  AND column_name = text_column.column_name
+                  AND data_type = 'bytea'
+            ) THEN
+                EXECUTE format(
+                        'ALTER TABLE %I ALTER COLUMN %I TYPE VARCHAR(255) USING convert_from(%I, ''UTF8'')',
+                        text_column.table_name,
+                        text_column.column_name,
+                        text_column.column_name
+                        );
+            END IF;
+        END LOOP;
+
     -- Drop legacy UNIQUE(first_name) constraint (remains after name -> first_name rename).
     -- Current model expects UNIQUE(first_name, last_name), so single-column uniqueness must be removed.
     FOR single_first_name_unique_constraint IN
