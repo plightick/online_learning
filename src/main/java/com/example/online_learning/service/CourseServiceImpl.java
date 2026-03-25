@@ -144,10 +144,10 @@ public class CourseServiceImpl implements CourseService {
 
         Optional<Page<CourseResponseDto>> cachedPage = courseSearchIndex.get(cacheKey);
         if (cachedPage.isPresent()) {
-            log.info("Cache hit: hash={}, key={}", hash, cacheKey);
+            log.info("Cache hit: hash={}", hash);
             return cachedPage.get();
         }
-        log.info("Cache miss: hash={}, key={}", hash, cacheKey);
+        log.info("Cache miss: hash={}", hash);
 
         Page<CourseResponseDto> resultPage = switch (queryType) {
             case JPQL -> {
