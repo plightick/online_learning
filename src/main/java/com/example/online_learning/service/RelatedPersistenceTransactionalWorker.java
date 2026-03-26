@@ -72,7 +72,7 @@ public class RelatedPersistenceTransactionalWorker {
 
             throw new IllegalStateException("Simulated failure after partial persistence");
         } finally {
-            courseSearchCacheInvalidator.invalidate("related persistence scenario");
+            courseSearchCacheInvalidator.invalidate();
         }
     }
 

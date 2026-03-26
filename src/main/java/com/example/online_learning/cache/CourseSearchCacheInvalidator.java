@@ -15,9 +15,9 @@ public class CourseSearchCacheInvalidator {
         this.courseSearchCache = courseSearchCache;
     }
 
-    public void invalidate(String reason) {
+    public void invalidate() {
         int cachedEntries = courseSearchCache.size();
         courseSearchCache.clear();
-        log.info("Search cache invalidated: reason='{}', clearedEntries={}", reason, cachedEntries);
+        log.info("Search cache invalidated: clearedEntries={}", cachedEntries);
     }
 }

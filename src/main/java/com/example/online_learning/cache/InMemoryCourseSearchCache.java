@@ -17,7 +17,7 @@ public class InMemoryCourseSearchCache implements CourseSearchCache {
                 @Override
                 protected boolean removeEldestEntry(
                         Map.Entry<CourseSearchCacheKey, Page<CourseResponseDto>> eldest) {
-                    return size() > MAX_ENTRIES;
+                    return super.size() > MAX_ENTRIES;
                 }
             };
 

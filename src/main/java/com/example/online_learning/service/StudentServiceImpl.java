@@ -34,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponseDto createStudent(StudentRequestDto requestDto) {
         Student student = new Student(requestDto.firstName(), requestDto.lastName(), requestDto.email());
         StudentResponseDto responseDto = studentMapper.toDto(studentRepository.save(student));
-        invalidateSearchIndex("student created");
+        invalidateSearchIndex();
         return responseDto;
     }
 
@@ -63,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
         student.setLastName(requestDto.lastName());
         student.setEmail(requestDto.email());
         StudentResponseDto responseDto = studentMapper.toDto(student);
-        invalidateSearchIndex("student updated");
+        invalidateSearchIndex();
         return responseDto;
     }
 
@@ -76,10 +76,10 @@ public class StudentServiceImpl implements StudentService {
             course.removeStudent(student);
         }
         studentRepository.delete(student);
-        invalidateSearchIndex("student deleted");
+        invalidateSearchIndex();
     }
 
-    private void invalidateSearchIndex(String reason) {
-        courseSearchCacheInvalidator.invalidate(reason);
+    private void invalidateSearchIndex() {
+        courseSearchCacheInvalidator.invalidate();
     }
 }

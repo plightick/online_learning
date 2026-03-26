@@ -40,7 +40,7 @@ public class CourseServiceImpl implements CourseService {
     private static final String COURSE_ENTITY = "Course";
     private static final String STUDENT_ENTITY = "Student";
     private static final String COURSE_SEARCH_LOG_TEMPLATE =
-            "Course search request: categoryName='{}', instructorSpecialization='{}', "
+            "Course search request: hasCategoryFilter={}, hasInstructorFilter={}, "
                     + "queryType={}, page={}, size={}, cache={}";
     private static final Logger log = LoggerFactory.getLogger(CourseServiceImpl.class);
 
@@ -75,8 +75,8 @@ public class CourseServiceImpl implements CourseService {
         Course course = new Course(requestDto.title(), requestDto.level());
         applyRequest(course, requestDto);
         CourseResponseDto responseDto = courseMapper.toDto(courseRepository.save(course));
-        log.info("Course created: id={}, title='{}'", responseDto.id(), responseDto.title());
-        invalidateSearchIndex("course created");
+        log.info("Course created: id={}", responseDto.id());
+        invalidateSearchIndex();
         return responseDto;
     }
 
@@ -103,8 +103,8 @@ public class CourseServiceImpl implements CourseService {
         course.setLevel(requestDto.level());
         applyRequest(course, requestDto);
         CourseResponseDto responseDto = courseMapper.toDto(course);
-        log.info("Course updated: id={}, title='{}'", responseDto.id(), responseDto.title());
-        invalidateSearchIndex("course updated");
+        log.info("Course updated: id={}", responseDto.id());
+        invalidateSearchIndex();
         return responseDto;
     }
 
@@ -118,7 +118,7 @@ public class CourseServiceImpl implements CourseService {
         course.getInstructor().getCourses().remove(course);
         courseRepository.delete(course);
         log.info("Course deleted: id={}", id);
-        invalidateSearchIndex("course deleted");
+        invalidateSearchIndex();
     }
 
     @Override
@@ -139,7 +139,7 @@ public class CourseServiceImpl implements CourseService {
             String categoryName,
             String instructorSpecialization,
             CourseSearchQueryType queryType) {
-        return searchCourses(
+        return findSearchCourses(
                 categoryName,
                 instructorSpecialization,
                 queryType,
@@ -150,6 +150,14 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional(readOnly = true)
     public Page<CourseResponseDto> searchCourses(
+            String categoryName,
+            String instructorSpecialization,
+            CourseSearchQueryType queryType,
+            Pageable pageable) {
+        return findSearchCourses(categoryName, instructorSpecialization, queryType, pageable);
+    }
+
+    private Page<CourseResponseDto> findSearchCourses(
             String categoryName,
             String instructorSpecialization,
             CourseSearchQueryType queryType,
@@ -166,8 +174,8 @@ public class CourseServiceImpl implements CourseService {
         if (cachedCourses.isPresent()) {
             log.info(
                     COURSE_SEARCH_LOG_TEMPLATE,
-                    normalizedCategoryName,
-                    normalizedSpecialization,
+                    normalizedCategoryName != null,
+                    normalizedSpecialization != null,
                     queryType,
                     toRequestedPageNumber(pageable),
                     pageable.getPageSize(),
@@ -177,8 +185,8 @@ public class CourseServiceImpl implements CourseService {
 
         log.info(
                 COURSE_SEARCH_LOG_TEMPLATE,
-                normalizedCategoryName,
-                normalizedSpecialization,
+                normalizedCategoryName != null,
+                normalizedSpecialization != null,
                 queryType,
                 toRequestedPageNumber(pageable),
                 pageable.getPageSize(),
@@ -337,7 +345,7 @@ public class CourseServiceImpl implements CourseService {
         return pageable.getPageNumber() + 1;
     }
 
-    private void invalidateSearchIndex(String reason) {
-        courseSearchCacheInvalidator.invalidate(reason);
+    private void invalidateSearchIndex() {
+        courseSearchCacheInvalidator.invalidate();
     }
 }
