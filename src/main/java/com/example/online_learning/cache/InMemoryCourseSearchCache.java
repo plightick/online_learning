@@ -1,4 +1,4 @@
-package com.example.online_learning.hash;
+package com.example.online_learning.cache;
 
 import com.example.online_learning.dto.CourseResponseDto;
 import java.util.LinkedHashMap;
@@ -8,35 +8,41 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CourseSearchIndex {
+public class InMemoryCourseSearchCache implements CourseSearchCache {
 
     private static final int MAX_ENTRIES = 3;
 
-    private final Map<CourseSearchCacheKey, Page<CourseResponseDto>> index =
+    private final Map<CourseSearchCacheKey, Page<CourseResponseDto>> cache =
             new LinkedHashMap<>(16, 0.75f, true) {
                 @Override
-                protected boolean removeEldestEntry(Map.Entry<CourseSearchCacheKey, Page<CourseResponseDto>> eldest) {
+                protected boolean removeEldestEntry(
+                        Map.Entry<CourseSearchCacheKey, Page<CourseResponseDto>> eldest) {
                     return size() > MAX_ENTRIES;
                 }
             };
 
+    @Override
     public synchronized Optional<Page<CourseResponseDto>> get(CourseSearchCacheKey key) {
-        return Optional.ofNullable(index.get(key));
+        return Optional.ofNullable(cache.get(key));
     }
 
+    @Override
     public synchronized void put(CourseSearchCacheKey key, Page<CourseResponseDto> value) {
-        index.put(key, value);
+        cache.put(key, value);
     }
 
+    @Override
     public synchronized void clear() {
-        index.clear();
+        cache.clear();
     }
 
+    @Override
     public synchronized boolean contains(CourseSearchCacheKey key) {
-        return index.containsKey(key);
+        return cache.containsKey(key);
     }
 
+    @Override
     public synchronized int size() {
-        return index.size();
+        return cache.size();
     }
 }

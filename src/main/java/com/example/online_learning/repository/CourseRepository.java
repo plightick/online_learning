@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface CourseRepository extends JpaRepository<Course, Long>, CourseRepositoryNativeSearch {
+public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findByLevelIgnoreCase(String level);
 
@@ -59,6 +59,21 @@ public interface CourseRepository extends JpaRepository<Course, Long>, CourseRep
 
     @Query(
             value = """
+                    select c.id
+                    from Course c
+                    where (:level is null or lower(c.level) = :level)
+                    """,
+            countQuery = """
+                    select count(c.id)
+                    from Course c
+                    where (:level is null or lower(c.level) = :level)
+                    """)
+    Page<Long> findPagedCourseIdsByLevel(
+            @Param("level") String level,
+            Pageable pageable);
+
+    @Query(
+            value = """
                     select distinct c.id
                     from Course c
                     join c.instructor i
@@ -66,6 +81,7 @@ public interface CourseRepository extends JpaRepository<Course, Long>, CourseRep
                     where (:categoryName is null or lower(cat.name) = :categoryName)
                       and (:instructorSpecialization is null
                            or lower(i.specialization) = :instructorSpecialization)
+                    order by c.id
                     """,
             countQuery = """
                     select count(distinct c.id)

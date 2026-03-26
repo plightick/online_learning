@@ -39,8 +39,14 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<CourseResponseDto> getCourses(@RequestParam(required = false) String level) {
-        return courseService.getCourses(level);
+    public Page<CourseResponseDto> getCourses(
+            @RequestParam(required = false) String level,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending) {
+        Pageable pageable = createSortedPageable(page, size, sortBy, ascending);
+        return courseService.getCourses(level, pageable);
     }
 
     @GetMapping("/search")
@@ -48,12 +54,9 @@ public class CourseController {
             @RequestParam(required = false) String categoryName,
             @RequestParam(required = false) String instructorSpecialization,
             @RequestParam(defaultValue = "JPQL") CourseSearchQueryType queryType,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "true") boolean ascending) {
-        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(page, size, sort);
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = createPageable(page, size);
         return courseService.searchCourses(
                 categoryName,
                 instructorSpecialization,
@@ -85,5 +88,18 @@ public class CourseController {
     @GetMapping("/optimized")
     public List<CourseResponseDto> getCoursesWithEntityGraph(@RequestParam(required = false) String level) {
         return courseService.getCoursesWithEntityGraph(level);
+    }
+
+    private Pageable createSortedPageable(int page, int size, String sortBy, boolean ascending) {
+        int normalizedPage = Math.max(page - 1, 0);
+        int normalizedSize = Math.max(size, 1);
+        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        return PageRequest.of(normalizedPage, normalizedSize, sort);
+    }
+
+    private Pageable createPageable(int page, int size) {
+        int normalizedPage = Math.max(page - 1, 0);
+        int normalizedSize = Math.max(size, 1);
+        return PageRequest.of(normalizedPage, normalizedSize);
     }
 }

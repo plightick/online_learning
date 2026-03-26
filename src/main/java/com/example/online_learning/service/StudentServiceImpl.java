@@ -1,5 +1,6 @@
 package com.example.online_learning.service;
 
+import com.example.online_learning.cache.CourseSearchCacheInvalidator;
 import com.example.online_learning.dto.StudentRequestDto;
 import com.example.online_learning.dto.StudentResponseDto;
 import com.example.online_learning.entity.Course;
@@ -17,17 +18,24 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final CourseSearchCacheInvalidator courseSearchCacheInvalidator;
 
-    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentServiceImpl(
+            StudentRepository studentRepository,
+            StudentMapper studentMapper,
+            CourseSearchCacheInvalidator courseSearchCacheInvalidator) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
+        this.courseSearchCacheInvalidator = courseSearchCacheInvalidator;
     }
 
     @Override
     @Transactional
     public StudentResponseDto createStudent(StudentRequestDto requestDto) {
         Student student = new Student(requestDto.firstName(), requestDto.lastName(), requestDto.email());
-        return studentMapper.toDto(studentRepository.save(student));
+        StudentResponseDto responseDto = studentMapper.toDto(studentRepository.save(student));
+        invalidateSearchIndex("student created");
+        return responseDto;
     }
 
     @Override
@@ -54,7 +62,9 @@ public class StudentServiceImpl implements StudentService {
         student.setFirstName(requestDto.firstName());
         student.setLastName(requestDto.lastName());
         student.setEmail(requestDto.email());
-        return studentMapper.toDto(student);
+        StudentResponseDto responseDto = studentMapper.toDto(student);
+        invalidateSearchIndex("student updated");
+        return responseDto;
     }
 
     @Override
@@ -66,5 +76,10 @@ public class StudentServiceImpl implements StudentService {
             course.removeStudent(student);
         }
         studentRepository.delete(student);
+        invalidateSearchIndex("student deleted");
+    }
+
+    private void invalidateSearchIndex(String reason) {
+        courseSearchCacheInvalidator.invalidate(reason);
     }
 }

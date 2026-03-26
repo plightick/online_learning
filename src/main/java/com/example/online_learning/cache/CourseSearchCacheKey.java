@@ -1,4 +1,4 @@
-package com.example.online_learning.hash;
+package com.example.online_learning.cache;
 
 import com.example.online_learning.dto.CourseSearchQueryType;
 import java.util.Objects;
@@ -7,24 +7,21 @@ public final class CourseSearchCacheKey {
 
     private final String categoryName;
     private final String instructorSpecialization;
+    private final CourseSearchQueryType queryType;
     private final int pageNumber;
     private final int pageSize;
-    private final String sort;
-    private final CourseSearchQueryType queryType;
 
     public CourseSearchCacheKey(
             String categoryName,
             String instructorSpecialization,
+            CourseSearchQueryType queryType,
             int pageNumber,
-            int pageSize,
-            String sort,
-            CourseSearchQueryType queryType) {
+            int pageSize) {
         this.categoryName = categoryName;
         this.instructorSpecialization = instructorSpecialization;
+        this.queryType = queryType;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
-        this.sort = sort;
-        this.queryType = queryType;
     }
 
     @Override
@@ -35,23 +32,16 @@ public final class CourseSearchCacheKey {
         if (!(object instanceof CourseSearchCacheKey that)) {
             return false;
         }
-        return pageNumber == that.pageNumber
-                && pageSize == that.pageSize
-                && Objects.equals(categoryName, that.categoryName)
+        return Objects.equals(categoryName, that.categoryName)
                 && Objects.equals(instructorSpecialization, that.instructorSpecialization)
-                && Objects.equals(sort, that.sort)
-                && queryType == that.queryType;
+                && queryType == that.queryType
+                && pageNumber == that.pageNumber
+                && pageSize == that.pageSize;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                categoryName,
-                instructorSpecialization,
-                pageNumber,
-                pageSize,
-                sort,
-                queryType);
+        return Objects.hash(categoryName, instructorSpecialization, queryType, pageNumber, pageSize);
     }
 
     @Override
@@ -59,10 +49,9 @@ public final class CourseSearchCacheKey {
         return "CourseSearchCacheKey{"
                 + "categoryName='" + categoryName + '\''
                 + ", instructorSpecialization='" + instructorSpecialization + '\''
+                + ", queryType=" + queryType
                 + ", pageNumber=" + pageNumber
                 + ", pageSize=" + pageSize
-                + ", sort='" + sort + '\''
-                + ", queryType=" + queryType
                 + '}';
     }
 }

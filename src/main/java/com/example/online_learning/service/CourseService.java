@@ -13,7 +13,7 @@ public interface CourseService {
 
     CourseResponseDto getCourseById(Long id);
 
-    List<CourseResponseDto> getCourses(String level);
+    Page<CourseResponseDto> getCourses(String level, Pageable pageable);
 
     CourseResponseDto updateCourse(Long id, CourseRequestDto requestDto);
 
@@ -22,6 +22,11 @@ public interface CourseService {
     List<CourseResponseDto> getCoursesWithNPlusOne(String level);
 
     List<CourseResponseDto> getCoursesWithEntityGraph(String level);
+
+    List<CourseResponseDto> searchCourses(
+            String categoryName,
+            String instructorSpecialization,
+            CourseSearchQueryType queryType);
 
     Page<CourseResponseDto> searchCourses(
             String categoryName,

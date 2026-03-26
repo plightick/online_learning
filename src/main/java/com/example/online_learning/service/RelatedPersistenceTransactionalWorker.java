@@ -1,5 +1,6 @@
 package com.example.online_learning.service;
 
+import com.example.online_learning.cache.CourseSearchCacheInvalidator;
 import com.example.online_learning.dto.LessonRequestDto;
 import com.example.online_learning.dto.RelatedSaveRequestDto;
 import com.example.online_learning.entity.Category;
@@ -25,18 +26,21 @@ public class RelatedPersistenceTransactionalWorker {
     private final LessonRepository lessonRepository;
     private final CategoryRepository categoryRepository;
     private final StudentRepository studentRepository;
+    private final CourseSearchCacheInvalidator courseSearchCacheInvalidator;
 
     public RelatedPersistenceTransactionalWorker(
             InstructorRepository instructorRepository,
             CourseRepository courseRepository,
             LessonRepository lessonRepository,
             CategoryRepository categoryRepository,
-            StudentRepository studentRepository) {
+            StudentRepository studentRepository,
+            CourseSearchCacheInvalidator courseSearchCacheInvalidator) {
         this.instructorRepository = instructorRepository;
         this.courseRepository = courseRepository;
         this.lessonRepository = lessonRepository;
         this.categoryRepository = categoryRepository;
         this.studentRepository = studentRepository;
+        this.courseSearchCacheInvalidator = courseSearchCacheInvalidator;
     }
 
     @Transactional
@@ -45,27 +49,31 @@ public class RelatedPersistenceTransactionalWorker {
     }
 
     public void persistScenario(RelatedSaveRequestDto requestDto) {
-        Instructor instructor = instructorRepository.save(new Instructor(
-                requestDto.instructorFirstName(),
-                requestDto.instructorLastName(),
-                requestDto.instructorSpecialization()));
+        try {
+            Instructor instructor = instructorRepository.save(new Instructor(
+                    requestDto.instructorFirstName(),
+                    requestDto.instructorLastName(),
+                    requestDto.instructorSpecialization()));
 
-        Course course = new Course(requestDto.courseTitle(), requestDto.courseLevel());
-        course.setInstructor(instructor);
-        courseRepository.save(course);
+            Course course = new Course(requestDto.courseTitle(), requestDto.courseLevel());
+            course.setInstructor(instructor);
+            courseRepository.save(course);
 
-        attachSharedRelations(course, requestDto.categoryNames(), requestDto.studentIds());
-        courseRepository.save(course);
+            attachSharedRelations(course, requestDto.categoryNames(), requestDto.studentIds());
+            courseRepository.save(course);
 
-        LessonRequestDto firstLesson = requestDto.lessons().getFirst();
-        Lesson lesson = new Lesson(
-                firstLesson.title(),
-                firstLesson.durationMinutes(),
-                firstLesson.lessonOrder());
-        lesson.setCourse(course);
-        lessonRepository.save(lesson);
+            LessonRequestDto firstLesson = requestDto.lessons().getFirst();
+            Lesson lesson = new Lesson(
+                    firstLesson.title(),
+                    firstLesson.durationMinutes(),
+                    firstLesson.lessonOrder());
+            lesson.setCourse(course);
+            lessonRepository.save(lesson);
 
-        throw new IllegalStateException("Simulated failure after partial persistence");
+            throw new IllegalStateException("Simulated failure after partial persistence");
+        } finally {
+            courseSearchCacheInvalidator.invalidate("related persistence scenario");
+        }
     }
 
     private void attachSharedRelations(Course course, List<String> categoryNames, List<Long> studentIds) {
