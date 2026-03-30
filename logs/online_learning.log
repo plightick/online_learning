@@ -1,0 +1,210 @@
+2026-03-30 10:28:58.998 [http-nio-8080-exec-6] ERROR c.e.o.e.GlobalExceptionHandler - Unhandled exception
+org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico for request '/favicon.ico'.
+	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:527)
+	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:50)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:633)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:723)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1779)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-03-30 10:30:09.063 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-30 10:30:09.065 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-30 10:30:09.072 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-30 10:30:09.075 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-30 10:30:09.087 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-03-30 10:35:05.064 [main] INFO  c.e.o.OnlineLearningApplication - Starting OnlineLearningApplication using Java 21.0.10 with PID 19768 (/home/zhenya/lab/labs_java/online_learning/target/classes started by zhenya in /home/zhenya/lab/labs_java/online_learning)
+2026-03-30 10:35:05.065 [main] DEBUG c.e.o.OnlineLearningApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-03-30 10:35:05.066 [main] INFO  c.e.o.OnlineLearningApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-30 10:35:05.657 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-30 10:35:05.710 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 5 JPA repository interfaces.
+2026-03-30 10:35:06.134 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-03-30 10:35:06.142 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-30 10:35:06.144 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-30 10:35:06.144 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-03-30 10:35:06.184 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1091 ms
+2026-03-30 10:35:06.275 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-30 10:35:06.478 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@13c90c06
+2026-03-30 10:35:06.479 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-30 10:35:06.820 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-30 10:35:07.392 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-30 10:35:07.460 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-30 10:35:08.730 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-30 10:35:08.740 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-03-30 10:35:08.747 [main] INFO  c.e.o.OnlineLearningApplication - Started OnlineLearningApplication in 3.933 seconds (process running for 4.237)
+2026-03-30 10:35:08.808 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        courses c1_0
+2026-03-30 10:35:08.819 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-03-30 10:35:08.820 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-03-30 10:35:10.947 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-30 10:35:10.947 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-03-30 10:35:10.948 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-03-30 10:35:11.631 [http-nio-8080-exec-10] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 382 ms
+2026-03-30 10:35:53.858 [http-nio-8080-exec-1] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [1]
+2026-03-30 10:35:53.884 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        distinct c1_0.id,
+        c2_0.course_id,
+        c2_1.id,
+        c2_1.name,
+        c1_0.instructor_id,
+        i1_0.id,
+        i1_0.first_name,
+        i1_0.last_name,
+        i1_0.specialization,
+        l1_0.course_id,
+        l1_0.id,
+        l1_0.duration_minutes,
+        l1_0.lesson_order,
+        l1_0.title,
+        c1_0.level,
+        s1_0.course_id,
+        s1_1.id,
+        s1_1.email,
+        s1_1.first_name,
+        s1_1.last_name,
+        c1_0.title 
+    from
+        courses c1_0 
+    left join
+        instructors i1_0 
+            on i1_0.id=c1_0.instructor_id 
+    left join
+        lessons l1_0 
+            on c1_0.id=l1_0.course_id 
+    left join
+        course_students s1_0 
+            on c1_0.id=s1_0.course_id 
+    left join
+        students s1_1 
+            on s1_1.id=s1_0.student_id 
+    left join
+        course_categories c2_0 
+            on c1_0.id=c2_0.course_id 
+    left join
+        categories c2_1 
+            on c2_1.id=c2_0.category_id 
+    where
+        c1_0.id=?
+2026-03-30 10:35:53.885 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-03-30 10:35:53.910 [http-nio-8080-exec-1] DEBUG c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById finished in 51 ms
+2026-03-30 10:36:02.092 [http-nio-8080-exec-2] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [1000]
+2026-03-30 10:36:02.093 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        distinct c1_0.id,
+        c2_0.course_id,
+        c2_1.id,
+        c2_1.name,
+        c1_0.instructor_id,
+        i1_0.id,
+        i1_0.first_name,
+        i1_0.last_name,
+        i1_0.specialization,
+        l1_0.course_id,
+        l1_0.id,
+        l1_0.duration_minutes,
+        l1_0.lesson_order,
+        l1_0.title,
+        c1_0.level,
+        s1_0.course_id,
+        s1_1.id,
+        s1_1.email,
+        s1_1.first_name,
+        s1_1.last_name,
+        c1_0.title 
+    from
+        courses c1_0 
+    left join
+        instructors i1_0 
+            on i1_0.id=c1_0.instructor_id 
+    left join
+        lessons l1_0 
+            on c1_0.id=l1_0.course_id 
+    left join
+        course_students s1_0 
+            on c1_0.id=s1_0.course_id 
+    left join
+        students s1_1 
+            on s1_1.id=s1_0.student_id 
+    left join
+        course_categories c2_0 
+            on c1_0.id=c2_0.course_id 
+    left join
+        categories c2_1 
+            on c2_1.id=c2_0.category_id 
+    where
+        c1_0.id=?
+2026-03-30 10:36:02.094 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1000]
+2026-03-30 10:36:02.095 [http-nio-8080-exec-2] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById failed after 2 ms
+2026-03-30 10:36:02.098 [http-nio-8080-exec-2] WARN  c.e.o.e.GlobalExceptionHandler - API exception [404]: Course with id 1000 was not found
+2026-03-30 10:37:26.552 [http-nio-8080-exec-9] ERROR c.e.o.e.GlobalExceptionHandler - Unhandled exception
+org.springframework.web.servlet.resource.NoResourceFoundException: No static resource api/courses/-1113234 for request '/api/courses/-1113234'.
+	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:527)
+	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:50)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:633)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:723)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1779)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)

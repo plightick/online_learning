@@ -394,14 +394,16 @@ class CourseSearchIntegrationTest {
                 1,
                 1,
                 "title",
-                true);
+                true).getBody();
         Page<CourseResponseDto> secondPage = courseController.getCourses(
                 null,
                 2,
                 1,
                 "title",
-                true);
+                true).getBody();
 
+        assertThat(firstPage).isNotNull();
+        assertThat(secondPage).isNotNull();
         assertThat(firstPage.getContent()).extracting(CourseResponseDto::title)
                 .containsExactly(FRONTEND_BASICS);
         assertThat(secondPage.getContent()).extracting(CourseResponseDto::title)
@@ -434,14 +436,16 @@ class CourseSearchIntegrationTest {
                 JAVA_ARCHITECTURE,
                 CourseSearchQueryType.JPQL,
                 1,
-                1);
+                1).getBody();
         Page<CourseResponseDto> secondPage = courseController.searchCourses(
                 BACKEND,
                 JAVA_ARCHITECTURE,
                 CourseSearchQueryType.JPQL,
                 2,
-                1);
+                1).getBody();
 
+        assertThat(firstPage).isNotNull();
+        assertThat(secondPage).isNotNull();
         assertThat(firstPage.getTotalElements()).isEqualTo(3);
         assertThat(firstPage.getContent()).extracting(CourseResponseDto::title)
                 .containsExactly(SPRING_BOOT_INTENSIVE);

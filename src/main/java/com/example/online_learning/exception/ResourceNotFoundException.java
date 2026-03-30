@@ -1,8 +1,14 @@
 package com.example.online_learning.exception;
 
-public class ResourceNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class ResourceNotFoundException extends ApiException {
+
+    public ResourceNotFoundException(String message) {
+        super(HttpStatus.NOT_FOUND, message);
+    }
 
     public ResourceNotFoundException(String resourceName, Long id) {
-        super(resourceName + " with id " + id + " was not found");
+        this(resourceName + " with id " + id + " was not found");
     }
 }

@@ -2,6 +2,7 @@ package com.example.online_learning.service;
 
 import com.example.online_learning.dto.RelatedSaveRequestDto;
 import com.example.online_learning.dto.RelatedSaveResponseDto;
+import com.example.online_learning.exception.LoggingException;
 import com.example.online_learning.repository.CourseRepository;
 import com.example.online_learning.repository.InstructorRepository;
 import com.example.online_learning.repository.LessonRepository;
@@ -30,8 +31,8 @@ public class PersistenceDemoService {
         try {
             transactionalWorker.persistScenario(requestDto);
             return buildResponse("WITHOUT_TRANSACTION", "Unexpected success", requestDto);
-        } catch (IllegalStateException exception) {
-            return buildResponse("WITHOUT_TRANSACTION", exception.getMessage(), requestDto);
+        } catch (IllegalStateException | LoggingException exception) {
+            return buildResponse("WITHOUT_TRANSACTION", extractFailureMessage(exception), requestDto);
         }
     }
 
@@ -39,8 +40,8 @@ public class PersistenceDemoService {
         try {
             transactionalWorker.saveWithRollback(requestDto);
             return buildResponse("WITH_TRANSACTION", "Unexpected success", requestDto);
-        } catch (IllegalStateException exception) {
-            return buildResponse("WITH_TRANSACTION", exception.getMessage(), requestDto);
+        } catch (IllegalStateException | LoggingException exception) {
+            return buildResponse("WITH_TRANSACTION", extractFailureMessage(exception), requestDto);
         }
     }
 
@@ -62,5 +63,12 @@ public class PersistenceDemoService {
                 instructorId,
                 courseId,
                 lessonRepository.countByCourseTitleIgnoreCase(requestDto.courseTitle()));
+    }
+
+    private String extractFailureMessage(Exception exception) {
+        if (exception instanceof LoggingException loggingException && loggingException.getCause() != null) {
+            return loggingException.getCause().getMessage();
+        }
+        return exception.getMessage();
     }
 }

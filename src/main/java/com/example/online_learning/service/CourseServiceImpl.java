@@ -12,6 +12,7 @@ import com.example.online_learning.entity.Course;
 import com.example.online_learning.entity.Instructor;
 import com.example.online_learning.entity.Lesson;
 import com.example.online_learning.entity.Student;
+import com.example.online_learning.exception.BadRequestException;
 import com.example.online_learning.exception.ResourceNotFoundException;
 import com.example.online_learning.mapper.CourseMapper;
 import com.example.online_learning.repository.CategoryRepository;
@@ -328,7 +329,7 @@ public class CourseServiceImpl implements CourseService {
                 Comparator.comparing(CourseResponseDto::instructorFirstName, String.CASE_INSENSITIVE_ORDER);
             case "instructorlastname" ->
                 Comparator.comparing(CourseResponseDto::instructorLastName, String.CASE_INSENSITIVE_ORDER);
-            default -> throw new IllegalArgumentException("Unsupported sort field: " + order.getProperty());
+            default -> throw new BadRequestException("Unsupported sort field: " + order.getProperty());
         };
         return order.isAscending() ? comparator : comparator.reversed();
     }

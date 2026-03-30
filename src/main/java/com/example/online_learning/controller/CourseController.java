@@ -1,5 +1,6 @@
 package com.example.online_learning.controller;
 
+import com.example.online_learning.controller.api.CourseControllerApi;
 import com.example.online_learning.dto.CourseRequestDto;
 import com.example.online_learning.dto.CourseResponseDto;
 import com.example.online_learning.dto.CourseSearchQueryType;
@@ -11,20 +12,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/courses")
-public class CourseController {
+public class CourseController implements CourseControllerApi {
 
     private final CourseService courseService;
 
@@ -32,62 +31,66 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public CourseResponseDto createCourse(@Valid @RequestBody CourseRequestDto requestDto) {
-        return courseService.createCourse(requestDto);
+    @PostMapping("/api/courses")
+    public ResponseEntity<CourseResponseDto> createCourse(@Valid @RequestBody CourseRequestDto requestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(courseService.createCourse(requestDto));
     }
 
-    @GetMapping
-    public Page<CourseResponseDto> getCourses(
+    @GetMapping("/api/courses")
+    public ResponseEntity<Page<CourseResponseDto>> getCourses(
             @RequestParam(required = false) String level,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending) {
         Pageable pageable = createSortedPageable(page, size, sortBy, ascending);
-        return courseService.getCourses(level, pageable);
+        return ResponseEntity.ok(courseService.getCourses(level, pageable));
     }
 
-    @GetMapping("/search")
-    public Page<CourseResponseDto> searchCourses(
+    @GetMapping("/api/courses/search")
+    public ResponseEntity<Page<CourseResponseDto>> searchCourses(
             @RequestParam(required = false) String categoryName,
             @RequestParam(required = false) String instructorSpecialization,
             @RequestParam(defaultValue = "JPQL") CourseSearchQueryType queryType,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = createPageable(page, size);
-        return courseService.searchCourses(
+        return ResponseEntity.ok(courseService.searchCourses(
                 categoryName,
                 instructorSpecialization,
                 queryType,
-                pageable);
+                pageable));
     }
 
-    @GetMapping("/{id:\\d+}")
-    public CourseResponseDto getCourseById(@PathVariable Long id) {
-        return courseService.getCourseById(id);
+    @GetMapping("/api/courses/{id:\\d+}")
+    public ResponseEntity<CourseResponseDto> getCourseById(@PathVariable Long id) {
+        return ResponseEntity.ok(courseService.getCourseById(id));
     }
 
-    @PutMapping("/{id:\\d+}")
-    public CourseResponseDto updateCourse(@PathVariable Long id, @Valid @RequestBody CourseRequestDto requestDto) {
-        return courseService.updateCourse(id, requestDto);
+    @PutMapping("/api/courses/{id:\\d+}")
+    public ResponseEntity<CourseResponseDto> updateCourse(
+            @PathVariable Long id,
+            @Valid @RequestBody CourseRequestDto requestDto) {
+        return ResponseEntity.ok(courseService.updateCourse(id, requestDto));
     }
 
-    @DeleteMapping("/{id:\\d+}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCourse(@PathVariable Long id) {
+    @DeleteMapping("/api/courses/{id:\\d+}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/n-plus-one")
-    public List<CourseResponseDto> demonstrateNPlusOne(@RequestParam(required = false) String level) {
-        return courseService.getCoursesWithNPlusOne(level);
+    @GetMapping("/api/courses/n-plus-one")
+    public ResponseEntity<List<CourseResponseDto>> demonstrateNPlusOne(
+            @RequestParam(required = false) String level) {
+        return ResponseEntity.ok(courseService.getCoursesWithNPlusOne(level));
     }
 
-    @GetMapping("/optimized")
-    public List<CourseResponseDto> getCoursesWithEntityGraph(@RequestParam(required = false) String level) {
-        return courseService.getCoursesWithEntityGraph(level);
+    @GetMapping("/api/courses/optimized")
+    public ResponseEntity<List<CourseResponseDto>> getCoursesWithEntityGraph(
+            @RequestParam(required = false) String level) {
+        return ResponseEntity.ok(courseService.getCoursesWithEntityGraph(level));
     }
 
     private Pageable createSortedPageable(int page, int size, String sortBy, boolean ascending) {

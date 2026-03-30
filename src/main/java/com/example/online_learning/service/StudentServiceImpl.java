@@ -5,6 +5,7 @@ import com.example.online_learning.dto.StudentRequestDto;
 import com.example.online_learning.dto.StudentResponseDto;
 import com.example.online_learning.entity.Course;
 import com.example.online_learning.entity.Student;
+import com.example.online_learning.exception.DuplicateResourceException;
 import com.example.online_learning.exception.ResourceNotFoundException;
 import com.example.online_learning.mapper.StudentMapper;
 import com.example.online_learning.repository.StudentRepository;
@@ -32,6 +33,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public StudentResponseDto createStudent(StudentRequestDto requestDto) {
+        validateUniqueEmail(null, requestDto.email());
         Student student = new Student(requestDto.firstName(), requestDto.lastName(), requestDto.email());
         StudentResponseDto responseDto = studentMapper.toDto(studentRepository.save(student));
         invalidateSearchIndex();
@@ -59,6 +61,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponseDto updateStudent(Long id, StudentRequestDto requestDto) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(STUDENT_ENTITY, id));
+        validateUniqueEmail(id, requestDto.email());
         student.setFirstName(requestDto.firstName());
         student.setLastName(requestDto.lastName());
         student.setEmail(requestDto.email());
@@ -81,5 +84,13 @@ public class StudentServiceImpl implements StudentService {
 
     private void invalidateSearchIndex() {
         courseSearchCacheInvalidator.invalidate();
+    }
+
+    private void validateUniqueEmail(Long currentStudentId, String email) {
+        studentRepository.findByEmailIgnoreCase(email)
+                .filter(existingStudent -> !existingStudent.getId().equals(currentStudentId))
+                .ifPresent(existingStudent -> {
+                    throw new DuplicateResourceException("Student with email " + email + " already exists");
+                });
     }
 }
