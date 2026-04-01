@@ -24,13 +24,13 @@ BEGIN
             ('categories', 'name'),
             ('courses', 'title'),
             ('courses', 'level'),
-            ('instructors', 'first_name'),
-            ('instructors', 'last_name'),
-            ('instructors', 'specialization'),
+            (instructors_table_name, first_name_column),
+            (instructors_table_name, last_name_column),
+            (instructors_table_name, 'specialization'),
             ('lessons', 'title'),
-            ('students', 'first_name'),
-            ('students', 'last_name'),
-            ('students', 'email')
+            (students_table_name, first_name_column),
+            (students_table_name, last_name_column),
+            (students_table_name, 'email')
         ) AS expected_text_column(table_name, column_name)
         LOOP
             IF EXISTS (

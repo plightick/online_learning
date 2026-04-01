@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
     private static final String MALFORMED_JSON_REQUEST = "Malformed JSON request";
     private static final String UNEXPECTED_ERROR = "An unexpected error occurred";
     private static final String CONFLICTING_REQUEST = "Request conflicts with existing data";
+    private static final String LOG_MESSAGE_WITH_DETAILS = "{}: {}";
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorResponse> handleApiException(ApiException exception) {
@@ -45,7 +46,7 @@ public class GlobalExceptionHandler {
             errors.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
 
-        log.warn("{}: {}", VALIDATION_FAILED, errors);
+        log.warn(LOG_MESSAGE_WITH_DETAILS, VALIDATION_FAILED, errors);
         return ResponseEntity.badRequest()
                 .body(buildValidationErrorResponse(HttpStatus.BAD_REQUEST, VALIDATION_FAILED, errors));
     }
@@ -58,7 +59,7 @@ public class GlobalExceptionHandler {
             errors.put(extractViolationName(violation), violation.getMessage());
         }
 
-        log.warn("{}: {}", VALIDATION_FAILED, errors);
+        log.warn(LOG_MESSAGE_WITH_DETAILS, VALIDATION_FAILED, errors);
         return ResponseEntity.badRequest()
                 .body(buildValidationErrorResponse(HttpStatus.BAD_REQUEST, VALIDATION_FAILED, errors));
     }
@@ -84,7 +85,7 @@ public class GlobalExceptionHandler {
             String fieldName = invalidFormatException.getPath().getFirst().getFieldName();
             message = "Invalid value for field '%s'".formatted(fieldName);
         }
-        log.warn("{}: {}", MALFORMED_JSON_REQUEST, message);
+        log.warn(LOG_MESSAGE_WITH_DETAILS, MALFORMED_JSON_REQUEST, message);
         return ResponseEntity.badRequest()
                 .body(buildErrorResponse(HttpStatus.BAD_REQUEST, message));
     }
