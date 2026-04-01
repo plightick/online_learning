@@ -625,3 +625,4 @@ org.springframework.web.servlet.resource.NoResourceFoundException: No static res
 2026-04-01 15:34:15.028 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [alice.smith@example.com]
 2026-04-01 15:34:15.030 [http-nio-8080-exec-10] ERROR c.e.o.aop.ServiceLoggingAspect - Method StudentServiceImpl.createStudent failed after 7 ms
 2026-04-01 15:34:15.031 [http-nio-8080-exec-10] WARN  c.e.o.e.GlobalExceptionHandler - API exception [409]: Student with email alice.smith@example.com already exists
+2026-04-01 16:07:25.378 [http-nio-8080-exec-2] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {email=must be a well-formed email address, firstName=размер должен находиться в диапазоне от 2 до 50, lastName=must not be blank}
