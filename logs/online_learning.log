@@ -1,628 +1,221 @@
-2026-04-01 12:30:44.983 [main] INFO  c.e.o.OnlineLearningApplication - Starting OnlineLearningApplication using Java 21.0.10 with PID 18413 (/home/zhenya/lab/labs_java/online_learning/target/classes started by zhenya in /home/zhenya/lab/labs_java/online_learning)
-2026-04-01 12:30:44.989 [main] DEBUG c.e.o.OnlineLearningApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
-2026-04-01 12:30:44.990 [main] INFO  c.e.o.OnlineLearningApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-01 12:30:45.723 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-01 12:30:45.786 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 48 ms. Found 5 JPA repository interfaces.
-2026-04-01 12:30:46.368 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-04-01 12:30:46.380 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-04-01 12:30:46.382 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-04-01 12:30:46.382 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-01 12:30:46.459 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1431 ms
-2026-04-01 12:30:46.581 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-04-01 12:30:46.909 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2830315f
-2026-04-01 12:30:46.910 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-04-01 12:30:47.499 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-01 12:30:48.287 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 12:30:48.378 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-01 12:30:49.862 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-04-01 12:30:49.876 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-04-01 12:30:49.882 [main] INFO  c.e.o.OnlineLearningApplication - Started OnlineLearningApplication in 5.307 seconds (process running for 5.847)
-2026-04-01 12:30:49.950 [main] DEBUG org.hibernate.SQL - 
+2026-04-01 16:32:25.635 [main] INFO  c.e.o.CourseSearchIntegrationTest - Starting CourseSearchIntegrationTest using Java 21.0.10 with PID 185 (started by zhenya in /home/zhenya/lab/labs_java/online_learning)
+2026-04-01 16:32:25.636 [main] INFO  c.e.o.CourseSearchIntegrationTest - The following 1 profile is active: "test"
+2026-04-01 16:32:25.636 [main] DEBUG o.s.boot.SpringApplication - Loading source class com.example.online_learning.OnlineLearningApplication
+2026-04-01 16:32:26.153 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-01 16:32:26.163 [main] DEBUG o.s.b.a.AutoConfigurationPackages - @EnableAutoConfiguration was declared on a class in the package 'com.example.online_learning'. Automatic @Repository and @Entity scanning is enabled.
+2026-04-01 16:32:26.186 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 5 JPA repository interfaces.
+2026-04-01 16:32:26.822 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-01 16:32:27.565 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:32:27.633 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-01 16:32:28.933 [main] INFO  c.e.o.CourseSearchIntegrationTest - Started CourseSearchIntegrationTest in 3.493 seconds (process running for 4.296)
+2026-04-01 16:32:28.934 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state LivenessState changed to CORRECT
+2026-04-01 16:32:28.936 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-04-01 16:32:28.936 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-04-01 16:32:28.937 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2026-04-01 16:32:50.516 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=5
+2026-04-01 16:32:50.517 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.527 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=6
+2026-04-01 16:32:50.528 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.625 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=11
+2026-04-01 16:32:50.626 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.632 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=12
+2026-04-01 16:32:50.632 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.666 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.681 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.684 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=false, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.688 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=false, hasInstructorFilter=true, queryType=JPQL, page=2, size=10, cache=miss
+2026-04-01 16:32:50.727 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=17
+2026-04-01 16:32:50.727 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.736 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=18
+2026-04-01 16:32:50.736 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.739 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=1, cache=miss
+2026-04-01 16:32:50.746 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=2, size=1, cache=miss
+2026-04-01 16:32:50.799 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=21
+2026-04-01 16:32:50.799 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.806 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=22
+2026-04-01 16:32:50.807 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.832 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.842 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=25
+2026-04-01 16:32:50.842 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
+2026-04-01 16:32:50.843 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.893 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.898 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
+2026-04-01 16:32:50.916 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.920 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
+2026-04-01 16:32:50.940 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.948 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=32
+2026-04-01 16:32:50.949 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:32:50.950 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.958 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
+2026-04-01 16:32:50.963 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:32:50.981 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
+2026-04-01 16:32:50.985 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
+2026-04-01 16:32:51.013 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
+2026-04-01 16:32:51.017 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
+2026-04-01 16:32:51.027 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-01 16:32:51.028 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
+2026-04-01 16:32:51.028 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
+2026-04-01 16:32:51.029 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
+2026-04-01 16:32:51.030 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-01 16:32:51.030 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
+2026-04-01 16:32:51.031 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
+2026-04-01 16:32:51.031 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
+2026-04-01 16:32:51.031 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [OnlineLearningApplicationTests]: using SpringBootContextLoader
+2026-04-01 16:32:51.032 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners for test class [OnlineLearningApplicationTests]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, BeanOverrideTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, CommonCachesTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, MockitoResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener]
+2026-04-01 16:32:51.063 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:33:53.500 [main] INFO  c.e.o.CourseSearchIntegrationTest - Starting CourseSearchIntegrationTest using Java 21.0.10 with PID 185 (started by zhenya in /home/zhenya/lab/labs_java/online_learning)
+2026-04-01 16:33:53.503 [main] INFO  c.e.o.CourseSearchIntegrationTest - The following 1 profile is active: "test"
+2026-04-01 16:33:53.504 [main] DEBUG o.s.boot.SpringApplication - Loading source class com.example.online_learning.OnlineLearningApplication
+2026-04-01 16:33:54.104 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-01 16:33:54.118 [main] DEBUG o.s.b.a.AutoConfigurationPackages - @EnableAutoConfiguration was declared on a class in the package 'com.example.online_learning'. Automatic @Repository and @Entity scanning is enabled.
+2026-04-01 16:33:54.151 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 5 JPA repository interfaces.
+2026-04-01 16:33:54.895 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-01 16:33:55.624 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:33:55.705 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-01 16:33:56.956 [main] INFO  c.e.o.CourseSearchIntegrationTest - Started CourseSearchIntegrationTest in 3.752 seconds (process running for 4.591)
+2026-04-01 16:33:56.957 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state LivenessState changed to CORRECT
+2026-04-01 16:33:56.959 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-04-01 16:33:56.959 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-04-01 16:33:56.959 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2026-04-01 16:34:18.474 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=5
+2026-04-01 16:34:18.474 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.479 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=6
+2026-04-01 16:34:18.479 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.558 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=11
+2026-04-01 16:34:18.558 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.564 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=12
+2026-04-01 16:34:18.564 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.599 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.610 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.613 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=false, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.616 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=false, hasInstructorFilter=true, queryType=JPQL, page=2, size=10, cache=miss
+2026-04-01 16:34:18.639 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=17
+2026-04-01 16:34:18.639 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.642 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=18
+2026-04-01 16:34:18.642 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.644 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=1, cache=miss
+2026-04-01 16:34:18.648 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=2, size=1, cache=miss
+2026-04-01 16:34:18.691 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=21
+2026-04-01 16:34:18.691 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.697 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=22
+2026-04-01 16:34:18.697 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.715 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.723 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=25
+2026-04-01 16:34:18.723 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
+2026-04-01 16:34:18.724 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.744 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.748 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
+2026-04-01 16:34:18.765 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.768 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
+2026-04-01 16:34:18.784 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.791 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=32
+2026-04-01 16:34:18.791 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-01 16:34:18.792 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.799 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
+2026-04-01 16:34:18.804 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-01 16:34:18.824 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
+2026-04-01 16:34:18.829 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
+2026-04-01 16:34:18.860 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
+2026-04-01 16:34:18.864 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
+2026-04-01 16:34:18.876 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-01 16:34:18.876 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
+2026-04-01 16:34:18.880 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, ImportsContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
+2026-04-01 16:34:18.880 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
+2026-04-01 16:34:18.881 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-01 16:34:18.882 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
+2026-04-01 16:34:18.883 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, ImportsContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
+2026-04-01 16:34:18.883 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
+2026-04-01 16:34:18.884 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [OnlineLearningApplicationTests]: using SpringBootContextLoader
+2026-04-01 16:34:18.884 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners for test class [OnlineLearningApplicationTests]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, BeanOverrideTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, CommonCachesTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, MockitoResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener]
+2026-04-01 16:34:18.913 [main] INFO  c.e.o.OnlineLearningApplicationTests - Starting OnlineLearningApplicationTests using Java 21.0.10 with PID 185 (started by zhenya in /home/zhenya/lab/labs_java/online_learning)
+2026-04-01 16:34:18.913 [main] INFO  c.e.o.OnlineLearningApplicationTests - The following 1 profile is active: "test"
+2026-04-01 16:34:18.913 [main] DEBUG o.s.boot.SpringApplication - Loading source class com.example.online_learning.OnlineLearningApplication
+2026-04-01 16:34:19.012 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-01 16:34:19.013 [main] DEBUG o.s.b.a.AutoConfigurationPackages - @EnableAutoConfiguration was declared on a class in the package 'com.example.online_learning'. Automatic @Repository and @Entity scanning is enabled.
+2026-04-01 16:34:19.019 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 5 JPA repository interfaces.
+2026-04-01 16:34:19.081 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-01 16:34:19.126 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:34:19.389 [main] DEBUG o.s.b.w.s.ServletContextInitializerBeans - Mapping filters: characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2026-04-01 16:34:19.389 [main] DEBUG o.s.b.w.s.ServletContextInitializerBeans - Mapping servlets: 
+2026-04-01 16:34:19.402 [main] DEBUG o.s.b.s.f.OrderedCharacterEncodingFilter - Filter 'characterEncodingFilter' configured for use
+2026-04-01 16:34:19.402 [main] DEBUG o.s.b.s.f.OrderedFormContentFilter - Filter 'formContentFilter' configured for use
+2026-04-01 16:34:19.403 [main] DEBUG o.s.b.s.f.OrderedRequestContextFilter - Filter 'requestContextFilter' configured for use
+2026-04-01 16:34:19.404 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-04-01 16:34:19.404 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-04-01 16:34:19.406 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+2026-04-01 16:34:19.424 [main] INFO  c.e.o.OnlineLearningApplicationTests - Started OnlineLearningApplicationTests in 0.536 seconds (process running for 27.058)
+2026-04-01 16:34:19.424 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state LivenessState changed to CORRECT
+2026-04-01 16:34:19.425 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-04-01 16:34:19.425 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-04-01 16:34:19.426 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2026-04-01 16:34:19.487 [main] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {id=must be greater than 0}
+2026-04-01 16:34:19.574 [main] WARN  c.e.o.e.GlobalExceptionHandler - Method argument type mismatch: Invalid value 'abc' for parameter 'id'
+2026-04-01 16:34:19.590 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:34:19.596 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:34:54.858 [main] INFO  c.e.o.OnlineLearningApplication - Starting OnlineLearningApplication using Java 21.0.10 with PID 84535 (/home/zhenya/lab/labs_java/online_learning/target/classes started by zhenya in /home/zhenya/lab/labs_java/online_learning)
+2026-04-01 16:34:54.861 [main] DEBUG c.e.o.OnlineLearningApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-04-01 16:34:54.861 [main] INFO  c.e.o.OnlineLearningApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-01 16:34:55.533 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-01 16:34:55.575 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35 ms. Found 5 JPA repository interfaces.
+2026-04-01 16:34:56.029 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-01 16:34:56.040 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-01 16:34:56.041 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-01 16:34:56.042 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-01 16:34:56.085 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1182 ms
+2026-04-01 16:34:56.190 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-01 16:34:56.494 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@405d8a80
+2026-04-01 16:34:56.495 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-01 16:34:57.034 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-01 16:34:57.802 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:34:57.882 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-01 16:34:59.203 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-01 16:34:59.218 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-04-01 16:34:59.226 [main] INFO  c.e.o.OnlineLearningApplication - Started OnlineLearningApplication in 4.743 seconds (process running for 5.257)
+2026-04-01 16:34:59.286 [main] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         courses c1_0
-2026-04-01 12:30:49.963 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2026-04-01 12:30:49.963 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2026-04-01 12:30:55.013 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-01 12:30:55.013 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-04-01 12:30:55.014 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-04-01 12:30:55.920 [http-nio-8080-exec-4] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 569 ms
-2026-04-01 12:31:20.760 [http-nio-8080-exec-5] ERROR c.e.o.e.GlobalExceptionHandler - Unhandled exception
-org.springframework.web.servlet.resource.NoResourceFoundException: No static resource api/courses/-11111111111 for request '/api/courses/-11111111111'.
-	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:527)
-	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:50)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:633)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:723)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1779)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-04-01 12:31:34.572 [http-nio-8080-exec-6] WARN  c.e.o.e.GlobalExceptionHandler - Method argument type mismatch: Invalid value '1111111111111111111111111111' for parameter 'id'
-2026-04-01 12:31:51.398 [http-nio-8080-exec-7] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [12]
-2026-04-01 12:31:51.428 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+2026-04-01 16:34:59.301 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-04-01 16:34:59.301 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-04-01 16:35:04.373 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-01 16:35:04.373 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-01 16:35:04.374 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-01 16:35:04.533 [http-nio-8080-exec-1] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {firstName=размер должен находиться в диапазоне от 2 до 50}
+2026-04-01 16:35:23.160 [http-nio-8080-exec-2] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {firstName=размер должен находиться в диапазоне от 2 до 50}
+2026-04-01 16:38:01.246 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-01 16:38:01.248 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-04-01 16:38:01.251 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:38:01.253 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-01 16:38:01.258 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-01 16:43:26.992 [main] INFO  c.e.o.OnlineLearningApplication - Starting OnlineLearningApplication using Java 21.0.10 with PID 90543 (/home/zhenya/lab/labs_java/online_learning/target/classes started by zhenya in /home/zhenya/lab/labs_java/online_learning)
+2026-04-01 16:43:26.995 [main] DEBUG c.e.o.OnlineLearningApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-04-01 16:43:26.995 [main] INFO  c.e.o.OnlineLearningApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-01 16:43:27.638 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-01 16:43:27.693 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 48 ms. Found 5 JPA repository interfaces.
+2026-04-01 16:43:28.207 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-01 16:43:28.220 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-01 16:43:28.222 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-01 16:43:28.222 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-01 16:43:28.269 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1230 ms
+2026-04-01 16:43:28.367 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-01 16:43:28.658 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@29892a77
+2026-04-01 16:43:28.659 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-01 16:43:29.152 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-01 16:43:29.890 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-01 16:43:29.980 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-01 16:43:31.463 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-01 16:43:31.474 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-04-01 16:43:31.483 [main] INFO  c.e.o.OnlineLearningApplication - Started OnlineLearningApplication in 4.864 seconds (process running for 5.366)
+2026-04-01 16:43:31.557 [main] DEBUG org.hibernate.SQL - 
     select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
+        count(*) 
     from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 12:31:51.429 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [12]
-2026-04-01 12:31:51.466 [http-nio-8080-exec-7] DEBUG c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById finished in 67 ms
-2026-04-01 12:31:58.518 [http-nio-8080-exec-8] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [1]
-2026-04-01 12:31:58.521 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 12:31:58.522 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
-2026-04-01 12:31:58.530 [http-nio-8080-exec-8] DEBUG c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById finished in 11 ms
-2026-04-01 12:33:08.329 [http-nio-8080-exec-10] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [0]
-2026-04-01 12:33:08.330 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 12:33:08.330 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [0]
-2026-04-01 12:33:08.334 [http-nio-8080-exec-10] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById failed after 4 ms
-2026-04-01 12:33:08.336 [http-nio-8080-exec-10] WARN  c.e.o.e.GlobalExceptionHandler - API exception [404]: Course with id 0 was not found
-2026-04-01 12:33:12.480 [http-nio-8080-exec-1] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [0]
-2026-04-01 12:33:12.481 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 12:33:12.481 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [0]
-2026-04-01 12:33:12.483 [http-nio-8080-exec-1] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById failed after 2 ms
-2026-04-01 12:33:12.486 [http-nio-8080-exec-1] WARN  c.e.o.e.GlobalExceptionHandler - API exception [404]: Course with id 0 was not found
-2026-04-01 12:36:55.874 [http-nio-8080-exec-3] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {firstName=must not be blank, email=must be a well-formed email address, lastName=размер должен находиться в диапазоне от 2 до 50}
-2026-04-01 12:38:49.721 [http-nio-8080-exec-4] WARN  c.e.o.e.GlobalExceptionHandler - Malformed JSON request: Malformed JSON request
-2026-04-01 12:38:52.719 [http-nio-8080-exec-5] WARN  c.e.o.e.GlobalExceptionHandler - Malformed JSON request: Malformed JSON request
-2026-04-01 12:39:05.281 [http-nio-8080-exec-6] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: StudentServiceImpl.createStudent with arguments: [StudentRequestDto[firstName=Alice, lastName=Smith, email=alice.smith@example.com]]
-2026-04-01 12:39:05.307 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
-    select
-        s1_0.id,
-        s1_0.email,
-        s1_0.first_name,
-        s1_0.last_name 
-    from
-        students s1_0 
-    where
-        upper(s1_0.email)=upper(?)
-2026-04-01 12:39:05.307 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [alice.smith@example.com]
-2026-04-01 12:39:05.328 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
-    insert 
-    into
-        students
-        (email, first_name, last_name) 
-    values
-        (?, ?, ?)
-2026-04-01 12:39:05.330 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [alice.smith@example.com]
-2026-04-01 12:39:05.330 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:VARCHAR) <- [Alice]
-2026-04-01 12:39:05.330 [http-nio-8080-exec-6] TRACE org.hibernate.orm.jdbc.bind - binding parameter (3:VARCHAR) <- [Smith]
-2026-04-01 12:39:05.341 [http-nio-8080-exec-6] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 12:39:05.341 [http-nio-8080-exec-6] DEBUG c.e.o.aop.ServiceLoggingAspect - Method StudentServiceImpl.createStudent finished in 60 ms
-2026-04-01 12:39:06.696 [http-nio-8080-exec-7] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: StudentServiceImpl.createStudent with arguments: [StudentRequestDto[firstName=Alice, lastName=Smith, email=alice.smith@example.com]]
-2026-04-01 12:39:06.698 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
-    select
-        s1_0.id,
-        s1_0.email,
-        s1_0.first_name,
-        s1_0.last_name 
-    from
-        students s1_0 
-    where
-        upper(s1_0.email)=upper(?)
-2026-04-01 12:39:06.699 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [alice.smith@example.com]
-2026-04-01 12:39:06.701 [http-nio-8080-exec-7] ERROR c.e.o.aop.ServiceLoggingAspect - Method StudentServiceImpl.createStudent failed after 4 ms
-2026-04-01 12:39:06.702 [http-nio-8080-exec-7] WARN  c.e.o.e.GlobalExceptionHandler - API exception [409]: Student with email alice.smith@example.com already exists
-2026-04-01 12:39:34.701 [http-nio-8080-exec-8] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {lastName=размер должен находиться в диапазоне от 2 до 50, firstName=must not be blank, email=must be a well-formed email address}
-2026-04-01 12:42:31.428 [http-nio-8080-exec-9] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [1]
-2026-04-01 12:42:31.429 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 12:42:31.430 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
-2026-04-01 12:42:31.434 [http-nio-8080-exec-9] DEBUG c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById finished in 5 ms
-2026-04-01 12:42:38.934 [http-nio-8080-exec-10] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [9]
-2026-04-01 12:42:38.935 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 12:42:38.935 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
-2026-04-01 12:42:38.940 [http-nio-8080-exec-10] DEBUG c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById finished in 6 ms
-2026-04-01 12:42:43.416 [http-nio-8080-exec-1] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [0]
-2026-04-01 12:42:43.417 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 12:42:43.418 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [0]
-2026-04-01 12:42:43.420 [http-nio-8080-exec-1] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById failed after 3 ms
-2026-04-01 12:42:43.421 [http-nio-8080-exec-1] WARN  c.e.o.e.GlobalExceptionHandler - API exception [404]: Course with id 0 was not found
-2026-04-01 15:13:39.595 [http-nio-8080-exec-3] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [0]
-2026-04-01 15:13:39.596 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 15:13:39.596 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [0]
-2026-04-01 15:13:39.599 [http-nio-8080-exec-3] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById failed after 4 ms
-2026-04-01 15:13:39.602 [http-nio-8080-exec-3] WARN  c.e.o.e.GlobalExceptionHandler - API exception [404]: Course with id 0 was not found
-2026-04-01 15:13:43.975 [http-nio-8080-exec-4] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {lastName=размер должен находиться в диапазоне от 2 до 50, email=must be a well-formed email address, firstName=размер должен находиться в диапазоне от 2 до 50}
-2026-04-01 15:14:07.260 [http-nio-8080-exec-5] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: StudentServiceImpl.createStudent with arguments: [StudentRequestDto[firstName=Alice, lastName=Smith, email=alice.smith@example.com]]
-2026-04-01 15:14:07.262 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
-    select
-        s1_0.id,
-        s1_0.email,
-        s1_0.first_name,
-        s1_0.last_name 
-    from
-        students s1_0 
-    where
-        upper(s1_0.email)=upper(?)
-2026-04-01 15:14:07.262 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [alice.smith@example.com]
-2026-04-01 15:14:07.264 [http-nio-8080-exec-5] ERROR c.e.o.aop.ServiceLoggingAspect - Method StudentServiceImpl.createStudent failed after 4 ms
-2026-04-01 15:14:07.267 [http-nio-8080-exec-5] WARN  c.e.o.e.GlobalExceptionHandler - API exception [409]: Student with email alice.smith@example.com already exists
-2026-04-01 15:18:23.162 [http-nio-8080-exec-7] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.getCourseById with arguments: [0]
-2026-04-01 15:18:23.163 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 15:18:23.163 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [0]
-2026-04-01 15:18:23.165 [http-nio-8080-exec-7] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.getCourseById failed after 3 ms
-2026-04-01 15:18:23.166 [http-nio-8080-exec-7] WARN  c.e.o.e.GlobalExceptionHandler - API exception [404]: Course with id 0 was not found
-2026-04-01 15:33:31.838 [http-nio-8080-exec-9] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: CourseServiceImpl.deleteCourse with arguments: [0]
-2026-04-01 15:33:31.842 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
-    select
-        distinct c1_0.id,
-        c2_0.course_id,
-        c2_1.id,
-        c2_1.name,
-        c1_0.instructor_id,
-        i1_0.id,
-        i1_0.first_name,
-        i1_0.last_name,
-        i1_0.specialization,
-        l1_0.course_id,
-        l1_0.id,
-        l1_0.duration_minutes,
-        l1_0.lesson_order,
-        l1_0.title,
-        c1_0.level,
-        s1_0.course_id,
-        s1_1.id,
-        s1_1.email,
-        s1_1.first_name,
-        s1_1.last_name,
-        c1_0.title 
-    from
-        courses c1_0 
-    left join
-        instructors i1_0 
-            on i1_0.id=c1_0.instructor_id 
-    left join
-        lessons l1_0 
-            on c1_0.id=l1_0.course_id 
-    left join
-        course_students s1_0 
-            on c1_0.id=s1_0.course_id 
-    left join
-        students s1_1 
-            on s1_1.id=s1_0.student_id 
-    left join
-        course_categories c2_0 
-            on c1_0.id=c2_0.course_id 
-    left join
-        categories c2_1 
-            on c2_1.id=c2_0.category_id 
-    where
-        c1_0.id=?
-2026-04-01 15:33:31.843 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [0]
-2026-04-01 15:33:31.850 [http-nio-8080-exec-9] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.deleteCourse failed after 12 ms
-2026-04-01 15:33:31.852 [http-nio-8080-exec-9] WARN  c.e.o.e.GlobalExceptionHandler - API exception [404]: Course with id 0 was not found
-2026-04-01 15:34:15.023 [http-nio-8080-exec-10] DEBUG c.e.o.aop.ServiceLoggingAspect - Executing method: StudentServiceImpl.createStudent with arguments: [StudentRequestDto[firstName=Alice, lastName=Smith, email=alice.smith@example.com]]
-2026-04-01 15:34:15.027 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
-    select
-        s1_0.id,
-        s1_0.email,
-        s1_0.first_name,
-        s1_0.last_name 
-    from
-        students s1_0 
-    where
-        upper(s1_0.email)=upper(?)
-2026-04-01 15:34:15.028 [http-nio-8080-exec-10] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [alice.smith@example.com]
-2026-04-01 15:34:15.030 [http-nio-8080-exec-10] ERROR c.e.o.aop.ServiceLoggingAspect - Method StudentServiceImpl.createStudent failed after 7 ms
-2026-04-01 15:34:15.031 [http-nio-8080-exec-10] WARN  c.e.o.e.GlobalExceptionHandler - API exception [409]: Student with email alice.smith@example.com already exists
-2026-04-01 16:07:25.378 [http-nio-8080-exec-2] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {email=must be a well-formed email address, firstName=размер должен находиться в диапазоне от 2 до 50, lastName=must not be blank}
+        courses c1_0
+2026-04-01 16:43:31.573 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-04-01 16:43:31.574 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-04-01 16:43:35.469 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-01 16:43:35.470 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-01 16:43:35.470 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-04-01 16:43:35.598 [http-nio-8080-exec-1] WARN  c.e.o.e.GlobalExceptionHandler - 400 BAD_REQUEST [Validation failed]: {firstName=размер должен находиться в диапазоне от 2 до 50}
+2026-04-01 16:44:11.529 [http-nio-8080-exec-2] WARN  c.e.o.e.GlobalExceptionHandler - 400 BAD_REQUEST [Validation failed]: {firstName=размер должен находиться в диапазоне от 2 до 50}

@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -104,6 +105,10 @@ public interface CourseControllerApi {
                 description = "Course found",
                 content = @Content(schema = @Schema(implementation = CourseResponseDto.class))),
         @ApiResponse(
+                responseCode = "400",
+                description = "Invalid course identifier",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
                 responseCode = "404",
                 description = "Course not found",
                 content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -111,7 +116,7 @@ public interface CourseControllerApi {
     @GetMapping("/api/courses/{id}")
     ResponseEntity<CourseResponseDto> getCourseById(
             @Parameter(description = "Course ID", required = true, example = "1")
-            @PathVariable Long id
+            @PathVariable @Positive Long id
     );
 
     @Operation(summary = "Update course", description = "Updates an existing course.")
@@ -122,7 +127,7 @@ public interface CourseControllerApi {
                 content = @Content(schema = @Schema(implementation = CourseResponseDto.class))),
         @ApiResponse(
                 responseCode = "400",
-                description = "Invalid request body",
+                description = "Invalid course identifier or request body",
                 content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class))),
         @ApiResponse(
                 responseCode = "404",
@@ -132,7 +137,7 @@ public interface CourseControllerApi {
     @PutMapping("/api/courses/{id}")
     ResponseEntity<CourseResponseDto> updateCourse(
             @Parameter(description = "Course ID", required = true, example = "1")
-            @PathVariable Long id,
+            @PathVariable @Positive Long id,
             @Parameter(description = "Updated course payload", required = true)
             @Valid @RequestBody CourseRequestDto requestDto
     );
@@ -141,6 +146,10 @@ public interface CourseControllerApi {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Course deleted successfully"),
         @ApiResponse(
+                responseCode = "400",
+                description = "Invalid course identifier",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
                 responseCode = "404",
                 description = "Course not found",
                 content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -148,7 +157,7 @@ public interface CourseControllerApi {
     @DeleteMapping("/api/courses/{id}")
     ResponseEntity<Void> deleteCourse(
             @Parameter(description = "Course ID", required = true, example = "1")
-            @PathVariable Long id
+            @PathVariable @Positive Long id
     );
 
     @Operation(summary = "Demonstrate N+1", description = "Returns courses using a non-optimized loading strategy.")

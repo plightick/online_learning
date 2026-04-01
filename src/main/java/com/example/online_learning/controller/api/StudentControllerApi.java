@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,6 +65,10 @@ public interface StudentControllerApi {
                 description = "Student found",
                 content = @Content(schema = @Schema(implementation = StudentResponseDto.class))),
         @ApiResponse(
+                responseCode = "400",
+                description = "Invalid student identifier",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
                 responseCode = "404",
                 description = "Student not found",
                 content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -71,7 +76,7 @@ public interface StudentControllerApi {
     @GetMapping("/api/students/{id}")
     ResponseEntity<StudentResponseDto> getStudentById(
             @Parameter(description = "Student ID", required = true, example = "1")
-            @PathVariable Long id
+            @PathVariable @Positive Long id
     );
 
     @Operation(summary = "Update student", description = "Updates an existing student.")
@@ -82,7 +87,7 @@ public interface StudentControllerApi {
                 content = @Content(schema = @Schema(implementation = StudentResponseDto.class))),
         @ApiResponse(
                 responseCode = "400",
-                description = "Invalid request body",
+                description = "Invalid student identifier or request body",
                 content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class))),
         @ApiResponse(
                 responseCode = "404",
@@ -96,7 +101,7 @@ public interface StudentControllerApi {
     @PutMapping("/api/students/{id}")
     ResponseEntity<StudentResponseDto> updateStudent(
             @Parameter(description = "Student ID", required = true, example = "1")
-            @PathVariable Long id,
+            @PathVariable @Positive Long id,
             @Parameter(description = "Updated student payload", required = true)
             @Valid @RequestBody StudentRequestDto requestDto
     );
@@ -105,6 +110,10 @@ public interface StudentControllerApi {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Student deleted successfully"),
         @ApiResponse(
+                responseCode = "400",
+                description = "Invalid student identifier",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
                 responseCode = "404",
                 description = "Student not found",
                 content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -112,6 +121,6 @@ public interface StudentControllerApi {
     @DeleteMapping("/api/students/{id}")
     ResponseEntity<Void> deleteStudent(
             @Parameter(description = "Student ID", required = true, example = "1")
-            @PathVariable Long id
+            @PathVariable @Positive Long id
     );
 }

@@ -6,6 +6,7 @@ import com.example.online_learning.dto.CourseResponseDto;
 import com.example.online_learning.dto.CourseSearchQueryType;
 import com.example.online_learning.service.CourseService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Validated
 public class CourseController implements CourseControllerApi {
 
     private final CourseService courseService;
@@ -63,20 +66,20 @@ public class CourseController implements CourseControllerApi {
                 pageable));
     }
 
-    @GetMapping("/api/courses/{id:\\d+}")
-    public ResponseEntity<CourseResponseDto> getCourseById(@PathVariable Long id) {
+    @GetMapping("/api/courses/{id}")
+    public ResponseEntity<CourseResponseDto> getCourseById(@PathVariable @Positive Long id) {
         return ResponseEntity.ok(courseService.getCourseById(id));
     }
 
-    @PutMapping("/api/courses/{id:\\d+}")
+    @PutMapping("/api/courses/{id}")
     public ResponseEntity<CourseResponseDto> updateCourse(
-            @PathVariable Long id,
+            @PathVariable @Positive Long id,
             @Valid @RequestBody CourseRequestDto requestDto) {
         return ResponseEntity.ok(courseService.updateCourse(id, requestDto));
     }
 
-    @DeleteMapping("/api/courses/{id:\\d+}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
+    @DeleteMapping("/api/courses/{id}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable @Positive Long id) {
         courseService.deleteCourse(id);
         return ResponseEntity.noContent().build();
     }
