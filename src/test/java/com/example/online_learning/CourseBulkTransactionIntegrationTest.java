@@ -57,7 +57,9 @@ class CourseBulkTransactionIntegrationTest {
 
     @Test
     void createCoursesBulkTxShouldRollbackAllChangesWhenLaterItemFails() {
-        assertThatThrownBy(() -> courseService.createCoursesBulkTx(bulkRequests()))
+        List<CourseRequestDto> requests = bulkRequests();
+
+        assertThatThrownBy(() -> courseService.createCoursesBulkTx(requests))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("999");
 
@@ -69,7 +71,9 @@ class CourseBulkTransactionIntegrationTest {
 
     @Test
     void createCoursesBulkNoTxShouldKeepFirstCourseWhenLaterItemFails() {
-        assertThatThrownBy(() -> courseService.createCoursesBulkNoTx(bulkRequests()))
+        List<CourseRequestDto> requests = bulkRequests();
+
+        assertThatThrownBy(() -> courseService.createCoursesBulkNoTx(requests))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("999");
 

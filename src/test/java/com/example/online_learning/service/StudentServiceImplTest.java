@@ -62,12 +62,14 @@ class StudentServiceImplTest {
 
     @Test
     void createStudentShouldRejectDuplicateEmail() {
+        StudentRequestDto requestDto = new StudentRequestDto("Anna", "Petrova", "anna@example.com");
+
         when(studentRepository.findByEmailIgnoreCase("anna@example.com"))
                 .thenReturn(Optional.of(student(12L, "Anna", "Petrova", "anna@example.com")));
 
         assertThrows(
                 DuplicateResourceException.class,
-                () -> service.createStudent(new StudentRequestDto("Anna", "Petrova", "anna@example.com")));
+                () -> service.createStudent(requestDto));
 
         verify(studentRepository, never()).save(any(Student.class));
         verify(courseSearchCacheInvalidator, never()).invalidate();

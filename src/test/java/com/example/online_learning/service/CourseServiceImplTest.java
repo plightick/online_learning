@@ -104,9 +104,11 @@ class CourseServiceImplTest {
 
     @Test
     void createCoursesBulkTxShouldRejectEmptyRequest() {
+        List<CourseRequestDto> requests = List.of();
+
         BadRequestException exception = assertThrows(
                 BadRequestException.class,
-                () -> service.createCoursesBulkTx(List.of()));
+                () -> service.createCoursesBulkTx(requests));
 
         assertTrue(exception.getMessage().contains("at least one item"));
         verify(courseRepository, never()).save(any(Course.class));
@@ -117,6 +119,9 @@ class CourseServiceImplTest {
     void createCoursesBulkNoTxShouldStopOnMissingStudentAfterFirstSuccessfulCourse() {
         Student student = student(1L, "Anna", "Petrova", "anna@example.com");
         Instructor instructor = instructor("Pavel", "Ivanov", "Security");
+        List<CourseRequestDto> requests = List.of(
+                courseRequest("Spring Security Deep Dive", List.of(1L)),
+                courseRequest("Broken Bulk Demo", List.of(999L)));
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student));
         when(studentRepository.findById(999L)).thenReturn(Optional.empty());
         when(instructorRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase("Pavel", "Ivanov"))
@@ -131,9 +136,7 @@ class CourseServiceImplTest {
 
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
-                () -> service.createCoursesBulkNoTx(List.of(
-                        courseRequest("Spring Security Deep Dive", List.of(1L)),
-                        courseRequest("Broken Bulk Demo", List.of(999L)))));
+                () -> service.createCoursesBulkNoTx(requests));
 
         assertTrue(exception.getMessage().contains("999"));
         verify(courseRepository, times(1)).save(any(Course.class));
