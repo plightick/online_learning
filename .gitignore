@@ -19,8 +19,6 @@ target/
 *.iml
 *.ipr
 
-online_learning/
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

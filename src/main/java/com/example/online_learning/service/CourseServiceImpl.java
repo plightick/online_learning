@@ -19,7 +19,6 @@ import com.example.online_learning.repository.CategoryRepository;
 import com.example.online_learning.repository.CourseRepository;
 import com.example.online_learning.repository.InstructorRepository;
 import com.example.online_learning.repository.StudentRepository;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,6 +32,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -40,6 +40,8 @@ public class CourseServiceImpl implements CourseService {
 
     private static final String COURSE_ENTITY = "Course";
     private static final String STUDENT_ENTITY = "Student";
+    private static final String BULK_REQUEST_EMPTY_MESSAGE =
+            "Bulk course request must contain at least one item";
     private static final String COURSE_SEARCH_LOG_TEMPLATE =
             "Course search request: hasCategoryFilter={}, hasInstructorFilter={}, "
                     + "queryType={}, page={}, size={}, cache={}";
@@ -73,12 +75,36 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public CourseResponseDto createCourse(CourseRequestDto requestDto) {
-        Course course = new Course(requestDto.title(), requestDto.level());
-        applyRequest(course, requestDto);
-        CourseResponseDto responseDto = courseMapper.toDto(courseRepository.save(course));
+        CourseResponseDto responseDto = courseMapper.toDto(createCourseEntity(requestDto));
         log.info("Course created: id={}", responseDto.id());
         invalidateSearchIndex();
         return responseDto;
+    }
+
+    @Override
+    @Transactional
+    public List<CourseResponseDto> createCoursesBulkTx(List<CourseRequestDto> requestDtos) {
+        List<CourseRequestDto> bulkRequests = validateBulkRequests(requestDtos);
+        try {
+            List<CourseResponseDto> responseDtos = createCoursesBulk(bulkRequests);
+            log.info("Bulk course import completed: mode=transactional, imported={}", responseDtos.size());
+            return responseDtos;
+        } finally {
+            invalidateSearchIndex();
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public List<CourseResponseDto> createCoursesBulkNoTx(List<CourseRequestDto> requestDtos) {
+        List<CourseRequestDto> bulkRequests = validateBulkRequests(requestDtos);
+        try {
+            List<CourseResponseDto> responseDtos = createCoursesBulk(bulkRequests);
+            log.info("Bulk course import completed: mode=non-transactional, imported={}", responseDtos.size());
+            return responseDtos;
+        } finally {
+            invalidateSearchIndex();
+        }
     }
 
     @Override
@@ -225,59 +251,83 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private void applyRequest(Course course, CourseRequestDto requestDto) {
+        syncStudents(course, requestDto.studentIds());
         course.setInstructor(resolveInstructor(
                 requestDto.instructorFirstName(),
                 requestDto.instructorLastName(),
                 requestDto.instructorSpecialization()));
         course.replaceLessons(mapLessons(requestDto.lessons()));
-        syncStudents(course, requestDto.studentIds());
         syncCategories(course, requestDto.categoryNames());
     }
 
     private Instructor resolveInstructor(String firstName, String lastName, String specialization) {
-        Optional<Instructor> existingInstructor = instructorRepository
-                .findByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName);
-        if (existingInstructor.isPresent()) {
-            Instructor instructor = existingInstructor.get();
-            instructor.setSpecialization(specialization);
-            return instructor;
-        }
-        return instructorRepository.save(new Instructor(firstName, lastName, specialization));
+        return instructorRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName)
+                .map(instructor -> {
+                    instructor.setSpecialization(specialization);
+                    return instructor;
+                })
+                .orElseGet(() -> instructorRepository.save(new Instructor(firstName, lastName, specialization)));
     }
 
     private List<Lesson> mapLessons(List<LessonRequestDto> lessonRequestDtos) {
-        List<Lesson> lessons = new ArrayList<>();
-        for (LessonRequestDto lessonRequestDto : lessonRequestDtos) {
-            lessons.add(new Lesson(
-                    lessonRequestDto.title(),
-                    lessonRequestDto.durationMinutes(),
-                    lessonRequestDto.lessonOrder()));
-        }
-        return lessons;
+        return Optional.ofNullable(lessonRequestDtos)
+                .orElse(List.of())
+                .stream()
+                .sorted(Comparator.comparing(LessonRequestDto::lessonOrder))
+                .map(lessonRequestDto -> new Lesson(
+                        lessonRequestDto.title(),
+                        lessonRequestDto.durationMinutes(),
+                        lessonRequestDto.lessonOrder()))
+                .toList();
     }
 
     private void syncStudents(Course course, List<Long> studentIds) {
+        List<Student> students = Optional.ofNullable(studentIds)
+                .orElse(List.of())
+                .stream()
+                .map(this::resolveStudent)
+                .toList();
         course.clearStudents();
-        if (studentIds == null) {
-            return;
-        }
-        for (Long studentId : studentIds) {
-            Student student = studentRepository.findById(studentId)
-                    .orElseThrow(() -> new ResourceNotFoundException(STUDENT_ENTITY, studentId));
-            course.addStudent(student);
-        }
+        students.forEach(course::addStudent);
     }
 
     private void syncCategories(Course course, List<String> categoryNames) {
+        List<Category> categories = Optional.ofNullable(categoryNames)
+                .orElse(List.of())
+                .stream()
+                .map(this::resolveCategory)
+                .toList();
         course.clearCategories();
-        if (categoryNames == null) {
-            return;
-        }
-        for (String categoryName : categoryNames) {
-            Category category = categoryRepository.findByNameIgnoreCase(categoryName)
-                    .orElseGet(() -> categoryRepository.save(new Category(categoryName)));
-            course.addCategory(category);
-        }
+        categories.forEach(course::addCategory);
+    }
+
+    private Student resolveStudent(Long studentId) {
+        return studentRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException(STUDENT_ENTITY, studentId));
+    }
+
+    private Category resolveCategory(String categoryName) {
+        return categoryRepository.findByNameIgnoreCase(categoryName)
+                .orElseGet(() -> categoryRepository.save(new Category(categoryName)));
+    }
+
+    private Course createCourseEntity(CourseRequestDto requestDto) {
+        Course course = new Course(requestDto.title(), requestDto.level());
+        applyRequest(course, requestDto);
+        return courseRepository.save(course);
+    }
+
+    private List<CourseRequestDto> validateBulkRequests(List<CourseRequestDto> requestDtos) {
+        return Optional.ofNullable(requestDtos)
+                .filter(items -> !items.isEmpty())
+                .orElseThrow(() -> new BadRequestException(BULK_REQUEST_EMPTY_MESSAGE));
+    }
+
+    private List<CourseResponseDto> createCoursesBulk(List<CourseRequestDto> bulkRequests) {
+        return bulkRequests.stream()
+                .map(this::createCourseEntity)
+                .map(courseMapper::toDto)
+                .toList();
     }
 
     private Page<CourseResponseDto> mapPagedCourses(Page<Long> courseIdsPage) {

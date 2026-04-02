@@ -40,6 +40,16 @@ public class CourseController implements CourseControllerApi {
                 .body(courseService.createCourse(requestDto));
     }
 
+    @PostMapping("/api/courses/bulk")
+    public ResponseEntity<List<CourseResponseDto>> createCoursesBulk(
+            @Valid @RequestBody List<@Valid CourseRequestDto> requestDtos,
+            @RequestParam(defaultValue = "true") boolean transactional) {
+        List<CourseResponseDto> responseDtos = transactional
+                ? courseService.createCoursesBulkTx(requestDtos)
+                : courseService.createCoursesBulkNoTx(requestDtos);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDtos);
+    }
+
     @GetMapping("/api/courses")
     public ResponseEntity<Page<CourseResponseDto>> getCourses(
             @RequestParam(required = false) String level,

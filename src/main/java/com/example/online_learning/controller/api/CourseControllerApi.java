@@ -54,6 +54,33 @@ public interface CourseControllerApi {
             @Valid @RequestBody CourseRequestDto requestDto
     );
 
+    @Operation(
+            summary = "Bulk create courses",
+            description = "Imports a list of courses and can demonstrate atomic or partial persistence.")
+    @ApiResponses(value = {
+        @ApiResponse(
+                responseCode = "201",
+                description = "Courses created successfully",
+                content = @Content(array = @ArraySchema(schema = @Schema(implementation = CourseResponseDto.class)))),
+        @ApiResponse(
+                responseCode = "400",
+                description = "Invalid request body or empty list",
+                content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class))),
+        @ApiResponse(
+                responseCode = "404",
+                description = "Student not found",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/api/courses/bulk")
+    ResponseEntity<List<CourseResponseDto>> createCoursesBulk(
+            @Parameter(description = "Course payloads", required = true)
+            @Valid @RequestBody List<@Valid CourseRequestDto> requestDtos,
+            @Parameter(
+                    description = "When true the whole bulk request is atomic; when false successful items stay saved",
+                    example = "true")
+            @RequestParam(defaultValue = "true") boolean transactional
+    );
+
     @Operation(summary = "Get courses", description = "Returns a paginated list of courses.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Courses retrieved successfully"),

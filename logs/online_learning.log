@@ -1,221 +1,111 @@
-2026-04-01 16:32:25.635 [main] INFO  c.e.o.CourseSearchIntegrationTest - Starting CourseSearchIntegrationTest using Java 21.0.10 with PID 185 (started by zhenya in /home/zhenya/lab/labs_java/online_learning)
-2026-04-01 16:32:25.636 [main] INFO  c.e.o.CourseSearchIntegrationTest - The following 1 profile is active: "test"
-2026-04-01 16:32:25.636 [main] DEBUG o.s.boot.SpringApplication - Loading source class com.example.online_learning.OnlineLearningApplication
-2026-04-01 16:32:26.153 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-01 16:32:26.163 [main] DEBUG o.s.b.a.AutoConfigurationPackages - @EnableAutoConfiguration was declared on a class in the package 'com.example.online_learning'. Automatic @Repository and @Entity scanning is enabled.
-2026-04-01 16:32:26.186 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 5 JPA repository interfaces.
-2026-04-01 16:32:26.822 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-01 16:32:27.565 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:32:27.633 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-01 16:32:28.933 [main] INFO  c.e.o.CourseSearchIntegrationTest - Started CourseSearchIntegrationTest in 3.493 seconds (process running for 4.296)
-2026-04-01 16:32:28.934 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state LivenessState changed to CORRECT
-2026-04-01 16:32:28.936 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2026-04-01 16:32:28.936 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2026-04-01 16:32:28.937 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
-2026-04-01 16:32:50.516 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=5
-2026-04-01 16:32:50.517 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.527 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=6
-2026-04-01 16:32:50.528 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.625 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=11
-2026-04-01 16:32:50.626 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.632 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=12
-2026-04-01 16:32:50.632 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.666 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.681 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.684 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=false, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.688 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=false, hasInstructorFilter=true, queryType=JPQL, page=2, size=10, cache=miss
-2026-04-01 16:32:50.727 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=17
-2026-04-01 16:32:50.727 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.736 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=18
-2026-04-01 16:32:50.736 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.739 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=1, cache=miss
-2026-04-01 16:32:50.746 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=2, size=1, cache=miss
-2026-04-01 16:32:50.799 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=21
-2026-04-01 16:32:50.799 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.806 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=22
-2026-04-01 16:32:50.807 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.832 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.842 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=25
-2026-04-01 16:32:50.842 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
-2026-04-01 16:32:50.843 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.893 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.898 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
-2026-04-01 16:32:50.916 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.920 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
-2026-04-01 16:32:50.940 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.948 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=32
-2026-04-01 16:32:50.949 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:32:50.950 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.958 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
-2026-04-01 16:32:50.963 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:32:50.981 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
-2026-04-01 16:32:50.985 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
-2026-04-01 16:32:51.013 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
-2026-04-01 16:32:51.017 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
-2026-04-01 16:32:51.027 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-04-01 16:32:51.028 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
-2026-04-01 16:32:51.028 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
-2026-04-01 16:32:51.029 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
-2026-04-01 16:32:51.030 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-04-01 16:32:51.030 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
-2026-04-01 16:32:51.031 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
-2026-04-01 16:32:51.031 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
-2026-04-01 16:32:51.031 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [OnlineLearningApplicationTests]: using SpringBootContextLoader
-2026-04-01 16:32:51.032 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners for test class [OnlineLearningApplicationTests]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, BeanOverrideTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, CommonCachesTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, MockitoResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener]
-2026-04-01 16:32:51.063 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:33:53.500 [main] INFO  c.e.o.CourseSearchIntegrationTest - Starting CourseSearchIntegrationTest using Java 21.0.10 with PID 185 (started by zhenya in /home/zhenya/lab/labs_java/online_learning)
-2026-04-01 16:33:53.503 [main] INFO  c.e.o.CourseSearchIntegrationTest - The following 1 profile is active: "test"
-2026-04-01 16:33:53.504 [main] DEBUG o.s.boot.SpringApplication - Loading source class com.example.online_learning.OnlineLearningApplication
-2026-04-01 16:33:54.104 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-01 16:33:54.118 [main] DEBUG o.s.b.a.AutoConfigurationPackages - @EnableAutoConfiguration was declared on a class in the package 'com.example.online_learning'. Automatic @Repository and @Entity scanning is enabled.
-2026-04-01 16:33:54.151 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 5 JPA repository interfaces.
-2026-04-01 16:33:54.895 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-01 16:33:55.624 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:33:55.705 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-01 16:33:56.956 [main] INFO  c.e.o.CourseSearchIntegrationTest - Started CourseSearchIntegrationTest in 3.752 seconds (process running for 4.591)
-2026-04-01 16:33:56.957 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state LivenessState changed to CORRECT
-2026-04-01 16:33:56.959 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2026-04-01 16:33:56.959 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2026-04-01 16:33:56.959 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
-2026-04-01 16:34:18.474 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=5
-2026-04-01 16:34:18.474 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.479 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=6
-2026-04-01 16:34:18.479 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.558 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=11
-2026-04-01 16:34:18.558 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.564 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=12
-2026-04-01 16:34:18.564 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.599 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.610 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.613 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=false, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.616 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=false, hasInstructorFilter=true, queryType=JPQL, page=2, size=10, cache=miss
-2026-04-01 16:34:18.639 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=17
-2026-04-01 16:34:18.639 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.642 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=18
-2026-04-01 16:34:18.642 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.644 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=1, cache=miss
-2026-04-01 16:34:18.648 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=2, size=1, cache=miss
-2026-04-01 16:34:18.691 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=21
-2026-04-01 16:34:18.691 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.697 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=22
-2026-04-01 16:34:18.697 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.715 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.723 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=25
-2026-04-01 16:34:18.723 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
-2026-04-01 16:34:18.724 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.744 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.748 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
-2026-04-01 16:34:18.765 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.768 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
-2026-04-01 16:34:18.784 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.791 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=32
-2026-04-01 16:34:18.791 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
-2026-04-01 16:34:18.792 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.799 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
-2026-04-01 16:34:18.804 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
-2026-04-01 16:34:18.824 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
-2026-04-01 16:34:18.829 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
-2026-04-01 16:34:18.860 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
-2026-04-01 16:34:18.864 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
-2026-04-01 16:34:18.876 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-04-01 16:34:18.876 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
-2026-04-01 16:34:18.880 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, ImportsContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
-2026-04-01 16:34:18.880 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
-2026-04-01 16:34:18.881 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-04-01 16:34:18.882 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
-2026-04-01 16:34:18.883 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, ImportsContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
-2026-04-01 16:34:18.883 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
-2026-04-01 16:34:18.884 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [OnlineLearningApplicationTests]: using SpringBootContextLoader
-2026-04-01 16:34:18.884 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners for test class [OnlineLearningApplicationTests]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, BeanOverrideTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, CommonCachesTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, MockitoResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener]
-2026-04-01 16:34:18.913 [main] INFO  c.e.o.OnlineLearningApplicationTests - Starting OnlineLearningApplicationTests using Java 21.0.10 with PID 185 (started by zhenya in /home/zhenya/lab/labs_java/online_learning)
-2026-04-01 16:34:18.913 [main] INFO  c.e.o.OnlineLearningApplicationTests - The following 1 profile is active: "test"
-2026-04-01 16:34:18.913 [main] DEBUG o.s.boot.SpringApplication - Loading source class com.example.online_learning.OnlineLearningApplication
-2026-04-01 16:34:19.012 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-01 16:34:19.013 [main] DEBUG o.s.b.a.AutoConfigurationPackages - @EnableAutoConfiguration was declared on a class in the package 'com.example.online_learning'. Automatic @Repository and @Entity scanning is enabled.
-2026-04-01 16:34:19.019 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 5 JPA repository interfaces.
-2026-04-01 16:34:19.081 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-01 16:34:19.126 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:34:19.389 [main] DEBUG o.s.b.w.s.ServletContextInitializerBeans - Mapping filters: characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
-2026-04-01 16:34:19.389 [main] DEBUG o.s.b.w.s.ServletContextInitializerBeans - Mapping servlets: 
-2026-04-01 16:34:19.402 [main] DEBUG o.s.b.s.f.OrderedCharacterEncodingFilter - Filter 'characterEncodingFilter' configured for use
-2026-04-01 16:34:19.402 [main] DEBUG o.s.b.s.f.OrderedFormContentFilter - Filter 'formContentFilter' configured for use
-2026-04-01 16:34:19.403 [main] DEBUG o.s.b.s.f.OrderedRequestContextFilter - Filter 'requestContextFilter' configured for use
-2026-04-01 16:34:19.404 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-2026-04-01 16:34:19.404 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-2026-04-01 16:34:19.406 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
-2026-04-01 16:34:19.424 [main] INFO  c.e.o.OnlineLearningApplicationTests - Started OnlineLearningApplicationTests in 0.536 seconds (process running for 27.058)
-2026-04-01 16:34:19.424 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state LivenessState changed to CORRECT
-2026-04-01 16:34:19.425 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2026-04-01 16:34:19.425 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2026-04-01 16:34:19.426 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
-2026-04-01 16:34:19.487 [main] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {id=must be greater than 0}
-2026-04-01 16:34:19.574 [main] WARN  c.e.o.e.GlobalExceptionHandler - Method argument type mismatch: Invalid value 'abc' for parameter 'id'
-2026-04-01 16:34:19.590 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:34:19.596 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:34:54.858 [main] INFO  c.e.o.OnlineLearningApplication - Starting OnlineLearningApplication using Java 21.0.10 with PID 84535 (/home/zhenya/lab/labs_java/online_learning/target/classes started by zhenya in /home/zhenya/lab/labs_java/online_learning)
-2026-04-01 16:34:54.861 [main] DEBUG c.e.o.OnlineLearningApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
-2026-04-01 16:34:54.861 [main] INFO  c.e.o.OnlineLearningApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-01 16:34:55.533 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-01 16:34:55.575 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35 ms. Found 5 JPA repository interfaces.
-2026-04-01 16:34:56.029 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-04-01 16:34:56.040 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-04-01 16:34:56.041 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-04-01 16:34:56.042 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-01 16:34:56.085 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1182 ms
-2026-04-01 16:34:56.190 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-04-01 16:34:56.494 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@405d8a80
-2026-04-01 16:34:56.495 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-04-01 16:34:57.034 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-01 16:34:57.802 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:34:57.882 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-01 16:34:59.203 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-04-01 16:34:59.218 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-04-01 16:34:59.226 [main] INFO  c.e.o.OnlineLearningApplication - Started OnlineLearningApplication in 4.743 seconds (process running for 5.257)
-2026-04-01 16:34:59.286 [main] DEBUG org.hibernate.SQL - 
+2026-04-02 20:24:10.814 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=false, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-02 20:24:10.821 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=false, hasInstructorFilter=true, queryType=JPQL, page=2, size=10, cache=miss
+2026-04-02 20:24:10.855 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=17
+2026-04-02 20:24:10.856 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-02 20:24:10.861 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=18
+2026-04-02 20:24:10.861 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-02 20:24:10.864 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=1, cache=miss
+2026-04-02 20:24:10.870 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=2, size=1, cache=miss
+2026-04-02 20:24:10.897 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=21
+2026-04-02 20:24:10.897 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-02 20:24:10.900 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=22
+2026-04-02 20:24:10.900 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-02 20:24:10.926 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-02 20:24:10.936 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=25
+2026-04-02 20:24:10.936 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
+2026-04-02 20:24:10.937 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-02 20:24:10.960 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-02 20:24:10.965 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
+2026-04-02 20:24:10.982 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-02 20:24:10.986 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=hit
+2026-04-02 20:24:11.005 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-02 20:24:11.013 [main] INFO  c.e.o.service.CourseServiceImpl - Course created: id=32
+2026-04-02 20:24:11.013 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-02 20:24:11.014 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-02 20:24:11.021 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=1
+2026-04-02 20:24:11.026 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=10, cache=miss
+2026-04-02 20:24:11.048 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
+2026-04-02 20:24:11.052 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
+2026-04-02 20:24:11.084 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=JPQL, page=1, size=2147483647, cache=miss
+2026-04-02 20:24:11.088 [main] INFO  c.e.o.service.CourseServiceImpl - Course search request: hasCategoryFilter=true, hasInstructorFilter=true, queryType=NATIVE, page=1, size=2147483647, cache=miss
+2026-04-02 20:24:11.248 [main] INFO  c.e.o.service.CourseServiceImpl - Bulk course import completed: mode=transactional, imported=2
+2026-04-02 20:24:11.255 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-02 20:24:11.256 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
+2026-04-02 20:24:11.261 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, ImportsContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
+2026-04-02 20:24:11.262 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
+2026-04-02 20:24:11.263 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.OnlineLearningApplicationTests]: OnlineLearningApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-02 20:24:11.263 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
+2026-04-02 20:24:11.264 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [OnlineLearningApplicationTests]: [SpringBootTestRandomPortContextCustomizer, ImportsContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
+2026-04-02 20:24:11.264 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.OnlineLearningApplicationTests
+2026-04-02 20:24:11.264 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [OnlineLearningApplicationTests]: using SpringBootContextLoader
+2026-04-02 20:24:11.265 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners for test class [OnlineLearningApplicationTests]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, BeanOverrideTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, CommonCachesTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, MockitoResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener]
+2026-04-02 20:24:11.289 [main] INFO  c.e.o.OnlineLearningApplicationTests - Starting OnlineLearningApplicationTests using Java 21.0.10 with PID 184 (started by zhenya in /home/zhenya/lab/labs_java/online_learning)
+2026-04-02 20:24:11.289 [main] INFO  c.e.o.OnlineLearningApplicationTests - The following 1 profile is active: "test"
+2026-04-02 20:24:11.289 [main] DEBUG o.s.boot.SpringApplication - Loading source class com.example.online_learning.OnlineLearningApplication
+2026-04-02 20:24:11.393 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-02 20:24:11.394 [main] DEBUG o.s.b.a.AutoConfigurationPackages - @EnableAutoConfiguration was declared on a class in the package 'com.example.online_learning'. Automatic @Repository and @Entity scanning is enabled.
+2026-04-02 20:24:11.401 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 5 JPA repository interfaces.
+2026-04-02 20:24:11.463 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-02 20:24:11.504 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-02 20:24:11.755 [main] DEBUG o.s.b.w.s.ServletContextInitializerBeans - Mapping filters: characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2026-04-02 20:24:11.755 [main] DEBUG o.s.b.w.s.ServletContextInitializerBeans - Mapping servlets: 
+2026-04-02 20:24:11.764 [main] DEBUG o.s.b.s.f.OrderedCharacterEncodingFilter - Filter 'characterEncodingFilter' configured for use
+2026-04-02 20:24:11.764 [main] DEBUG o.s.b.s.f.OrderedFormContentFilter - Filter 'formContentFilter' configured for use
+2026-04-02 20:24:11.764 [main] DEBUG o.s.b.s.f.OrderedRequestContextFilter - Filter 'requestContextFilter' configured for use
+2026-04-02 20:24:11.765 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-04-02 20:24:11.765 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-04-02 20:24:11.766 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+2026-04-02 20:24:11.778 [main] INFO  c.e.o.OnlineLearningApplicationTests - Started OnlineLearningApplicationTests in 0.51 seconds (process running for 16.511)
+2026-04-02 20:24:11.779 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state LivenessState changed to CORRECT
+2026-04-02 20:24:11.779 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-04-02 20:24:11.779 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-04-02 20:24:11.779 [main] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2026-04-02 20:24:11.824 [main] WARN  c.e.o.e.GlobalExceptionHandler - 400 BAD_REQUEST [Validation failed]: {id=must be greater than 0}
+2026-04-02 20:24:11.907 [main] WARN  c.e.o.e.GlobalExceptionHandler - Method argument type mismatch: Invalid value 'abc' for parameter 'id'
+2026-04-02 20:24:11.913 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.CourseBulkTransactionIntegrationTest]: CourseBulkTransactionIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-02 20:24:11.914 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [CourseBulkTransactionIntegrationTest]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
+2026-04-02 20:24:11.914 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [CourseBulkTransactionIntegrationTest]: [SpringBootTestRandomPortContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
+2026-04-02 20:24:11.915 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.CourseBulkTransactionIntegrationTest
+2026-04-02 20:24:11.915 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.online_learning.CourseBulkTransactionIntegrationTest]: CourseBulkTransactionIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-02 20:24:11.916 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizerFactory implementations for test class [CourseBulkTransactionIntegrationTest]: [SpringBootTestRandomPortContextCustomizerFactory, ImportsContextCustomizerFactory, PropertyMappingContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, OnFailureConditionReportContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, BeanOverrideContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory, WebDriverContextCustomizerFactory]
+2026-04-02 20:24:11.916 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [CourseBulkTransactionIntegrationTest]: [SpringBootTestRandomPortContextCustomizer, PropertyMappingContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, OnFailureConditionReportContextCustomizer, DynamicPropertiesContextCustomizer, WebDriverContextCustomizer]
+2026-04-02 20:24:11.916 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.online_learning.OnlineLearningApplication for test class com.example.online_learning.CourseBulkTransactionIntegrationTest
+2026-04-02 20:24:11.917 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [CourseBulkTransactionIntegrationTest]: using SpringBootContextLoader
+2026-04-02 20:24:11.917 [main] DEBUG o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners for test class [CourseBulkTransactionIntegrationTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, BeanOverrideTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, CommonCachesTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, MockitoResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener]
+2026-04-02 20:24:11.941 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=2
+2026-04-02 20:24:11.942 [main] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.createCoursesBulkNoTx failed after 13 ms
+2026-04-02 20:24:11.985 [main] INFO  c.e.o.c.CourseSearchCacheInvalidator - Search cache invalidated: clearedEntries=0
+2026-04-02 20:24:11.985 [main] ERROR c.e.o.aop.ServiceLoggingAspect - Method CourseServiceImpl.createCoursesBulkTx failed after 6 ms
+2026-04-02 20:24:11.998 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-02 20:24:12.005 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-02 20:29:54.013 [main] INFO  c.e.o.OnlineLearningApplication - Starting OnlineLearningApplication using Java 21.0.10 with PID 28187 (/home/zhenya/lab/labs_java/online_learning/target/classes started by zhenya in /home/zhenya/lab/labs_java/online_learning)
+2026-04-02 20:29:54.014 [main] DEBUG c.e.o.OnlineLearningApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-04-02 20:29:54.015 [main] INFO  c.e.o.OnlineLearningApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-02 20:29:54.676 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-02 20:29:54.740 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 54 ms. Found 5 JPA repository interfaces.
+2026-04-02 20:29:55.326 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-02 20:29:55.342 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-02 20:29:55.344 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-02 20:29:55.344 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-02 20:29:55.403 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1360 ms
+2026-04-02 20:29:55.522 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-02 20:29:55.854 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@ac4e690
+2026-04-02 20:29:55.855 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-02 20:29:56.380 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-02 20:29:57.054 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-02 20:29:57.175 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-02 20:29:58.731 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-02 20:29:58.747 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-04-02 20:29:58.755 [main] INFO  c.e.o.OnlineLearningApplication - Started OnlineLearningApplication in 5.086 seconds (process running for 5.435)
+2026-04-02 20:29:58.821 [main] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         courses c1_0
-2026-04-01 16:34:59.301 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2026-04-01 16:34:59.301 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2026-04-01 16:35:04.373 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-01 16:35:04.373 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-04-01 16:35:04.374 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-04-01 16:35:04.533 [http-nio-8080-exec-1] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {firstName=размер должен находиться в диапазоне от 2 до 50}
-2026-04-01 16:35:23.160 [http-nio-8080-exec-2] WARN  c.e.o.e.GlobalExceptionHandler - Validation failed: {firstName=размер должен находиться в диапазоне от 2 до 50}
-2026-04-01 16:38:01.246 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-01 16:38:01.248 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-04-01 16:38:01.251 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:38:01.253 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-04-01 16:38:01.258 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-04-01 16:43:26.992 [main] INFO  c.e.o.OnlineLearningApplication - Starting OnlineLearningApplication using Java 21.0.10 with PID 90543 (/home/zhenya/lab/labs_java/online_learning/target/classes started by zhenya in /home/zhenya/lab/labs_java/online_learning)
-2026-04-01 16:43:26.995 [main] DEBUG c.e.o.OnlineLearningApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
-2026-04-01 16:43:26.995 [main] INFO  c.e.o.OnlineLearningApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-01 16:43:27.638 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-01 16:43:27.693 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 48 ms. Found 5 JPA repository interfaces.
-2026-04-01 16:43:28.207 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-04-01 16:43:28.220 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-04-01 16:43:28.222 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-04-01 16:43:28.222 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-01 16:43:28.269 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1230 ms
-2026-04-01 16:43:28.367 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-04-01 16:43:28.658 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@29892a77
-2026-04-01 16:43:28.659 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-04-01 16:43:29.152 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-01 16:43:29.890 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-01 16:43:29.980 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-01 16:43:31.463 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-04-01 16:43:31.474 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-04-01 16:43:31.483 [main] INFO  c.e.o.OnlineLearningApplication - Started OnlineLearningApplication in 4.864 seconds (process running for 5.366)
-2026-04-01 16:43:31.557 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        courses c1_0
-2026-04-01 16:43:31.573 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2026-04-01 16:43:31.574 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2026-04-01 16:43:35.469 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-01 16:43:35.470 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-04-01 16:43:35.470 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
-2026-04-01 16:43:35.598 [http-nio-8080-exec-1] WARN  c.e.o.e.GlobalExceptionHandler - 400 BAD_REQUEST [Validation failed]: {firstName=размер должен находиться в диапазоне от 2 до 50}
-2026-04-01 16:44:11.529 [http-nio-8080-exec-2] WARN  c.e.o.e.GlobalExceptionHandler - 400 BAD_REQUEST [Validation failed]: {firstName=размер должен находиться в диапазоне от 2 до 50}
+2026-04-02 20:29:58.836 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-04-02 20:29:58.836 [main] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-04-02 20:30:05.094 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-02 20:30:05.096 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-04-02 20:30:05.100 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-02 20:30:05.102 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-02 20:30:05.108 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

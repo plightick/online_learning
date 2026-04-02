@@ -11,6 +11,10 @@ public interface CourseService {
 
     CourseResponseDto createCourse(CourseRequestDto requestDto);
 
+    List<CourseResponseDto> createCoursesBulkTx(List<CourseRequestDto> requestDtos);
+
+    List<CourseResponseDto> createCoursesBulkNoTx(List<CourseRequestDto> requestDtos);
+
     CourseResponseDto getCourseById(Long id);
 
     Page<CourseResponseDto> getCourses(String level, Pageable pageable);
