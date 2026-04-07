@@ -1,6 +1,7 @@
 package com.example.online_learning.cache;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,8 +46,8 @@ class CourseSearchCacheKeyTest {
                 2,
                 20);
 
-        assertNotEquals(null, key);
-        assertNotEquals("not-a-key", key);
+        assertFalse(key.equals(null));
+        assertFalse(key.equals("not-a-key"));
         assertTrue(key.toString().contains("categoryName='backend'"));
         assertTrue(key.toString().contains("pageNumber=2"));
         assertTrue(key.toString().contains("pageSize=20"));

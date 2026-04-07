@@ -32,11 +32,19 @@ public final class CourseSearchCacheKey {
         if (!(object instanceof CourseSearchCacheKey that)) {
             return false;
         }
-        return Objects.equals(categoryName, that.categoryName)
-                && Objects.equals(instructorSpecialization, that.instructorSpecialization)
-                && queryType == that.queryType
-                && pageNumber == that.pageNumber
-                && pageSize == that.pageSize;
+        if (!Objects.equals(categoryName, that.categoryName)) {
+            return false;
+        }
+        if (!Objects.equals(instructorSpecialization, that.instructorSpecialization)) {
+            return false;
+        }
+        if (queryType != that.queryType) {
+            return false;
+        }
+        if (pageNumber != that.pageNumber) {
+            return false;
+        }
+        return pageSize == that.pageSize;
     }
 
     @Override
