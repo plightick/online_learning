@@ -317,6 +317,17 @@ class CourseServiceImplTest {
     }
 
     @Test
+    void getCoursesWithNPlusOneShouldUseFindAllWhenLevelIsBlank() {
+        Course course = detailedCourse(23L, "General", "BEGINNER", "Jane", "Doe");
+        when(courseRepository.findAll()).thenReturn(List.of(course));
+
+        List<CourseResponseDto> responseDtos = service.getCoursesWithNPlusOne("   ");
+
+        assertEquals(1, responseDtos.size());
+        verify(courseRepository).findAll();
+    }
+
+    @Test
     void getCoursesWithEntityGraphShouldUseNormalizedLevel() {
         Course course = detailedCourse(22L, "Cloud", "ADVANCED", "Jane", "Doe");
         when(courseRepository.findAllWithDetailsByLevel("advanced")).thenReturn(List.of(course));
@@ -341,6 +352,21 @@ class CourseServiceImplTest {
         assertSame(cachedPage, responsePage);
         verify(courseRepository, never()).findPagedCourseIdsByCategoryAndInstructorJpql(any(), any(), any());
         verify(courseSearchCache, never()).put(any(CourseSearchCacheKey.class), any(Page.class));
+    }
+
+    @Test
+    void searchCoursesShouldReturnCachedPageOnHitWithoutFilters() {
+        Page<CourseResponseDto> cachedPage = new PageImpl<>(List.of(responseDto(2L, "Cached Empty")));
+        when(courseSearchCache.get(any(CourseSearchCacheKey.class))).thenReturn(Optional.of(cachedPage));
+
+        Page<CourseResponseDto> responsePage = service.searchCourses(
+                "   ",
+                null,
+                CourseSearchQueryType.JPQL,
+                PageRequest.of(0, 3));
+
+        assertSame(cachedPage, responsePage);
+        verify(courseRepository, never()).findPagedCourseIdsByCategoryAndInstructorJpql(any(), any(), any());
     }
 
     @Test
@@ -394,6 +420,19 @@ class CourseServiceImplTest {
                 () -> service.getCourses(
                         null,
                         PageRequest.of(0, 10, Sort.by("unsupported").ascending())));
+    }
+
+    @Test
+    void getCoursesShouldSupportMultipleSortOrders() {
+        Course alpha = detailedCourse(2L, "Alpha", "ADVANCED", "Jane", "Zulu");
+        Course beta = detailedCourse(1L, "Alpha", "ADVANCED", "Jane", "Alpha");
+        when(courseRepository.findAllWithDetails()).thenReturn(List.of(alpha, beta));
+
+        Page<CourseResponseDto> page = service.getCourses(
+                null,
+                PageRequest.of(0, 10, Sort.by("title").ascending().and(Sort.by("id").ascending())));
+
+        assertIterableEquals(List.of(1L, 2L), page.map(CourseResponseDto::id).getContent());
     }
 
     @Test

@@ -98,6 +98,26 @@ class PersistenceDemoServiceTest {
     }
 
     @Test
+    void saveWithTransactionShouldUseOwnMessageWhenLoggingExceptionHasNoCause() {
+        RelatedSaveRequestDto requestDto = requestDto();
+
+        doThrow(new LoggingException("Wrapper message"))
+                .when(transactionalWorker)
+                .saveWithRollback(requestDto);
+        when(instructorRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(
+                requestDto.instructorFirstName(),
+                requestDto.instructorLastName())).thenReturn(Optional.empty());
+        when(courseRepository.findByTitleIgnoreCase(requestDto.courseTitle())).thenReturn(Optional.empty());
+        when(lessonRepository.countByCourseTitleIgnoreCase(requestDto.courseTitle())).thenReturn(0L);
+
+        RelatedSaveResponseDto responseDto = service.saveWithTransaction(requestDto);
+
+        assertEquals("WITH_TRANSACTION", responseDto.mode());
+        assertEquals("Wrapper message", responseDto.message());
+        assertEquals(0L, responseDto.persistedLessons());
+    }
+
+    @Test
     void saveWithoutTransactionShouldReturnUnexpectedSuccessWhenWorkerCompletes() {
         RelatedSaveRequestDto requestDto = requestDto();
         Instructor instructor = instructor(11L);

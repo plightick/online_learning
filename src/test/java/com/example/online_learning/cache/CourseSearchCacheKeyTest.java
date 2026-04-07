@@ -51,4 +51,39 @@ class CourseSearchCacheKeyTest {
         assertTrue(key.toString().contains("pageNumber=2"));
         assertTrue(key.toString().contains("pageSize=20"));
     }
+
+    @Test
+    void equalsShouldDetectDifferencesAcrossEveryField() {
+        CourseSearchCacheKey base = new CourseSearchCacheKey(
+                "backend",
+                "security",
+                CourseSearchQueryType.JPQL,
+                1,
+                10);
+
+        assertNotEquals(base, new CourseSearchCacheKey(
+                "frontend",
+                "security",
+                CourseSearchQueryType.JPQL,
+                1,
+                10));
+        assertNotEquals(base, new CourseSearchCacheKey(
+                "backend",
+                "platform",
+                CourseSearchQueryType.JPQL,
+                1,
+                10));
+        assertNotEquals(base, new CourseSearchCacheKey(
+                "backend",
+                "security",
+                CourseSearchQueryType.JPQL,
+                2,
+                10));
+        assertNotEquals(base, new CourseSearchCacheKey(
+                "backend",
+                "security",
+                CourseSearchQueryType.JPQL,
+                1,
+                20));
+    }
 }
