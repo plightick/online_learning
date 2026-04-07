@@ -1,4 +1,4 @@
-name: SonarQube
+name: SonarQube Cloud
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   analyze:
-    name: SonarQube Analysis
+    name: SonarQube Cloud Analysis
     runs-on: ubuntu-latest
 
     steps:
@@ -40,7 +40,11 @@ jobs:
       - name: Build, test, and analyze in SonarQube
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: >
-          ./mvnw -B verify
-          org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar
+          SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
+          SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
+        run: |
+          ./mvnw -B verify \
+            org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.organization="${SONAR_ORGANIZATION}" \
+            -Dsonar.projectKey="${SONAR_PROJECT_KEY}"
