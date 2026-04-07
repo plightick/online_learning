@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>21</java.version>
 		<jacoco.version>0.8.14</jacoco.version>
+		<sonar.organization>plightick</sonar.organization>
 		<sonar.coverage.jacoco.xmlReportPaths>
 			target/site/jacoco/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>
