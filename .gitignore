@@ -35,3 +35,7 @@ build/
 
 ### Local Tools ###
 postman/
+
+.codex
+.codex/
+
