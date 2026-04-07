@@ -413,13 +413,10 @@ class CourseServiceImplTest {
     @Test
     void getCoursesShouldRejectUnsupportedSortField() {
         Course course = detailedCourse(1L, "Alpha", "ADVANCED", "Jane", "Doe");
+        PageRequest pageable = PageRequest.of(0, 10, Sort.by("unsupported").ascending());
         when(courseRepository.findAllWithDetails()).thenReturn(List.of(course));
 
-        assertThrows(
-                BadRequestException.class,
-                () -> service.getCourses(
-                        null,
-                        PageRequest.of(0, 10, Sort.by("unsupported").ascending())));
+        assertThrows(BadRequestException.class, () -> service.getCourses(null, pageable));
     }
 
     @Test
@@ -466,12 +463,10 @@ class CourseServiceImplTest {
         assertEquals(List.of(2L, 1L, 3L), sortIds(courses, firstNameComparator));
         assertEquals(List.of(1L, 2L, 3L), sortIds(courses, lastNameComparator));
 
-        assertThrows(
-                BadRequestException.class,
-                () -> ReflectionTestUtils.invokeMethod(
-                        service,
-                        "buildCourseComparator",
-                        Sort.Order.asc("unknown")));
+        Sort.Order unknownSortOrder = Sort.Order.asc("unknown");
+
+        assertThrows(BadRequestException.class,
+                () -> ReflectionTestUtils.invokeMethod(service, "buildCourseComparator", unknownSortOrder));
     }
 
     @Test

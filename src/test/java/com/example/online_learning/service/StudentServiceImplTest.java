@@ -137,28 +137,22 @@ class StudentServiceImplTest {
     void updateStudentShouldRejectEmailUsedByAnotherStudent() {
         Student currentStudent = student(5L, "Anna", "Petrova", "anna@example.com");
         Student otherStudent = student(6L, "Maria", "Green", "maria@example.com");
+        StudentRequestDto requestDto = new StudentRequestDto("Anna", "Petrova", "maria@example.com");
         when(studentRepository.findById(5L)).thenReturn(Optional.of(currentStudent));
         when(studentRepository.findByEmailIgnoreCase("maria@example.com"))
                 .thenReturn(Optional.of(otherStudent));
 
-        assertThrows(
-                DuplicateResourceException.class,
-                () -> service.updateStudent(
-                        5L,
-                        new StudentRequestDto("Anna", "Petrova", "maria@example.com")));
+        assertThrows(DuplicateResourceException.class, () -> service.updateStudent(5L, requestDto));
 
         verify(courseSearchCacheInvalidator, never()).invalidate();
     }
 
     @Test
     void updateStudentShouldThrowWhenStudentMissing() {
+        StudentRequestDto requestDto = new StudentRequestDto("Anna", "Petrova", "anna@example.com");
         when(studentRepository.findById(77L)).thenReturn(Optional.empty());
 
-        assertThrows(
-                ResourceNotFoundException.class,
-                () -> service.updateStudent(
-                        77L,
-                        new StudentRequestDto("Anna", "Petrova", "anna@example.com")));
+        assertThrows(ResourceNotFoundException.class, () -> service.updateStudent(77L, requestDto));
     }
 
     @Test

@@ -45,8 +45,8 @@ class CourseSearchCacheKeyTest {
                 2,
                 20);
 
-        assertNotEquals(key, null);
-        assertNotEquals(key, "not-a-key");
+        assertNotEquals(null, key);
+        assertNotEquals("not-a-key", key);
         assertTrue(key.toString().contains("categoryName='backend'"));
         assertTrue(key.toString().contains("pageNumber=2"));
         assertTrue(key.toString().contains("pageSize=20"));
