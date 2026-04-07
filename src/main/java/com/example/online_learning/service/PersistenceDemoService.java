@@ -2,6 +2,8 @@ package com.example.online_learning.service;
 
 import com.example.online_learning.dto.RelatedSaveRequestDto;
 import com.example.online_learning.dto.RelatedSaveResponseDto;
+import com.example.online_learning.entity.Course;
+import com.example.online_learning.entity.Instructor;
 import com.example.online_learning.exception.LoggingException;
 import com.example.online_learning.repository.CourseRepository;
 import com.example.online_learning.repository.InstructorRepository;
@@ -52,10 +54,10 @@ public class PersistenceDemoService {
         Long instructorId = instructorRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(
                         requestDto.instructorFirstName(),
                         requestDto.instructorLastName())
-                .map(instructor -> instructor.getId())
+                .map(Instructor::getId)
                 .orElse(null);
         Long courseId = courseRepository.findByTitleIgnoreCase(requestDto.courseTitle())
-                .map(course -> course.getId())
+                .map(Course::getId)
                 .orElse(null);
         return new RelatedSaveResponseDto(
                 mode,

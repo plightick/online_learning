@@ -2,6 +2,7 @@ package com.example.online_learning.mapper;
 
 import com.example.online_learning.dto.CourseResponseDto;
 import com.example.online_learning.dto.LessonResponseDto;
+import com.example.online_learning.entity.Category;
 import com.example.online_learning.entity.Course;
 import com.example.online_learning.entity.Lesson;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class CourseMapper {
                         .sorted()
                         .toList(),
                 course.getCategories().stream()
-                        .map(category -> category.getName())
+                        .map(Category::getName)
                         .sorted()
                         .toList());
     }

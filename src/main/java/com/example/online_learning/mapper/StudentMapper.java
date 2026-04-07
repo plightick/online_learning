@@ -1,6 +1,7 @@
 package com.example.online_learning.mapper;
 
 import com.example.online_learning.dto.StudentResponseDto;
+import com.example.online_learning.entity.Course;
 import com.example.online_learning.entity.Student;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ public class StudentMapper {
                 student.getLastName(),
                 student.getEmail(),
                 student.getCourses().stream()
-                        .map(course -> course.getTitle())
+                        .map(Course::getTitle)
                         .sorted()
                         .toList());
     }

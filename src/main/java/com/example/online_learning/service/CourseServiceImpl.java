@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -340,7 +341,7 @@ public class CourseServiceImpl implements CourseService {
         }
         List<CourseResponseDto> content = courseIdsPage.getContent().stream()
                 .map(coursesById::get)
-                .filter(course -> course != null)
+                .filter(Objects::nonNull)
                 .map(courseMapper::toDto)
                 .toList();
         return new PageImpl<>(content, courseIdsPage.getPageable(), courseIdsPage.getTotalElements());
