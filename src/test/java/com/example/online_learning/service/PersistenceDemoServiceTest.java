@@ -97,6 +97,45 @@ class PersistenceDemoServiceTest {
         verify(transactionalWorker).saveWithRollback(requestDto);
     }
 
+    @Test
+    void saveWithoutTransactionShouldReturnUnexpectedSuccessWhenWorkerCompletes() {
+        RelatedSaveRequestDto requestDto = requestDto();
+        Instructor instructor = instructor(11L);
+        Course course = course(21L, requestDto.courseTitle());
+        when(instructorRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(
+                requestDto.instructorFirstName(),
+                requestDto.instructorLastName())).thenReturn(Optional.of(instructor));
+        when(courseRepository.findByTitleIgnoreCase(requestDto.courseTitle())).thenReturn(Optional.of(course));
+        when(lessonRepository.countByCourseTitleIgnoreCase(requestDto.courseTitle())).thenReturn(1L);
+
+        RelatedSaveResponseDto responseDto = service.saveWithoutTransaction(requestDto);
+
+        assertEquals("WITHOUT_TRANSACTION", responseDto.mode());
+        assertEquals("Unexpected success", responseDto.message());
+        assertEquals(11L, responseDto.instructorId());
+        assertEquals(21L, responseDto.courseId());
+    }
+
+    @Test
+    void saveWithTransactionShouldReturnUnexpectedSuccessWhenWorkerCompletes() {
+        RelatedSaveRequestDto requestDto = requestDto();
+        Instructor instructor = instructor(12L);
+        Course course = course(22L, requestDto.courseTitle());
+        when(instructorRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(
+                requestDto.instructorFirstName(),
+                requestDto.instructorLastName())).thenReturn(Optional.of(instructor));
+        when(courseRepository.findByTitleIgnoreCase(requestDto.courseTitle())).thenReturn(Optional.of(course));
+        when(lessonRepository.countByCourseTitleIgnoreCase(requestDto.courseTitle())).thenReturn(2L);
+
+        RelatedSaveResponseDto responseDto = service.saveWithTransaction(requestDto);
+
+        assertEquals("WITH_TRANSACTION", responseDto.mode());
+        assertEquals("Unexpected success", responseDto.message());
+        assertEquals(12L, responseDto.instructorId());
+        assertEquals(22L, responseDto.courseId());
+        assertEquals(2L, responseDto.persistedLessons());
+    }
+
     private static RelatedSaveRequestDto requestDto() {
         return new RelatedSaveRequestDto(
                 "Jane",
