@@ -1,8 +1,8 @@
 package com.example.online_learning.cache;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.example.online_learning.dto.CourseSearchQueryType;
 import org.junit.jupiter.api.Test;
@@ -46,11 +46,11 @@ class CourseSearchCacheKeyTest {
                 20);
         Object unrelatedObject = new Object();
 
-        assertNotEquals(null, key);
-        assertNotEquals(unrelatedObject, key);
-        assertTrue(key.toString().contains("categoryName='backend'"));
-        assertTrue(key.toString().contains("pageNumber=2"));
-        assertTrue(key.toString().contains("pageSize=20"));
+        assertThat(key.equals(null)).isFalse();
+        assertThat(key.equals(unrelatedObject)).isFalse();
+        assertThat(key.toString()).contains("categoryName='backend'");
+        assertThat(key.toString()).contains("pageNumber=2");
+        assertThat(key.toString()).contains("pageSize=20");
     }
 
     @Test
