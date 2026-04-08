@@ -293,6 +293,17 @@ class CourseServiceImplTest {
     }
 
     @Test
+    void updateCourseShouldThrowWhenCourseIsMissing() {
+        when(courseRepository.findDetailedById(404L)).thenReturn(Optional.empty());
+
+        ResourceNotFoundException exception = assertThrows(
+                ResourceNotFoundException.class,
+                () -> service.updateCourse(404L, courseRequest("Missing", List.of())));
+
+        assertTrue(exception.getMessage().contains("404"));
+    }
+
+    @Test
     void deleteCourseShouldRemoveRelationsDeleteAndInvalidateCache() {
         Course course = detailedCourse(12L, "Delete Me", "BEGINNER", "Jane", "Doe");
         when(courseRepository.findDetailedById(12L)).thenReturn(Optional.of(course));
@@ -304,6 +315,17 @@ class CourseServiceImplTest {
         assertTrue(course.getInstructor().getCourses().isEmpty());
         verify(courseRepository).delete(course);
         verify(courseSearchCacheInvalidator).invalidate();
+    }
+
+    @Test
+    void deleteCourseShouldThrowWhenCourseIsMissing() {
+        when(courseRepository.findDetailedById(405L)).thenReturn(Optional.empty());
+
+        ResourceNotFoundException exception = assertThrows(
+                ResourceNotFoundException.class,
+                () -> service.deleteCourse(405L));
+
+        assertTrue(exception.getMessage().contains("405"));
     }
 
     @Test

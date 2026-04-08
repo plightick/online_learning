@@ -1,6 +1,7 @@
 package com.example.online_learning.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -91,8 +92,8 @@ class PersistenceDemoServiceTest {
 
         assertEquals("WITH_TRANSACTION", responseDto.mode());
         assertEquals("Inner failure", responseDto.message());
-        assertEquals(null, responseDto.instructorId());
-        assertEquals(null, responseDto.courseId());
+        assertNull(responseDto.instructorId());
+        assertNull(responseDto.courseId());
         assertEquals(0L, responseDto.persistedLessons());
         verify(transactionalWorker).saveWithRollback(requestDto);
     }

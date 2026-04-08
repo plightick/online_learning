@@ -2,6 +2,10 @@ package com.example.online_learning;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.online_learning.dto.CourseRequestDto;
 import com.example.online_learning.dto.LessonRequestDto;
@@ -14,13 +18,17 @@ import com.example.online_learning.repository.LessonRepository;
 import com.example.online_learning.repository.StudentRepository;
 import com.example.online_learning.service.CourseService;
 import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 @ActiveProfiles("test")
 class CourseBulkTransactionIntegrationTest {
 
@@ -41,6 +49,11 @@ class CourseBulkTransactionIntegrationTest {
 
     @Autowired
     private LessonRepository lessonRepository;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private Long existingStudentId;
 
@@ -76,6 +89,43 @@ class CourseBulkTransactionIntegrationTest {
         assertThatThrownBy(() -> courseService.createCoursesBulkNoTx(requests))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("999");
+
+        assertThat(courseRepository.count()).isEqualTo(1);
+        assertThat(lessonRepository.count()).isEqualTo(1);
+        assertThat(instructorRepository.count()).isEqualTo(1);
+        assertThat(categoryRepository.count()).isEqualTo(2);
+        assertThat(courseRepository.findByTitleIgnoreCase("Spring Security Deep Dive")).isPresent();
+    }
+
+    @Test
+    void bulkEndpointTransactionalTrueShouldRollbackAllChangesWhenLaterItemFails() throws Exception {
+        List<CourseRequestDto> requests = bulkRequests();
+
+        mockMvc.perform(post("/api/courses/bulk")
+                        .param("transactional", "true")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requests)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.message").value("Student with id 999 was not found"));
+
+        assertThat(courseRepository.count()).isZero();
+        assertThat(lessonRepository.count()).isZero();
+        assertThat(instructorRepository.count()).isZero();
+        assertThat(categoryRepository.count()).isZero();
+    }
+
+    @Test
+    void bulkEndpointTransactionalFalseShouldKeepFirstCourseWhenLaterItemFails() throws Exception {
+        List<CourseRequestDto> requests = bulkRequests();
+
+        mockMvc.perform(post("/api/courses/bulk")
+                        .param("transactional", "false")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requests)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.message").value("Student with id 999 was not found"));
 
         assertThat(courseRepository.count()).isEqualTo(1);
         assertThat(lessonRepository.count()).isEqualTo(1);
