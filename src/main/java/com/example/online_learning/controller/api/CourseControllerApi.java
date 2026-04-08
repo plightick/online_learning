@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -28,6 +29,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Course Controller", description = "Course management and search endpoints")
 public interface CourseControllerApi {
+
+    String BULK_DEMO_REQUEST_EXAMPLE = """
+            [
+              {
+                "title": "Spring Security Deep Dive",
+                "level": "ADVANCED",
+                "instructorFirstName": "Pavel",
+                "instructorLastName": "Ivanov",
+                "instructorSpecialization": "Security",
+                "lessons": [
+                  {
+                    "title": "Authentication",
+                    "durationMinutes": 40,
+                    "lessonOrder": 1
+                  }
+                ],
+                "studentIds": [1],
+                "categoryNames": ["Backend", "Security"]
+              },
+              {
+                "title": "Broken Bulk Demo",
+                "level": "ADVANCED",
+                "instructorFirstName": "Pavel",
+                "instructorLastName": "Ivanov",
+                "instructorSpecialization": "Security",
+                "lessons": [
+                  {
+                    "title": "Authorization",
+                    "durationMinutes": 45,
+                    "lessonOrder": 1
+                  }
+                ],
+                "studentIds": [999999],
+                "categoryNames": ["Backend"]
+              }
+            ]
+            """;
 
     @Operation(summary = "Create course", description = "Creates a new course with lessons and optional relations.")
     @ApiResponses(value = {
@@ -55,8 +93,10 @@ public interface CourseControllerApi {
     );
 
     @Operation(
-            summary = "Bulk create courses",
-            description = "Imports a list of courses and can demonstrate atomic or partial persistence.")
+            summary = "Bulk create courses with transaction",
+            description = "Saves a list of courses atomically. "
+                    + "Use the example with two objects: the first is valid, the "
+                    + "second references a missing student and forces rollback of the whole bulk request.")
     @ApiResponses(value = {
         @ApiResponse(
                 responseCode = "201",
@@ -71,17 +111,65 @@ public interface CourseControllerApi {
                 description = "Student not found",
                 content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PostMapping("/api/courses/bulk")
-    ResponseEntity<List<CourseResponseDto>> createCoursesBulk(
+    @PostMapping("/api/courses/bulk/with-transaction")
+    ResponseEntity<List<CourseResponseDto>> createCoursesBulkWithTransaction(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Two demo courses where the first is valid and the second is intentionally invalid",
+                    required = true,
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = CourseRequestDto.class)),
+                            examples = @ExampleObject(
+                                    name = "Transactional rollback demo",
+                                    summary = "One valid course and one invalid course",
+                                    value = BULK_DEMO_REQUEST_EXAMPLE)))
             @Parameter(description = "Course payloads", required = true)
-            @Valid @RequestBody List<@Valid CourseRequestDto> requestDtos,
-            @Parameter(
-                    description = "When true the whole bulk request is atomic; when false successful items stay saved",
-                    example = "true")
-            @RequestParam(defaultValue = "true") boolean transactional
+            @Valid @RequestBody List<@Valid CourseRequestDto> requestDtos
     );
 
-    @Operation(summary = "Get courses", description = "Returns a paginated list of courses.")
+    @Operation(
+            summary = "Bulk create courses without transaction",
+            description = "Saves courses without wrapping the whole request in one transaction. Use the same example: "
+                    + "the first course stays in the database, the second fails.")
+    @ApiResponses(value = {
+        @ApiResponse(
+                responseCode = "201",
+                description = "Courses created successfully",
+                content = @Content(array = @ArraySchema(schema = @Schema(implementation = CourseResponseDto.class)))),
+        @ApiResponse(
+                responseCode = "400",
+                description = "Invalid request body or empty list",
+                content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class))),
+        @ApiResponse(
+                responseCode = "404",
+                description = "Student not found",
+                content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/api/courses/bulk/without-transaction")
+    ResponseEntity<List<CourseResponseDto>> createCoursesBulkWithoutTransaction(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Two demo courses where the first is valid and the second is intentionally invalid",
+                    required = true,
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = CourseRequestDto.class)),
+                            examples = @ExampleObject(
+                                    name = "Partial save demo",
+                                    summary = "The first course is saved, the second one fails",
+                                    value = BULK_DEMO_REQUEST_EXAMPLE)))
+            @Parameter(description = "Course payloads", required = true)
+            @Valid @RequestBody List<@Valid CourseRequestDto> requestDtos
+    );
+
+    @Operation(summary = "Get all courses", description = "Returns all courses without filters and pagination.")
+    @ApiResponses(value = {
+        @ApiResponse(
+                responseCode = "200",
+                description = "All courses retrieved successfully",
+                content = @Content(array = @ArraySchema(schema = @Schema(implementation = CourseResponseDto.class))))
+    })
+    @GetMapping("/api/courses/all")
+    ResponseEntity<List<CourseResponseDto>> getAllCourses();
+
+    @Operation(summary = "Get courses page", description = "Returns a paginated list of courses with optional filters.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Courses retrieved successfully"),
         @ApiResponse(

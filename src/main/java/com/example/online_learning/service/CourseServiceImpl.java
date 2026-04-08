@@ -110,6 +110,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<CourseResponseDto> getAllCourses() {
+        return getCoursesInternal(null, true);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public CourseResponseDto getCourseById(Long id) {
         Course course = courseRepository.findDetailedById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(COURSE_ENTITY, id));

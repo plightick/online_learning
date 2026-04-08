@@ -101,8 +101,7 @@ class CourseBulkTransactionIntegrationTest {
     void bulkEndpointTransactionalTrueShouldRollbackAllChangesWhenLaterItemFails() throws Exception {
         List<CourseRequestDto> requests = bulkRequests();
 
-        mockMvc.perform(post("/api/courses/bulk")
-                        .param("transactional", "true")
+        mockMvc.perform(post("/api/courses/bulk/with-transaction")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requests)))
                 .andExpect(status().isNotFound())
@@ -119,8 +118,7 @@ class CourseBulkTransactionIntegrationTest {
     void bulkEndpointTransactionalFalseShouldKeepFirstCourseWhenLaterItemFails() throws Exception {
         List<CourseRequestDto> requests = bulkRequests();
 
-        mockMvc.perform(post("/api/courses/bulk")
-                        .param("transactional", "false")
+        mockMvc.perform(post("/api/courses/bulk/without-transaction")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requests)))
                 .andExpect(status().isNotFound())

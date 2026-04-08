@@ -46,8 +46,8 @@ class CourseSearchCacheKeyTest {
                 20);
         Object unrelatedObject = new Object();
 
-        assertThat(key.equals(null)).isFalse();
-        assertThat(key.equals(unrelatedObject)).isFalse();
+        assertNotEquals(key, null);
+        assertNotEquals(key, unrelatedObject);
         assertThat(key.toString()).contains("categoryName='backend'");
         assertThat(key.toString()).contains("pageNumber=2");
         assertThat(key.toString()).contains("pageSize=20");

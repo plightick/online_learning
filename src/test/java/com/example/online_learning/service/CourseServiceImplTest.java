@@ -226,6 +226,20 @@ class CourseServiceImplTest {
     }
 
     @Test
+    void getAllCoursesShouldReturnOptimizedMappedCourses() {
+        Course firstCourse = detailedCourse(41L, "Algorithms", "ADVANCED", "Ann", "A");
+        Course secondCourse = detailedCourse(42L, "Cloud", "BEGINNER", "Ben", "B");
+        when(courseRepository.findAllWithDetails()).thenReturn(List.of(firstCourse, secondCourse));
+
+        List<CourseResponseDto> responseDtos = service.getAllCourses();
+
+        assertEquals(List.of("Algorithms", "Cloud"), responseDtos.stream()
+                .map(CourseResponseDto::title)
+                .toList());
+        verify(courseRepository).findAllWithDetails();
+    }
+
+    @Test
     void getCourseByIdShouldReturnMappedCourse() {
         Course course = detailedCourse(5L, "Algorithms", "ADVANCED", "Ira", "Stone");
         when(courseRepository.findDetailedById(5L)).thenReturn(Optional.of(course));

@@ -40,14 +40,23 @@ public class CourseController implements CourseControllerApi {
                 .body(courseService.createCourse(requestDto));
     }
 
-    @PostMapping("/api/courses/bulk")
-    public ResponseEntity<List<CourseResponseDto>> createCoursesBulk(
-            @Valid @RequestBody List<@Valid CourseRequestDto> requestDtos,
-            @RequestParam(defaultValue = "true") boolean transactional) {
-        List<CourseResponseDto> responseDtos = transactional
-                ? courseService.createCoursesBulkTx(requestDtos)
-                : courseService.createCoursesBulkNoTx(requestDtos);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDtos);
+    @PostMapping("/api/courses/bulk/with-transaction")
+    public ResponseEntity<List<CourseResponseDto>> createCoursesBulkWithTransaction(
+            @Valid @RequestBody List<@Valid CourseRequestDto> requestDtos) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(courseService.createCoursesBulkTx(requestDtos));
+    }
+
+    @PostMapping("/api/courses/bulk/without-transaction")
+    public ResponseEntity<List<CourseResponseDto>> createCoursesBulkWithoutTransaction(
+            @Valid @RequestBody List<@Valid CourseRequestDto> requestDtos) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(courseService.createCoursesBulkNoTx(requestDtos));
+    }
+
+    @GetMapping("/api/courses/all")
+    public ResponseEntity<List<CourseResponseDto>> getAllCourses() {
+        return ResponseEntity.ok(courseService.getAllCourses());
     }
 
     @GetMapping("/api/courses")

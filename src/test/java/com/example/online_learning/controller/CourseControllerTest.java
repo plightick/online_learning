@@ -51,12 +51,12 @@ class CourseControllerTest {
     }
 
     @Test
-    void createCoursesBulkShouldUseTransactionalServiceWhenRequested() {
+    void createCoursesBulkWithTransactionShouldUseTransactionalService() {
         List<CourseRequestDto> requestDtos = List.of(requestDto("Bulk Tx"));
         List<CourseResponseDto> responseDtos = List.of(responseDto(2L, "Bulk Tx"));
         when(courseService.createCoursesBulkTx(requestDtos)).thenReturn(responseDtos);
 
-        ResponseEntity<List<CourseResponseDto>> response = controller.createCoursesBulk(requestDtos, true);
+        ResponseEntity<List<CourseResponseDto>> response = controller.createCoursesBulkWithTransaction(requestDtos);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertSame(responseDtos, response.getBody());
@@ -65,17 +65,29 @@ class CourseControllerTest {
     }
 
     @Test
-    void createCoursesBulkShouldUseNonTransactionalServiceWhenRequested() {
+    void createCoursesBulkWithoutTransactionShouldUseNonTransactionalService() {
         List<CourseRequestDto> requestDtos = List.of(requestDto("Bulk No Tx"));
         List<CourseResponseDto> responseDtos = List.of(responseDto(3L, "Bulk No Tx"));
         when(courseService.createCoursesBulkNoTx(requestDtos)).thenReturn(responseDtos);
 
-        ResponseEntity<List<CourseResponseDto>> response = controller.createCoursesBulk(requestDtos, false);
+        ResponseEntity<List<CourseResponseDto>> response = controller.createCoursesBulkWithoutTransaction(requestDtos);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertSame(responseDtos, response.getBody());
         verify(courseService).createCoursesBulkNoTx(requestDtos);
         verify(courseService, never()).createCoursesBulkTx(requestDtos);
+    }
+
+    @Test
+    void getAllCoursesShouldReturnAllItems() {
+        List<CourseResponseDto> responseDtos = List.of(responseDto(30L, "All Courses"));
+        when(courseService.getAllCourses()).thenReturn(responseDtos);
+
+        ResponseEntity<List<CourseResponseDto>> response = controller.getAllCourses();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertSame(responseDtos, response.getBody());
+        verify(courseService).getAllCourses();
     }
 
     @Test
