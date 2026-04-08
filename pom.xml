@@ -30,16 +30,6 @@
 		<java.version>21</java.version>
 		<jacoco.version>0.8.14</jacoco.version>
 		<sonar.organization>plightick</sonar.organization>
-		<sonar.coverage.exclusions>
-			src/main/java/com/example/online_learning/OnlineLearningApplication.java,
-			src/main/java/com/example/online_learning/aop/**,
-			src/main/java/com/example/online_learning/config/**,
-			src/main/java/com/example/online_learning/controller/**,
-			src/main/java/com/example/online_learning/dto/**,
-			src/main/java/com/example/online_learning/entity/**,
-			src/main/java/com/example/online_learning/exception/**,
-			src/main/java/com/example/online_learning/repository/**
-		</sonar.coverage.exclusions>
 		<sonar.coverage.jacoco.xmlReportPaths>
 			target/site/jacoco/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>
@@ -195,18 +185,6 @@
 						<execution>
 							<id>report</id>
 							<phase>verify</phase>
-							<configuration>
-								<excludes>
-									<exclude>com/example/online_learning/OnlineLearningApplication*</exclude>
-									<exclude>com/example/online_learning/aop/**</exclude>
-									<exclude>com/example/online_learning/config/**</exclude>
-									<exclude>com/example/online_learning/controller/**</exclude>
-									<exclude>com/example/online_learning/dto/**</exclude>
-									<exclude>com/example/online_learning/entity/**</exclude>
-									<exclude>com/example/online_learning/exception/**</exclude>
-									<exclude>com/example/online_learning/repository/**</exclude>
-								</excludes>
-							</configuration>
 							<goals>
 								<goal>report</goal>
 							</goals>

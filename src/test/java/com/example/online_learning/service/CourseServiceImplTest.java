@@ -41,6 +41,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
@@ -351,7 +352,9 @@ class CourseServiceImplTest {
 
         assertSame(cachedPage, responsePage);
         verify(courseRepository, never()).findPagedCourseIdsByCategoryAndInstructorJpql(any(), any(), any());
-        verify(courseSearchCache, never()).put(any(CourseSearchCacheKey.class), any(Page.class));
+        verify(courseSearchCache, never()).put(
+                any(CourseSearchCacheKey.class),
+                ArgumentMatchers.<Page<CourseResponseDto>>any());
     }
 
     @Test
@@ -388,7 +391,9 @@ class CourseServiceImplTest {
 
         assertEquals(1, responsePage.getContent().size());
         assertEquals("Native", responsePage.getContent().getFirst().title());
-        verify(courseSearchCache).put(any(CourseSearchCacheKey.class), any(Page.class));
+        verify(courseSearchCache).put(
+                any(CourseSearchCacheKey.class),
+                ArgumentMatchers.<Page<CourseResponseDto>>any());
     }
 
     @Test
@@ -407,7 +412,7 @@ class CourseServiceImplTest {
                 PageRequest.of(0, 10));
 
         assertTrue(responsePage.isEmpty());
-        verify(courseRepository, never()).findAllDetailedByIdIn(any(List.class));
+        verify(courseRepository, never()).findAllDetailedByIdIn(ArgumentMatchers.<Long>anyList());
     }
 
     @Test

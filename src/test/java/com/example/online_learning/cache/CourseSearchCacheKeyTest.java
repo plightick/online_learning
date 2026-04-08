@@ -45,9 +45,10 @@ class CourseSearchCacheKeyTest {
                 CourseSearchQueryType.JPQL,
                 2,
                 20);
+        Object unrelatedObject = new Object();
 
         assertFalse(key.equals(null));
-        assertFalse(key.equals("not-a-key"));
+        assertFalse(key.equals(unrelatedObject));
         assertTrue(key.toString().contains("categoryName='backend'"));
         assertTrue(key.toString().contains("pageNumber=2"));
         assertTrue(key.toString().contains("pageSize=20"));
