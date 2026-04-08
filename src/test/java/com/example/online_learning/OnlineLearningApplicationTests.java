@@ -1,5 +1,6 @@
 package com.example.online_learning;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,6 +22,7 @@ class OnlineLearningApplicationTests {
 
     @Test
     void contextLoads() {
+        assertNotNull(mockMvc);
     }
 
     @Test

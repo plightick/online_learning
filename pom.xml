@@ -30,9 +30,7 @@
 		<java.version>21</java.version>
 		<jacoco.version>0.8.14</jacoco.version>
 		<sonar.organization>plightick</sonar.organization>
-		<sonar.coverage.jacoco.xmlReportPaths>
-			target/site/jacoco/jacoco.xml
-		</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.cpd.exclusions>
 			src/main/java/com/example/online_learning/dto/**,
 			src/main/java/com/example/online_learning/entity/**

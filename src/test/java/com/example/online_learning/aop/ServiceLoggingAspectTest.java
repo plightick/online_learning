@@ -1,5 +1,6 @@
 package com.example.online_learning.aop;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,7 +39,7 @@ class ServiceLoggingAspectTest {
 
     @Test
     void serviceMethodsPointcutShouldBeCallable() {
-        aspect.serviceMethods();
+        assertDoesNotThrow(aspect::serviceMethods);
     }
 
     @Test
@@ -77,9 +78,11 @@ class ServiceLoggingAspectTest {
 
     @Test
     void logExecutionResultShouldSupportAllSuccessThresholds() {
-        ReflectionTestUtils.invokeMethod(aspect, "logExecutionResult", "Demo.fast", 100L, true);
-        ReflectionTestUtils.invokeMethod(aspect, "logExecutionResult", "Demo.slow", 700L, true);
-        ReflectionTestUtils.invokeMethod(aspect, "logExecutionResult", "Demo.verySlow", 1500L, true);
+        assertDoesNotThrow(() -> {
+            ReflectionTestUtils.invokeMethod(aspect, "logExecutionResult", "Demo.fast", 100L, true);
+            ReflectionTestUtils.invokeMethod(aspect, "logExecutionResult", "Demo.slow", 700L, true);
+            ReflectionTestUtils.invokeMethod(aspect, "logExecutionResult", "Demo.verySlow", 1500L, true);
+        });
     }
 
     private static ProceedingJoinPoint joinPoint(String methodName, Object result) throws Throwable {

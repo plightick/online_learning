@@ -57,6 +57,7 @@ class DataInitializerTest {
                 instructorRepository,
                 studentRepository,
                 categoryRepository);
+        assertNotNull(runner);
         runner.run();
 
         verify(courseRepository).count();

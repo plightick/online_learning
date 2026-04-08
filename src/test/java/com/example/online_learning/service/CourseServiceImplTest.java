@@ -294,11 +294,12 @@ class CourseServiceImplTest {
 
     @Test
     void updateCourseShouldThrowWhenCourseIsMissing() {
+        CourseRequestDto requestDto = courseRequest("Missing", List.of());
         when(courseRepository.findDetailedById(404L)).thenReturn(Optional.empty());
 
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
-                () -> service.updateCourse(404L, courseRequest("Missing", List.of())));
+                () -> service.updateCourse(404L, requestDto));
 
         assertTrue(exception.getMessage().contains("404"));
     }
