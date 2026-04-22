@@ -1,7 +1,6 @@
 package com.example.online_learning.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.example.online_learning.dto.CourseSearchQueryType;
@@ -30,9 +29,9 @@ class CourseSearchCacheKeyTest {
                 1,
                 10);
 
-        assertEquals(first, first);
-        assertEquals(first, same);
-        assertEquals(first.hashCode(), same.hashCode());
+        assertThat(first).isEqualTo(first);
+        assertThat(same).isEqualTo(first);
+        assertThat(same.hashCode()).isEqualTo(first.hashCode());
         assertNotEquals(first, different);
     }
 

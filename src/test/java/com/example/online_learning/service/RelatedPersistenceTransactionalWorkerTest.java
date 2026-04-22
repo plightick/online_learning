@@ -1,5 +1,6 @@
 package com.example.online_learning.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -92,13 +93,13 @@ class RelatedPersistenceTransactionalWorkerTest {
         ArgumentCaptor<Course> courseCaptor = ArgumentCaptor.forClass(Course.class);
         verify(courseRepository, org.mockito.Mockito.times(2)).save(courseCaptor.capture());
         Course persistedCourse = courseCaptor.getAllValues().getLast();
-        assertEquals(instructor, persistedCourse.getInstructor());
+        assertThat(persistedCourse.getInstructor()).isEqualTo(instructor);
         assertEquals(2, persistedCourse.getCategories().size());
         assertEquals(1, persistedCourse.getStudents().size());
 
         ArgumentCaptor<Lesson> lessonCaptor = ArgumentCaptor.forClass(Lesson.class);
         verify(lessonRepository).save(lessonCaptor.capture());
-        assertEquals(persistedCourse, lessonCaptor.getValue().getCourse());
+        assertThat(lessonCaptor.getValue().getCourse()).isEqualTo(persistedCourse);
         verify(courseSearchCacheInvalidator).invalidate();
     }
 

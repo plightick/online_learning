@@ -40,11 +40,10 @@ public class ConcurrencyDemoService {
         UnsafeCounter unsafeCounter = new UnsafeCounter();
         AtomicInteger atomicCounter = new AtomicInteger();
         SynchronizedCounter synchronizedCounter = new SynchronizedCounter();
-        ExecutorService executorService = Executors.newFixedThreadPool(normalizedThreads);
         CountDownLatch startGate = new CountDownLatch(1);
         CountDownLatch finishGate = new CountDownLatch(normalizedThreads);
 
-        try {
+        try (ExecutorService executorService = Executors.newFixedThreadPool(normalizedThreads)) {
             for (int threadIndex = 0; threadIndex < normalizedThreads; threadIndex++) {
                 executorService.execute(() -> runIncrementBatch(
                         incrementsPerThread,
@@ -60,8 +59,6 @@ public class ConcurrencyDemoService {
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Race condition demo was interrupted", exception);
-        } finally {
-            executorService.shutdownNow();
         }
 
         int expectedTotal = normalizedThreads * incrementsPerThread;
@@ -84,7 +81,10 @@ public class ConcurrencyDemoService {
             AtomicInteger atomicCounter,
             SynchronizedCounter synchronizedCounter) {
         try {
-            startGate.await(5, TimeUnit.SECONDS);
+            boolean started = startGate.await(5, TimeUnit.SECONDS);
+            if (!started) {
+                return;
+            }
             for (int increment = 0; increment < incrementsPerThread; increment++) {
                 unsafeCounter.increment();
                 atomicCounter.incrementAndGet();
