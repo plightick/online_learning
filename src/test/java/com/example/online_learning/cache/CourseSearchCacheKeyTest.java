@@ -29,8 +29,9 @@ class CourseSearchCacheKeyTest {
                 10);
 
         assertThat(first).isEqualTo(first);
-        assertThat(same).isEqualTo(first);
-        assertThat(same).hasSameHashCodeAs(first);
+        assertThat(same)
+                .isEqualTo(first)
+                .hasSameHashCodeAs(first);
         assertThat(first).isNotEqualTo(different);
     }
 
@@ -44,11 +45,13 @@ class CourseSearchCacheKeyTest {
                 20);
         Object unrelatedObject = new Object();
 
-        assertThat(key).isNotEqualTo(null);
-        assertThat(key).isNotEqualTo(unrelatedObject);
-        assertThat(key.toString()).contains("categoryName='backend'");
-        assertThat(key.toString()).contains("pageNumber=2");
-        assertThat(key.toString()).contains("pageSize=20");
+        assertThat(key)
+                .isNotEqualTo(null)
+                .isNotEqualTo(unrelatedObject);
+        assertThat(key.toString())
+                .contains("categoryName='backend'")
+                .contains("pageNumber=2")
+                .contains("pageSize=20");
     }
 
     @Test
@@ -60,29 +63,30 @@ class CourseSearchCacheKeyTest {
                 1,
                 10);
 
-        assertThat(base).isNotEqualTo(new CourseSearchCacheKey(
-                "frontend",
-                "security",
-                CourseSearchQueryType.JPQL,
-                1,
-                10));
-        assertThat(base).isNotEqualTo(new CourseSearchCacheKey(
-                "backend",
-                "platform",
-                CourseSearchQueryType.JPQL,
-                1,
-                10));
-        assertThat(base).isNotEqualTo(new CourseSearchCacheKey(
-                "backend",
-                "security",
-                CourseSearchQueryType.JPQL,
-                2,
-                10));
-        assertThat(base).isNotEqualTo(new CourseSearchCacheKey(
-                "backend",
-                "security",
-                CourseSearchQueryType.JPQL,
-                1,
-                20));
+        assertThat(base)
+                .isNotEqualTo(new CourseSearchCacheKey(
+                        "frontend",
+                        "security",
+                        CourseSearchQueryType.JPQL,
+                        1,
+                        10))
+                .isNotEqualTo(new CourseSearchCacheKey(
+                        "backend",
+                        "platform",
+                        CourseSearchQueryType.JPQL,
+                        1,
+                        10))
+                .isNotEqualTo(new CourseSearchCacheKey(
+                        "backend",
+                        "security",
+                        CourseSearchQueryType.JPQL,
+                        2,
+                        10))
+                .isNotEqualTo(new CourseSearchCacheKey(
+                        "backend",
+                        "security",
+                        CourseSearchQueryType.JPQL,
+                        1,
+                        20));
     }
 }
