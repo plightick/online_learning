@@ -1,7 +1,6 @@
 package com.example.online_learning.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.example.online_learning.dto.CourseSearchQueryType;
 import org.junit.jupiter.api.Test;
@@ -31,8 +30,8 @@ class CourseSearchCacheKeyTest {
 
         assertThat(first).isEqualTo(first);
         assertThat(same).isEqualTo(first);
-        assertThat(same.hashCode()).isEqualTo(first.hashCode());
-        assertNotEquals(first, different);
+        assertThat(same).hasSameHashCodeAs(first);
+        assertThat(first).isNotEqualTo(different);
     }
 
     @Test
@@ -45,8 +44,8 @@ class CourseSearchCacheKeyTest {
                 20);
         Object unrelatedObject = new Object();
 
-        assertNotEquals(key, null);
-        assertNotEquals(key, unrelatedObject);
+        assertThat(key).isNotEqualTo(null);
+        assertThat(key).isNotEqualTo(unrelatedObject);
         assertThat(key.toString()).contains("categoryName='backend'");
         assertThat(key.toString()).contains("pageNumber=2");
         assertThat(key.toString()).contains("pageSize=20");
@@ -61,25 +60,25 @@ class CourseSearchCacheKeyTest {
                 1,
                 10);
 
-        assertNotEquals(base, new CourseSearchCacheKey(
+        assertThat(base).isNotEqualTo(new CourseSearchCacheKey(
                 "frontend",
                 "security",
                 CourseSearchQueryType.JPQL,
                 1,
                 10));
-        assertNotEquals(base, new CourseSearchCacheKey(
+        assertThat(base).isNotEqualTo(new CourseSearchCacheKey(
                 "backend",
                 "platform",
                 CourseSearchQueryType.JPQL,
                 1,
                 10));
-        assertNotEquals(base, new CourseSearchCacheKey(
+        assertThat(base).isNotEqualTo(new CourseSearchCacheKey(
                 "backend",
                 "security",
                 CourseSearchQueryType.JPQL,
                 2,
                 10));
-        assertNotEquals(base, new CourseSearchCacheKey(
+        assertThat(base).isNotEqualTo(new CourseSearchCacheKey(
                 "backend",
                 "security",
                 CourseSearchQueryType.JPQL,
