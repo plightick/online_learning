@@ -64,11 +64,26 @@ public class CourseAnalyticsTaskService {
     }
 
     private TaskSnapshot getTaskSnapshot(String taskId) {
-        TaskSnapshot taskSnapshot = tasks.get(taskId);
+        TaskSnapshot taskSnapshot = taskId == null ? null : tasks.get(taskId);
+        if (taskSnapshot == null) {
+            String normalizedTaskId = normalizeTaskId(taskId);
+            if (normalizedTaskId != null && !normalizedTaskId.equals(taskId)) {
+                taskSnapshot = tasks.get(normalizedTaskId);
+            }
+        }
         if (taskSnapshot == null) {
             throw new ResourceNotFoundException("Course analytics task '" + taskId + "' was not found");
         }
         return taskSnapshot;
+    }
+
+    private String normalizeTaskId(String taskId) {
+        if (taskId == null) {
+            return null;
+        }
+        return taskId.trim()
+                .replace('\u0441', 'c')
+                .replace('\u0421', 'C');
     }
 
     private record TaskSnapshot(

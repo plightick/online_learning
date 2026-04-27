@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "app.course-analytics.async-delay-ms",
+      "type": "java.lang.Long",
+      "description": "Delay in milliseconds for async course analytics calculation to keep RUNNING status observable in demos.",
+      "defaultValue": 15000
+    }
+  ]
+}

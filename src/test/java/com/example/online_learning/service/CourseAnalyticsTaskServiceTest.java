@@ -84,6 +84,21 @@ class CourseAnalyticsTaskServiceTest {
     }
 
     @Test
+    void getTaskStatusShouldResolveTaskIdWithCyrillicFirstLetter() {
+        CompletableFuture<CourseAnalyticsResultDto> future = new CompletableFuture<>();
+        when(courseRepository.existsById(4L)).thenReturn(true);
+        when(courseAnalyticsAsyncWorker.buildCourseAnalytics(4L)).thenReturn(future);
+
+        AsyncTaskAcceptedResponseDto response = service.startAnalyticsTask(4L);
+        String taskIdWithCyrillicFirstLetter = "\u0441" + response.taskId().substring(1);
+
+        CourseAnalyticsTaskStatusDto status = service.getTaskStatus(taskIdWithCyrillicFirstLetter);
+
+        assertEquals(response.taskId(), status.taskId());
+        assertEquals(AsyncTaskState.RUNNING, status.status());
+    }
+
+    @Test
     void startAnalyticsTaskShouldStoreFailureMessageWhenFutureFails() {
         CompletableFuture<CourseAnalyticsResultDto> future = new CompletableFuture<>();
         when(courseRepository.existsById(2L)).thenReturn(true);
@@ -132,5 +147,14 @@ class CourseAnalyticsTaskServiceTest {
                 () -> service.getTaskStatus("missing-task"));
 
         assertTrue(exception.getMessage().contains("missing-task"));
+    }
+
+    @Test
+    void getTaskStatusShouldThrowForNullTaskId() {
+        ResourceNotFoundException exception = assertThrows(
+                ResourceNotFoundException.class,
+                () -> service.getTaskStatus(null));
+
+        assertTrue(exception.getMessage().contains("null"));
     }
 }

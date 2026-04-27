@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.locks.LockSupport;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,13 @@ import org.springframework.stereotype.Service;
 public class CourseAnalyticsAsyncWorker {
 
     private final CourseRepository courseRepository;
+    private final long asyncDelayMs;
 
-    public CourseAnalyticsAsyncWorker(CourseRepository courseRepository) {
+    public CourseAnalyticsAsyncWorker(
+            CourseRepository courseRepository,
+            @Value("${app.course-analytics.async-delay-ms:15000}") long asyncDelayMs) {
         this.courseRepository = courseRepository;
+        this.asyncDelayMs = Math.max(0, asyncDelayMs);
     }
 
     @Async("courseTaskExecutor")
@@ -28,8 +33,8 @@ public class CourseAnalyticsAsyncWorker {
         Course course = courseRepository.findDetailedById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course", courseId));
 
-        // Small delay makes the in-progress state observable in Swagger and JMeter.
-        LockSupport.parkNanos(Duration.ofMillis(250).toNanos());
+        // Configurable delay helps demonstrate RUNNING -> COMPLETED transitions in Swagger/JMeter.
+        LockSupport.parkNanos(Duration.ofMillis(asyncDelayMs).toNanos());
 
         List<Lesson> uniqueLessons = uniqueLessons(course.getLessons());
         int totalDurationMinutes = uniqueLessons.stream()

@@ -27,7 +27,7 @@ class CourseAnalyticsAsyncWorkerTest {
 
     @Test
     void buildCourseAnalyticsShouldReturnCalculatedSummary() {
-        CourseAnalyticsAsyncWorker worker = new CourseAnalyticsAsyncWorker(courseRepository);
+        CourseAnalyticsAsyncWorker worker = new CourseAnalyticsAsyncWorker(courseRepository, 0L);
         Course course = detailedCourse(1L);
         when(courseRepository.findDetailedById(1L)).thenReturn(Optional.of(course));
 
@@ -44,7 +44,7 @@ class CourseAnalyticsAsyncWorkerTest {
 
     @Test
     void buildCourseAnalyticsShouldIgnoreDuplicatedLessonsFromFetchJoinResult() {
-        CourseAnalyticsAsyncWorker worker = new CourseAnalyticsAsyncWorker(courseRepository);
+        CourseAnalyticsAsyncWorker worker = new CourseAnalyticsAsyncWorker(courseRepository, 0L);
         Course course = detailedCourse(2L);
         ReflectionTestUtils.setField(course.getLessons().getFirst(), "id", 11L);
         ReflectionTestUtils.setField(course.getLessons().get(1), "id", 12L);
@@ -60,7 +60,7 @@ class CourseAnalyticsAsyncWorkerTest {
 
     @Test
     void buildCourseAnalyticsShouldThrowWhenCourseIsMissing() {
-        CourseAnalyticsAsyncWorker worker = new CourseAnalyticsAsyncWorker(courseRepository);
+        CourseAnalyticsAsyncWorker worker = new CourseAnalyticsAsyncWorker(courseRepository, 0L);
         when(courseRepository.findDetailedById(99L)).thenReturn(Optional.empty());
 
         ResourceNotFoundException exception = assertThrows(
