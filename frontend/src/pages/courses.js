@@ -16,6 +16,30 @@ const SORT_OPTIONS = [
 ];
 const PAGE_SIZE = 5;
 
+/** Сопоставление с фильтром: в БД часто BEGINNER / INTERMEDIATE, с формы — Beginner. */
+function normalizeLevelKey(level) {
+  return String(level ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '');
+}
+
+const LEVEL_RANK = {
+  beginner: 0,
+  intermediate: 1,
+  advanced: 2,
+};
+
+function levelRankForSort(level) {
+  const k = normalizeLevelKey(level);
+  return LEVEL_RANK[k] ?? 100;
+}
+
+function matchesLevelFilter(courseLevel, filterValue) {
+  if (!filterValue) return true;
+  return normalizeLevelKey(courseLevel) === normalizeLevelKey(filterValue);
+}
+
 function parseCsv(value) {
   return value
     .split(',')
@@ -408,7 +432,8 @@ export function CoursesPage({ toast }) {
       ? sourceItems
       : sourceItems
           .filter((course) => {
-            if (filters.mode === 'list' && filters.level && course?.level !== filters.level) return false;
+            if (filters.mode === 'list' && filters.level && !matchesLevelFilter(course?.level, filters.level))
+              return false;
             if (filters.mode === 'localSearch' && normalizedSearch) {
               const title = (course?.title ?? '').toLowerCase();
               const instructor = `${course?.instructorFirstName ?? ''} ${course?.instructorLastName ?? ''}`.toLowerCase();
@@ -426,6 +451,13 @@ export function CoursesPage({ toast }) {
           .slice()
           .sort((a, b) => {
             if (filters.mode !== 'list') return 0;
+            if (filters.sortBy === 'level') {
+              const ra = levelRankForSort(a?.level);
+              const rb = levelRankForSort(b?.level);
+              const cmp = ra - rb;
+              if (cmp !== 0) return filters.ascending ? cmp : -cmp;
+              return String(a?.title ?? '').localeCompare(String(b?.title ?? ''), 'ru');
+            }
             const av = a?.[filters.sortBy];
             const bv = b?.[filters.sortBy];
             if (av == null && bv == null) return 0;
