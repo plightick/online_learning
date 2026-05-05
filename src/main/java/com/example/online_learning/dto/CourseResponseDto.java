@@ -15,6 +15,8 @@ public record CourseResponseDto(
         String instructorFirstName,
         @Schema(description = "Instructor last name", example = "Doe")
         String instructorLastName,
+        @Schema(description = "Instructor specialization", example = "Backend Development")
+        String instructorSpecialization,
         @Schema(description = "Course lessons")
         List<LessonResponseDto> lessons,
         @Schema(description = "Names of enrolled students")

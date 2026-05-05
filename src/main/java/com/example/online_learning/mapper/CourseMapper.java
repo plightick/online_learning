@@ -17,6 +17,7 @@ public class CourseMapper {
                 course.getLevel(),
                 course.getInstructor().getFirstName(),
                 course.getInstructor().getLastName(),
+                course.getInstructor().getSpecialization(),
                 course.getLessons().stream()
                         .sorted((left, right) -> left.getLessonOrder().compareTo(right.getLessonOrder()))
                         .map(this::toLessonDto)
