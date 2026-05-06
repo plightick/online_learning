@@ -34,7 +34,10 @@ python3 -m http.server 5173
 Можно поменять в DevTools консоли:
 
 ```js
-localStorage.setItem('apiBaseUrl', 'http://localhost:8080')
+localStorage.setItem('serverBaseUrl', 'http://localhost:8080')
 location.reload()
 ```
+
+Если фронт запущен в Docker/на PaaS, URL также может подставляться через `API_BASE_URL`
+в `runtime-config.js`.
 

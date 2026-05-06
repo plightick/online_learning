@@ -1,0 +1,9 @@
+.git
+.github
+target
+logs
+frontend/node_modules
+**/*.iml
+.idea
+.vscode
+

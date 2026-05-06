@@ -121,6 +121,27 @@ DB_PASSWORD=postgres
 
 При старте приложение добавляет тестовые данные.
 
+## Docker / Docker Compose
+
+Запуск всего окружения (backend + PostgreSQL + frontend):
+
+```bash
+cd online_learning
+docker compose up --build
+```
+
+- Backend: `http://localhost:8080` (healthcheck: `http://localhost:8080/health`)
+- Frontend: `http://localhost:5173`
+
+Переменные окружения backend:
+
+```properties
+PORT=8080
+DB_URL=jdbc:postgresql://postgres:5432/online_learning
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+```
+
 ## Основные endpoints
 
 ### Courses CRUD
