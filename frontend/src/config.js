@@ -1,4 +1,9 @@
 export const API_BASE_URL = (() => {
+  const fromAppConfig = globalThis?.window?.__APP_CONFIG__?.apiBaseUrl;
+  if (typeof fromAppConfig === 'string' && fromAppConfig.trim() !== '') {
+    return fromAppConfig.trim();
+  }
+
   const fromRuntime = globalThis?.__RUNTIME_CONFIG__?.API_BASE_URL;
   if (typeof fromRuntime === 'string' && fromRuntime.trim() !== '') {
     return fromRuntime.trim();
