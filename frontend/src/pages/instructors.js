@@ -57,7 +57,8 @@ export function InstructorsPage({ toast }) {
       <p>Список построен на основе текущих курсов.</p>
     </div>
 
-    <div className="card">
+    <div className="section">
+      <div className="card">
       <div className="card-h">
         <div>
           <h2 className="card-title">Список преподавателей</h2>
@@ -88,6 +89,7 @@ export function InstructorsPage({ toast }) {
               )}
             </div>`}
       </div>
+    </div>
     </div>
   </div>`;
 }

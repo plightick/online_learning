@@ -171,6 +171,8 @@ a{color:inherit}
 /* Явный отступ между кнопками (на случай проблем с gap) */
 .actions > * + *{ margin-left: 10px; }
 
+.section{ margin-top: 18px; }
+
 .filters-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -226,6 +228,11 @@ a{color:inherit}
   font-size: 12px;
   font-weight: 700;
   color: var(--muted);
+}
+.req{
+  color: var(--danger);
+  margin-left: 4px;
+  font-weight: 900;
 }
 .input,.select,.textarea{
   width: 100%;

@@ -53,13 +53,20 @@ export function Pill({ children, strong }) {
   return html`<span className=${strong ? 'pill pill-strong' : 'pill'}>${children}</span>`;
 }
 
-export function TextField({ label, value, onChange, placeholder, hint, type = 'text' }) {
+function FieldLabel({ label, required }) {
+  return html`<span className="label">
+    ${label}${required ? html`<span className="req" aria-hidden="true">*</span>` : null}
+  </span>`;
+}
+
+export function TextField({ label, value, onChange, placeholder, hint, type = 'text', required = false }) {
   return html`<label className="field">
-    <span className="label">${label}</span>
+    <${FieldLabel} label=${label} required=${required} />
     <input
       className="input"
       type=${type}
       value=${value ?? ''}
+      required=${required || undefined}
       placeholder=${placeholder ?? ''}
       onInput=${(e) => onChange(e.target.value)}
     />
@@ -67,10 +74,15 @@ export function TextField({ label, value, onChange, placeholder, hint, type = 't
   </label>`;
 }
 
-export function SelectField({ label, value, onChange, options, hint }) {
+export function SelectField({ label, value, onChange, options, hint, required = false }) {
   return html`<label className="field">
-    <span className="label">${label}</span>
-    <select className="select" value=${value ?? ''} onChange=${(e) => onChange(e.target.value)}>
+    <${FieldLabel} label=${label} required=${required} />
+    <select
+      className="select"
+      value=${value ?? ''}
+      required=${required || undefined}
+      onChange=${(e) => onChange(e.target.value)}
+    >
       ${options.map(
         (o) => html`<option key=${o.value} value=${o.value}>${o.label}</option>`
       )}
@@ -79,14 +91,15 @@ export function SelectField({ label, value, onChange, options, hint }) {
   </label>`;
 }
 
-export function NumberField({ label, value, onChange, placeholder, hint, min }) {
+export function NumberField({ label, value, onChange, placeholder, hint, min, required = false }) {
   return html`<label className="field">
-    <span className="label">${label}</span>
+    <${FieldLabel} label=${label} required=${required} />
     <input
       className="input"
       type="number"
       value=${value ?? ''}
       min=${min ?? undefined}
+      required=${required || undefined}
       placeholder=${placeholder ?? ''}
       onInput=${(e) => onChange(e.target.value === '' ? '' : Number(e.target.value))}
     />

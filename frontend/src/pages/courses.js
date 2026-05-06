@@ -151,20 +151,39 @@ function CourseForm({ initial, students, onCancel, onSave, busy }) {
 
     <div className="card-b">
       <div className="row">
-        ${TextField({ label: 'Название', value: title, onChange: setTitle, placeholder: 'Основы Java' })}
-        ${SelectField({ label: 'Уровень', value: level, onChange: setLevel, options: LEVELS.filter((x) => x.value) })}
+        ${TextField({ label: 'Название', value: title, onChange: setTitle, placeholder: 'Основы Java', required: true })}
+        ${SelectField({
+          label: 'Уровень',
+          value: level,
+          onChange: setLevel,
+          options: LEVELS.filter((x) => x.value),
+          required: true,
+        })}
       </div>
 
       <div style=${{ height: '10px' }}></div>
 
       <div className="row">
-        ${TextField({ label: 'Инструктор: имя', value: instructorFirstName, onChange: setInstructorFirstName, placeholder: 'Иван' })}
-        ${TextField({ label: 'Инструктор: фамилия', value: instructorLastName, onChange: setInstructorLastName, placeholder: 'Иванов' })}
+        ${TextField({
+          label: 'Инструктор: имя',
+          value: instructorFirstName,
+          onChange: setInstructorFirstName,
+          placeholder: 'Иван',
+          required: true,
+        })}
+        ${TextField({
+          label: 'Инструктор: фамилия',
+          value: instructorLastName,
+          onChange: setInstructorLastName,
+          placeholder: 'Иванов',
+          required: true,
+        })}
         ${TextField({
           label: 'Специализация',
           value: instructorSpecialization,
           onChange: setInstructorSpecialization,
           placeholder: 'Разработка серверной части',
+          required: true,
         })}
       </div>
 
@@ -182,9 +201,27 @@ function CourseForm({ initial, students, onCancel, onSave, busy }) {
           (l, i) => html`<div className="item" key=${i}>
             <div style=${{ flex: 1 }}>
               <div className="row">
-                ${TextField({ label: 'Название урока', value: l.title, onChange: (v) => updateLesson(i, { title: v }), placeholder: 'Введение' })}
-                ${NumberField({ label: 'Минут', value: l.durationMinutes, onChange: (v) => updateLesson(i, { durationMinutes: v || 0 }), min: 1 })}
-                ${NumberField({ label: 'Порядок', value: l.lessonOrder, onChange: (v) => updateLesson(i, { lessonOrder: v || 1 }), min: 1 })}
+                ${TextField({
+                  label: 'Название урока',
+                  value: l.title,
+                  onChange: (v) => updateLesson(i, { title: v }),
+                  placeholder: 'Введение',
+                  required: true,
+                })}
+                ${NumberField({
+                  label: 'Минут',
+                  value: l.durationMinutes,
+                  onChange: (v) => updateLesson(i, { durationMinutes: v || 0 }),
+                  min: 1,
+                  required: true,
+                })}
+                ${NumberField({
+                  label: 'Порядок',
+                  value: l.lessonOrder,
+                  onChange: (v) => updateLesson(i, { lessonOrder: v || 1 }),
+                  min: 1,
+                  required: true,
+                })}
               </div>
             </div>
             <div className="row">

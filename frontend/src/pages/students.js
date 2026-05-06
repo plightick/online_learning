@@ -124,7 +124,8 @@ export function StudentsPage({ toast }) {
       <p>Список студентов.</p>
     </div>
 
-    <div className="card">
+    <div className="section">
+      <div className="card">
       <div className="card-h">
         <div>
           <h2 className="card-title">Список</h2>
@@ -160,6 +161,7 @@ export function StudentsPage({ toast }) {
               )}
             </div>`}
       </div>
+    </div>
     </div>
   </div>`;
 }
