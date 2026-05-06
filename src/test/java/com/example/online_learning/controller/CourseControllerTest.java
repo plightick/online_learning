@@ -198,6 +198,7 @@ class CourseControllerTest {
                 "ADVANCED",
                 "Jane",
                 "Doe",
+                "Backend",
                 List.of(),
                 List.of(),
                 List.of());

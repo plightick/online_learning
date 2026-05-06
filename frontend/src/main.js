@@ -6,35 +6,6 @@ import { StudentsPage } from './pages/students.js';
 import { InstructorsPage } from './pages/instructors.js';
 import { API_BASE_URL } from './config.js';
 
-function ApiBaseUrlControl() {
-  const [value, setValue] = React.useState(API_BASE_URL);
-  const [open, setOpen] = React.useState(false);
-
-  function apply() {
-    try {
-      localStorage.setItem('apiBaseUrl', value.trim());
-    } catch {
-      // ignore
-    }
-    location.reload();
-  }
-
-  if (!open) {
-    return html`<button className="chip" type="button" onClick=${() => setOpen(true)}>
-      API
-    </button>`;
-  }
-
-  return html`<div className="row" style=${{ alignItems: 'center' }}>
-    <label className="field" style=${{ minWidth: '320px', flex: '0 0 auto' }}>
-      <span className="label">Адрес API</span>
-      <input className="input" value=${value} onInput=${(e) => setValue(e.target.value)} placeholder="http://localhost:8080" />
-    </label>
-    <button className="btn btn-primary" type="button" onClick=${apply}>Применить</button>
-    <button className="btn" type="button" onClick=${() => setOpen(false)}>Закрыть</button>
-  </div>`;
-}
-
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -99,7 +70,6 @@ function Layout({ route, toast }) {
                 >${n.label}</a
               >`
           )}
-          <${ApiBaseUrlControl} />
         </nav>
       </div>
     </div>

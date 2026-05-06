@@ -597,6 +597,7 @@ class CourseServiceImplTest {
                 level,
                 instructorFirstName,
                 instructorLastName,
+                "Backend",
                 List.of(),
                 List.of(),
                 List.of());

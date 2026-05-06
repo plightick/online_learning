@@ -155,7 +155,21 @@ a{color:inherit}
 }
 
 .row{display:flex; gap: 10px; flex-wrap:wrap; align-items:center}
+.row-col{flex-direction: column; align-items: stretch; flex-wrap: nowrap}
 .row-between{display:flex; align-items:center; justify-content:space-between; gap: 10px; flex-wrap:wrap}
+
+.actions{
+  display:flex;
+  justify-content: space-between; /* работает даже без flex-gap */
+  width: 270px; /* 2 кнопки по 130px + gap 10px */
+  flex: 0 0 270px;
+  flex-wrap: nowrap;
+}
+
+.actions-left{ justify-content: flex-start; }
+
+/* Явный отступ между кнопками (на случай проблем с gap) */
+.actions > * + *{ margin-left: 10px; }
 
 .filters-grid{
   display:grid;

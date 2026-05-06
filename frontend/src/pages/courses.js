@@ -10,7 +10,6 @@ const LEVELS = [
 ];
 
 const SORT_OPTIONS = [
-  { value: 'id', label: 'ID' },
   { value: 'title', label: 'Название' },
   { value: 'level', label: 'Уровень' },
 ];
@@ -139,7 +138,7 @@ function CourseForm({ initial, students, onCancel, onSave, busy }) {
   return html`<div className="card">
     <div className="card-h">
       <div>
-        <h2 className="card-title">${initial ? `Редактировать курс #${initial.id}` : 'Новый курс'}</h2>
+        <h2 className="card-title">${initial ? 'Редактировать курс' : 'Новый курс'}</h2>
         <p className="card-sub">Заполни данные курса и сохрани изменения.</p>
       </div>
       <div className="row">
@@ -216,7 +215,7 @@ function CourseForm({ initial, students, onCancel, onSave, busy }) {
                 onClick=${() => toggleStudent(id)}
                 disabled=${busy}
               >
-                ${checked ? '✓' : '+'} ${s.firstName} ${s.lastName} (#${id})
+                ${checked ? '✓' : '+'} ${s.firstName} ${s.lastName}
               </button>`;
             })}
       </div>
@@ -249,8 +248,6 @@ function CourseDetails({ course, onEdit }) {
     </div>
     <div className="card-b">
       <div className="kvs">
-        <div className="k">ID</div>
-        <div className="v mono">${course.id}</div>
         <div className="k">Название</div>
         <div className="v">${course.title}</div>
         <div className="k">Уровень</div>
@@ -298,7 +295,7 @@ export function CoursesPage({ toast }) {
     mode: 'list', // list | apiSearch | localSearch
     level: '',
     page: 1,
-    sortBy: 'id',
+    sortBy: 'title',
     ascending: true,
     categoryName: '',
     instructorSpecialization: '',
@@ -379,8 +376,8 @@ export function CoursesPage({ toast }) {
   async function onCreate(dto) {
     setBusy(true);
     try {
-      const created = await api.createCourse(dto);
-      toast.show('Курс создан', `ID: ${created?.id ?? '—'}`);
+      await api.createCourse(dto);
+      toast.show('Курс создан');
       setFormMode('none');
       setFilters((prev) => ({ ...prev, mode: 'list', page: 1, search: '' }));
       setReloadKey((x) => x + 1);
@@ -409,7 +406,7 @@ export function CoursesPage({ toast }) {
   }
 
   async function onDelete(id) {
-    if (!confirm(`Удалить курс #${id}?`)) return;
+    if (!confirm('Удалить курс?')) return;
     setBusy(true);
     try {
       await api.deleteCourse(id);
@@ -609,7 +606,7 @@ export function CoursesPage({ toast }) {
                   className=${filters.mode === 'apiSearch' ? 'btn btn-active' : 'btn'}
                   onClick=${() => setFilters((p) => ({ ...p, mode: 'apiSearch', page: 1, search: '' }))}
                 >
-                  Поиск API
+                  Поиск по критериям
                 </button>
                 <button
                   type="button"
@@ -643,7 +640,16 @@ export function CoursesPage({ toast }) {
                     <p>${c.instructorFirstName} ${c.instructorLastName}</p>
                     <div className="meta">${Pill({ children: c.level, strong: true })}</div>
                   </div>
-                  <div className="row">
+                  <div
+                    className="actions"
+                    style=${{
+                      width: '270px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      flexWrap: 'nowrap',
+                      flex: '0 0 270px',
+                    }}
+                  >
                     <button className="btn" onClick=${() => openDetails(c)} disabled=${busy}>Открыть</button>
                     <button className="btn btn-danger" onClick=${() => onDelete(c.id)} disabled=${busy}>Удалить</button>
                   </div>
@@ -653,7 +659,17 @@ export function CoursesPage({ toast }) {
 
             <div className="row-between" style=${{ marginTop: '12px' }}>
               <div className="hint">Страница: ${page} / ${totalPages}</div>
-              <div className="row">
+              <div
+                className="actions actions-left"
+                style=${{
+                  width: '270px',
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  flexWrap: 'nowrap',
+                  flex: '0 0 270px',
+                  gap: '10px',
+                }}
+              >
                 <button className="btn" disabled=${busy || loading || page <= 1} onClick=${() => setFilters((p) => ({ ...p, page: Math.max(1, p.page - 1) }))}>
                   Назад
                 </button>

@@ -88,7 +88,7 @@ export function StudentsPage({ toast }) {
   }
 
   async function onDelete(id) {
-    if (!confirm(`Удалить студента #${id}?`)) return;
+    if (!confirm('Удалить студента?')) return;
     setBusy(true);
     try {
       await api.deleteStudent(id);

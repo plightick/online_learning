@@ -27,9 +27,7 @@ async function request(method, path, { query, body } = {}) {
       body: body ? JSON.stringify(body) : undefined,
     });
   } catch (e) {
-    const err = new Error(
-      `Не удалось подключиться к API (в т.ч. возможен CORS): ${API_BASE_URL}`
-    );
+    const err = new Error(`Не удалось подключиться к серверу (в т.ч. возможен CORS): ${API_BASE_URL}`);
     err.cause = e;
     err.url = url;
     throw err;
