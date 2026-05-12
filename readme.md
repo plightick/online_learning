@@ -108,7 +108,7 @@ DB_USERNAME=postgres
 DB_PASSWORD=postgres
 ```
 
-Можно передать свои значения через переменные окружения.
+На Railway задайте **`DATABASE_JDBC_URL`** (формат `jdbc:postgresql://…`); см. раздел Docker / Docker Compose ниже. Можно передать свои значения через переменные окружения.
 
 ## Запуск
 
@@ -141,6 +141,8 @@ DB_URL=jdbc:postgresql://postgres:5432/online_learning
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
 ```
+
+На Railway задайте **`DATABASE_JDBC_URL`** в формате JDBC (`jdbc:postgresql://…`), а не `DATABASE_URL` (`postgresql://…`). Удобно собрать из переменных плагина Postgres, например `jdbc:postgresql://${{ Postgres.PGHOST }}:${{ Postgres.PGPORT }}/${{ Postgres.PGDATABASE}}` (имя сервиса `Postgres` замените на своё). Логин и пароль: **`PGUSER`** / **`PGPASSWORD`** с плагина или **`DB_USERNAME`** / **`DB_PASSWORD`** для Docker/локально.
 
 ## Основные endpoints
 
