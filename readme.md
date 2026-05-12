@@ -140,9 +140,12 @@ PORT=8080
 DB_URL=jdbc:postgresql://postgres:5432/online_learning
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
+APP_CORS_ALLOWED_ORIGIN_PATTERNS=http://localhost:*,http://127.0.0.1:*
 ```
 
 На Railway задайте **`DATABASE_JDBC_URL`** в формате JDBC (`jdbc:postgresql://…`), а не `DATABASE_URL` (`postgresql://…`). Удобно собрать из переменных плагина Postgres, например `jdbc:postgresql://${{ Postgres.PGHOST }}:${{ Postgres.PGPORT }}/${{ Postgres.PGDATABASE}}` (имя сервиса `Postgres` замените на своё). Логин и пароль: **`PGUSER`** / **`PGPASSWORD`** с плагина или **`DB_USERNAME`** / **`DB_PASSWORD`** для Docker/локально.
+
+Для браузерного фронта укажите **`APP_CORS_ALLOWED_ORIGIN_PATTERNS`** — список через запятую (Spring origin patterns), например публичный URL фронта на Railway: `https://…up.railway.app`.
 
 ## Основные endpoints
 

@@ -8,14 +8,16 @@ on:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
 
-permissions:
-  contents: read
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   backend:
     name: Backend Build and Test
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
     services:
       postgres:
         image: postgres:16
@@ -36,12 +38,12 @@ jobs:
       DB_PASSWORD: postgres
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: "21"
           distribution: temurin
@@ -61,9 +63,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [backend]
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build backend image
         run: docker build -t online-learning-backend:ci .
@@ -77,12 +81,31 @@ jobs:
     timeout-minutes: 15
     needs: [backend, docker]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Railway CLI
-        run: npm install -g @railway/cli
+        env:
+          RAILWAY_CLI_VERSION: 4.58.0
+        run: |
+          set -euo pipefail
+          tmp="${RUNNER_TEMP}/railway-cli"
+          mkdir -p "${tmp}"
+          curl -fsSL \
+            "https://github.com/railwayapp/cli/releases/download/v${RAILWAY_CLI_VERSION}/railway-v${RAILWAY_CLI_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
+            -o "${tmp}/railway.tgz"
+          tar -xzf "${tmp}/railway.tgz" -C "${tmp}"
+          bin="$(find "${tmp}" -maxdepth 3 -type f -name railway -print -quit)"
+          if [ -z "${bin}" ]; then
+            echo "railway binary not found in release archive"
+            tar -tzf "${tmp}/railway.tgz" | head -50
+            exit 1
+          fi
+          sudo install -m 0755 "${bin}" /usr/local/bin/railway
+          railway --version
 
       - name: Validate Railway configuration
         env:
@@ -122,6 +145,7 @@ jobs:
     timeout-minutes: 10
     needs: [deploy]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    permissions: {}
     steps:
       - name: Check deployed app health
         env:
@@ -146,4 +170,3 @@ jobs:
           echo "Healthcheck failed after all retries. Last response:"
           cat /tmp/health.json || true
           exit 1
-
