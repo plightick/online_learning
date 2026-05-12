@@ -121,23 +121,23 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: >
-          railway up
+          railway up .
+          --ci
           --project ${{ secrets.RAILWAY_PROJECT_ID }}
           --environment ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
           --service backend
-          --path-as-root .
-          --detach
+          --path-as-root
 
       - name: Deploy frontend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: >
-          railway up
+          railway up frontend
+          --ci
           --project ${{ secrets.RAILWAY_PROJECT_ID }}
           --environment ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
           --service frontend
-          --path-as-root frontend
-          --detach
+          --path-as-root
 
   healthcheck:
     name: Post-deploy Healthcheck
