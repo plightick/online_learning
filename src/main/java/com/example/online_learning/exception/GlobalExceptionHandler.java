@@ -19,6 +19,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -100,6 +101,16 @@ public class GlobalExceptionHandler {
         log.warn("Data integrity violation: {}", details);
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(buildErrorResponse(HttpStatus.CONFLICT, CONFLICTING_REQUEST));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoResourceFound(NoResourceFoundException exception) {
+        String path = exception.getResourcePath();
+        if (!"favicon.ico".equals(path)) {
+            log.debug("No static resource: {}", path);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(buildErrorResponse(HttpStatus.NOT_FOUND, "Not found"));
     }
 
     @ExceptionHandler(Exception.class)
