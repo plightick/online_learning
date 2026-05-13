@@ -170,11 +170,11 @@ jobs:
         run: |
           set -euo pipefail
           echo "Starting: railway up backend"
-          railway up .
-            --ci
-            --project "${{ secrets.RAILWAY_PROJECT_ID }}"
-            --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}"
-            --service backend
+          railway up . \
+            --ci \
+            --project "${{ secrets.RAILWAY_PROJECT_ID }}" \
+            --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}" \
+            --service backend \
             --path-as-root
 
       - name: Deploy frontend to Railway
@@ -183,11 +183,11 @@ jobs:
         run: |
           set -euo pipefail
           echo "Starting: railway up frontend"
-          railway up frontend
-            --ci
-            --project "${{ secrets.RAILWAY_PROJECT_ID }}"
-            --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}"
-            --service frontend
+          railway up frontend \
+            --ci \
+            --project "${{ secrets.RAILWAY_PROJECT_ID }}" \
+            --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}" \
+            --service frontend \
             --path-as-root
 
   healthcheck:
