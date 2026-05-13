@@ -122,17 +122,6 @@ jobs:
           echo " - RAILWAY_PROJECT_ID length=${#RAILWAY_PROJECT_ID}"
           echo " - RAILWAY_ENVIRONMENT_ID length=${#RAILWAY_ENVIRONMENT_ID}"
 
-      - name: Link Railway project/environment (CI)
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          set -euo pipefail
-          railway whoami
-          # Persist link to the working directory so subsequent `railway up` resolves the project.
-          railway link \
-            --project "${{ secrets.RAILWAY_PROJECT_ID }}" \
-            --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}"
-
       - name: Deploy backend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
@@ -141,6 +130,8 @@ jobs:
           echo "Starting: railway up backend"
           railway up .
             --ci
+            --project "${{ secrets.RAILWAY_PROJECT_ID }}"
+            --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}"
             --service backend
             --path-as-root
 
@@ -152,6 +143,8 @@ jobs:
           echo "Starting: railway up frontend"
           railway up frontend
             --ci
+            --project "${{ secrets.RAILWAY_PROJECT_ID }}"
+            --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}"
             --service frontend
             --path-as-root
 
