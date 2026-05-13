@@ -78,7 +78,7 @@ jobs:
   deploy:
     name: Deploy to Railway
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     needs: [backend, docker]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     permissions:
@@ -169,26 +169,40 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           set -euo pipefail
-          echo "Starting: railway up backend"
-          railway up . \
-            --ci \
+          set -o pipefail
+          echo "Starting: railway up backend (full deploy stream; no --ci)"
+          log="${RUNNER_TEMP}/railway-backend.log"
+          if ! railway up . \
+            --verbose \
             --project "${{ secrets.RAILWAY_PROJECT_ID }}" \
             --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}" \
             --service backend \
-            --path-as-root
+            --path-as-root \
+            2>&1 | tee "${log}"; then
+            echo "=== railway up backend failed; last 250 lines ==="
+            tail -n 250 "${log}" || true
+            exit 1
+          fi
 
       - name: Deploy frontend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           set -euo pipefail
-          echo "Starting: railway up frontend"
-          railway up frontend \
-            --ci \
+          set -o pipefail
+          echo "Starting: railway up frontend (full deploy stream; no --ci)"
+          log="${RUNNER_TEMP}/railway-frontend.log"
+          if ! railway up frontend \
+            --verbose \
             --project "${{ secrets.RAILWAY_PROJECT_ID }}" \
             --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}" \
             --service frontend \
-            --path-as-root
+            --path-as-root \
+            2>&1 | tee "${log}"; then
+            echo "=== railway up frontend failed; last 250 lines ==="
+            tail -n 250 "${log}" || true
+            exit 1
+          fi
 
   healthcheck:
     name: Post-deploy Healthcheck
