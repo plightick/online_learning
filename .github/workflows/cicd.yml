@@ -167,6 +167,9 @@ jobs:
       - name: Deploy backend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          # GitHub sets CI=true globally; Railway CLI enables "CI mode" from that and can exit 1
+          # after scheduling a deploy even when Railway finishes the deploy successfully.
+          CI: "false"
         run: |
           set -euo pipefail
           set -o pipefail
@@ -187,6 +190,7 @@ jobs:
       - name: Deploy frontend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          CI: "false"
         run: |
           set -euo pipefail
           set -o pipefail
