@@ -122,6 +122,48 @@ jobs:
           echo " - RAILWAY_PROJECT_ID length=${#RAILWAY_PROJECT_ID}"
           echo " - RAILWAY_ENVIRONMENT_ID length=${#RAILWAY_ENVIRONMENT_ID}"
 
+          # RAILWAY_TOKEN in CI must be a Project token (Project Settings → Tokens), not an account API token.
+          # See https://docs.railway.com/integrations/api#project-token — project tokens use Project-Access-Token.
+          echo "Verifying RAILWAY_TOKEN is a valid project token (GraphQL)..."
+          resp="$(curl -fsS -X POST "https://backboard.railway.com/graphql/v2" \
+            -H "Content-Type: application/json" \
+            -H "Project-Access-Token: ${RAILWAY_TOKEN}" \
+            -d '{"query":"query { projectToken { projectId environmentId } }"}')"
+          echo "${resp}" | head -c 800
+          echo ""
+          export GRAPHQL_RESP="${resp}"
+          python3 - <<'PY'
+          import json, os, sys
+          raw = os.environ.get("GRAPHQL_RESP", "").strip()
+          try:
+              j = json.loads(raw)
+          except json.JSONDecodeError as e:
+              print("Invalid JSON from Railway:", e)
+              raise SystemExit(1)
+          if j.get("errors"):
+              print("GraphQL errors:", j["errors"])
+              raise SystemExit(1)
+          data = (j.get("data") or {}).get("projectToken") or {}
+          pid, eid = data.get("projectId"), data.get("environmentId")
+          if not pid or not eid:
+              print("Unexpected response (no projectToken.projectId/environmentId):", j)
+              raise SystemExit(1)
+          print("Token resolves to projectId=%s environmentId=%s" % (pid, eid))
+          open("/tmp/railway_token_project", "w").write(pid)
+          open("/tmp/railway_token_env", "w").write(eid)
+          PY
+          exp_proj="$(cat /tmp/railway_token_project)"
+          exp_env="$(cat /tmp/railway_token_env)"
+          if [ "${exp_proj}" != "${RAILWAY_PROJECT_ID}" ]; then
+            echo "Mismatch: GitHub secret RAILWAY_PROJECT_ID must equal token's projectId (${exp_proj})."
+            exit 1
+          fi
+          if [ "${exp_env}" != "${RAILWAY_ENVIRONMENT_ID}" ]; then
+            echo "Mismatch: GitHub secret RAILWAY_ENVIRONMENT_ID must equal token's environmentId (${exp_env}). Recreate token for production."
+            exit 1
+          fi
+          echo "Project token OK (matches RAILWAY_PROJECT_ID / RAILWAY_ENVIRONMENT_ID)."
+
       - name: Deploy backend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
