@@ -98,7 +98,8 @@ jobs:
             "https://github.com/railwayapp/cli/releases/download/v${RAILWAY_CLI_VERSION}/railway-v${RAILWAY_CLI_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
             -o "${tmp}/railway.tgz"
           tar -xzf "${tmp}/railway.tgz" -C "${tmp}"
-          bin="$(find "${tmp}" -maxdepth 3 -type f -name railway -print -quit)"
+          # Archive layout can vary; search without a tight maxdepth.
+          bin="$(find "${tmp}" -type f -name railway -print -quit)"
           if [ -z "${bin}" ]; then
             echo "railway binary not found in release archive"
             tar -tzf "${tmp}/railway.tgz" | head -50
@@ -116,28 +117,43 @@ jobs:
           if [ -z "${RAILWAY_TOKEN}" ]; then echo "Missing secret: RAILWAY_TOKEN"; exit 1; fi
           if [ -z "${RAILWAY_PROJECT_ID}" ]; then echo "Missing secret: RAILWAY_PROJECT_ID"; exit 1; fi
           if [ -z "${RAILWAY_ENVIRONMENT_ID}" ]; then echo "Missing secret: RAILWAY_ENVIRONMENT_ID"; exit 1; fi
+          echo "Railway secrets present:"
+          echo " - RAILWAY_TOKEN length=${#RAILWAY_TOKEN}"
+          echo " - RAILWAY_PROJECT_ID length=${#RAILWAY_PROJECT_ID}"
+          echo " - RAILWAY_ENVIRONMENT_ID length=${#RAILWAY_ENVIRONMENT_ID}"
+
+      - name: Link Railway project/environment (CI)
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          set -euo pipefail
+          railway whoami
+          # Persist link to the working directory so subsequent `railway up` resolves the project.
+          railway link \
+            --project "${{ secrets.RAILWAY_PROJECT_ID }}" \
+            --environment "${{ secrets.RAILWAY_ENVIRONMENT_ID }}"
 
       - name: Deploy backend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: >
+        run: |
+          set -euo pipefail
+          echo "Starting: railway up backend"
           railway up .
-          --ci
-          --project ${{ secrets.RAILWAY_PROJECT_ID }}
-          --environment ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
-          --service backend
-          --path-as-root
+            --ci
+            --service backend
+            --path-as-root
 
       - name: Deploy frontend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: >
+        run: |
+          set -euo pipefail
+          echo "Starting: railway up frontend"
           railway up frontend
-          --ci
-          --project ${{ secrets.RAILWAY_PROJECT_ID }}
-          --environment ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
-          --service frontend
-          --path-as-root
+            --ci
+            --service frontend
+            --path-as-root
 
   healthcheck:
     name: Post-deploy Healthcheck
