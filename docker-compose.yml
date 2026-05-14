@@ -5,8 +5,9 @@ services:
       POSTGRES_DB: online_learning
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    # Host 5432 is often taken by a local Postgres; use 5433 on the host to avoid bind errors.
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
